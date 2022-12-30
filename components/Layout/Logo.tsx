@@ -1,11 +1,14 @@
 import Link from "next/link";
 import React from "react";
+import { Routes } from "../../constants/routes";
+
+import ImageAssets from "../elements/ImageAssets";
 
 const Logo = () => {
   return (
-    <Link legacyBehavior href="/">
+    <Link legacyBehavior href={Routes.home}>
       <a className="d-flex">
-        <img alt="jobBox" src="assets/imgs/template/jobhub-logo.svg" />
+        <ImageAssets src="assets/imgs/template/jobhub-logo.svg" alt="logo" />{" "}
       </a>
     </Link>
   );

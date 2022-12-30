@@ -3,8 +3,10 @@ import Link from "next/link";
 import React from "react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { menuBar } from "../@config/menu_bar";
+import { menuRoutes } from "../../constants/menu_routes";
 import Logo from "./Logo";
+import PageHead from "./PageHead";
+import { Routes } from "../../constants/routes";
 const Header = ({ handleOpen, handleRemove, openClass }: any) => {
   const router = useRouter();
   const { pathname } = router;
@@ -23,6 +25,7 @@ const Header = ({ handleOpen, handleRemove, openClass }: any) => {
 
   return (
     <>
+      {/* <PageHead /> */}
       <header
         className={scroll ? "header sticky-bar stick" : "header sticky-bar"}
       >
@@ -36,7 +39,7 @@ const Header = ({ handleOpen, handleRemove, openClass }: any) => {
             <div className="header-nav">
               <nav className="nav-main-menu">
                 <ul className="main-menu">
-                  {menuBar.map((item, index) => {
+                  {menuRoutes.map((item, index) => {
                     return (
                       <li
                         key={index}
@@ -98,11 +101,11 @@ const Header = ({ handleOpen, handleRemove, openClass }: any) => {
             </div>
             <div className="header-right">
               <div className="block-signin">
-                <Link legacyBehavior href="page-register">
+                <Link legacyBehavior href={Routes.registor}>
                   <a className="text-link-bd-btom hover-up">Register</a>
                 </Link>
 
-                <Link legacyBehavior href="page-signin">
+                <Link legacyBehavior href={Routes.signin}>
                   <a className="btn btn-default btn-shadow ml-40 hover-up">
                     Sign in
                   </a>

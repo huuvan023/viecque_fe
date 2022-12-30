@@ -26,7 +26,7 @@ TABLE CONTENT
  WP STYPE
  Custom amine
 ***/
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+@import url(https://fonts.bunny.net/css?family=plus-jakarta-sans:400,500,600,700,800);
 /*import vendors*/
 @import url(vendors/normalize.css);
 @import url(vendors/bootstrap.min.css);
@@ -1579,12 +1579,7 @@ label {
 .box-swiper .swiper-button-next,
 .box-swiper .swiper-button-prev {
   width: 40px;
-  margin-top: -50px;
-}
-.layout-brand-1.box-swiper .swiper-button-next,
-.layout-brand-1.box-swiper .swiper-button-prev {
-  width: 40px;
-  margin-top: -25px;
+  margin-top: -55px;
 }
 .box-swiper .swiper-button-next {
   left: auto;
@@ -2373,6 +2368,7 @@ label {
   background-size: cover;
   border-radius: 16px;
   overflow: hidden;
+  margin-bottom: 30px;
 }
 .card-grid-5 .category {
   background: url(../imgs/page/blog/picture-icon.svg) center no-repeat;
@@ -2955,12 +2951,6 @@ ul li:last-child .card-list-4 {
 .banner-hero .block-banner .form-find .box-industry {
   width: 100%;
   max-width: 180px;
-  padding-top: 5px;
-}
-.banner-hero .block-banner .form-find .box-industry.style-2 {
-  width: 100%;
-  max-width: 220px;
-  margin-right: 30px;
 }
 .banner-hero .block-banner .form-find .box-industry .select2::before {
   content: "";
@@ -2975,10 +2965,7 @@ ul li:last-child .card-list-4 {
   background: url(../imgs/page/homepage1/key-numbers.svg) no-repeat left 10px center;
 }
 .banner-hero .block-banner .form-find .input-industry {
-  background: url(../imgs/template/icons/icon-job.svg) no-repeat left 10px center;
-}
-.banner-hero .block-banner .form-find .input-location {
-  background: url(../imgs/template/icons/icon-location-2.svg) no-repeat left 10px center;
+  background: url(../imgs/template/icons/icon-job.svg) no-repeat left 18px center;
 }
 .banner-hero .block-banner .list-tags-banner {
   position: relative;
@@ -2987,8 +2974,8 @@ ul li:last-child .card-list-4 {
   color: #4F5E64;
   font-size: 14px;
   margin-left: 2px;
-  margin-right: 5px;
   text-decoration: underline;
+  margin-right: 5px;
 }
 .banner-hero .block-banner .list-tags-banner strong {
   font-weight: 700;
@@ -4846,7 +4833,7 @@ ul li:last-child .card-list-4 {
 }
 
 /***************************
-    Page section margin
+    Page section margin 
 ****************************/
 .mtb-0 {
   margin: 0;
@@ -7237,7 +7224,6 @@ ul li:last-child .card-list-4 {
 .login-register-cover {
   border-bottom: 1px solid #E0E6F6;
   position: relative;
-  width: 100%;
 }
 .login-register-cover .img-1 {
   position: absolute;
@@ -7870,11 +7856,11 @@ ul li:last-child .card-list-4 {
     width: 33.33%;
   }
   .footer .footer-col-1,
-.footer .footer-col-2,
-.footer .footer-col-3,
-.footer .footer-col-4,
-.footer .footer-col-5,
-.footer .footer-col-6 {
+  .footer .footer-col-2,
+  .footer .footer-col-3,
+  .footer .footer-col-4,
+  .footer .footer-col-5,
+  .footer .footer-col-6 {
     width: 33.33%;
     margin-bottom: 20px;
   }
@@ -7885,7 +7871,7 @@ ul li:last-child .card-list-4 {
     width: 0%;
   }
   .img-job-1,
-.img-job-2 {
+  .img-job-2 {
     display: none;
   }
   .content-job-inner {
@@ -8096,11 +8082,11 @@ ul li:last-child .card-list-4 {
     width: 50%;
   }
   .footer .footer-col-1,
-.footer .footer-col-2,
-.footer .footer-col-3,
-.footer .footer-col-4,
-.footer .footer-col-5,
-.footer .footer-col-6 {
+  .footer .footer-col-2,
+  .footer .footer-col-3,
+  .footer .footer-col-4,
+  .footer .footer-col-5,
+  .footer .footer-col-6 {
     width: 50%;
   }
   .box-we-hiring {
@@ -8132,15 +8118,15 @@ ul li:last-child .card-list-4 {
     display: block;
   }
   .box-swiper .swiper-button-next-1,
-.box-swiper .swiper-button-prev-1 {
+  .box-swiper .swiper-button-prev-1 {
     display: none;
   }
   .style-nav-top .swiper-button-next,
-.style-nav-top .swiper-button-prev {
+  .style-nav-top .swiper-button-prev {
     top: 10px;
   }
   .banner-hero .block-banner .form-find .select2,
-.banner-hero .block-banner .form-find .box-industry {
+  .banner-hero .block-banner .form-find .box-industry {
     max-width: 100%;
   }
   .banner-hero .block-banner .form-find {
@@ -8241,11 +8227,11 @@ ul li:last-child .card-list-4 {
 }
 @media (max-width: 575.98px) {
   .footer .footer-col-1,
-.footer .footer-col-2,
-.footer .footer-col-3,
-.footer .footer-col-4,
-.footer .footer-col-5,
-.footer .footer-col-6 {
+  .footer .footer-col-2,
+  .footer .footer-col-3,
+  .footer .footer-col-4,
+  .footer .footer-col-5,
+  .footer .footer-col-6 {
     width: 100%;
   }
   .box-we-hiring .text-2 {
@@ -8258,9 +8244,9 @@ ul li:last-child .card-list-4 {
     text-align: center;
   }
   .section-box.mt-70,
-.section-box.mt-80,
-.section-box.mt-100,
-.section-box.mt-40 {
+  .section-box.mt-80,
+  .section-box.mt-100,
+  .section-box.mt-40 {
     margin-top: 30px !important;
   }
   .header.sticky-bar .col-lg-7 .burger-icon {
@@ -8270,7 +8256,7 @@ ul li:last-child .card-list-4 {
     font-size: 38px;
   }
   .swiper-button-next,
-.swiper-button-prev {
+  .swiper-button-prev {
     display: none;
   }
   .mt-sm-15 {

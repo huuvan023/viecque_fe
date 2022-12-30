@@ -1,7 +1,7 @@
 ﻿import Link from "next/link";
 import "react-perfect-scrollbar/dist/css/styles.css";
 import { useState } from "react";
-import { menuBar } from "../@config/menu_bar";
+import { menuRoutes } from "../../constants/menu_routes";
 
 interface Props {
   openClass: string;
@@ -44,7 +44,7 @@ const MobileMenu = (props: Props) => {
                 {/* mobile menu start*/}
                 <nav>
                   <ul className="mobile-menu font-heading">
-                    {menuBar.map((item, index) => {
+                    {menuRoutes.map((item, index) => {
                       return (
                         <li
                           key={index}
