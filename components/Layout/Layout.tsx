@@ -1,10 +1,13 @@
-import React, { ElementType, useState } from "react";
+import React, { useState } from "react";
 import BackToTop from "../elements/BackToTop";
 import Footer from "./Footer";
 import Header from "./Header";
-import Sidebar from "./Sidebar";
+import MobileMenu from "./MobileMenu";
 
-const Layout = ({ children }: any) => {
+interface Props {
+  children: React.ReactNode;
+}
+const Layout = (props: Props) => {
   const [openClass, setOpenClass] = useState("");
 
   const handleOpen = () => {
@@ -26,8 +29,8 @@ const Layout = ({ children }: any) => {
         handleRemove={handleRemove}
         openClass={openClass}
       />
-      <Sidebar openClass={openClass} />
-      <main className="main">{children}</main>
+      <MobileMenu openClass={openClass} />
+      <main className="main">{props.children}</main>
       <Footer />
       <BackToTop />
     </>

@@ -19,9 +19,10 @@
     "next": "13.1.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "typescript": "4.9.4",
     "react-perfect-scrollbar": "^1.5.8",
+    "react-router-dom": "^6.6.1",
     "sass": "^1.56.1",
-    "swiper": "^8.4.4"
+    "swiper": "^8.4.4",
+    "typescript": "4.9.4"
   }
 }

@@ -1,8 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Layout from "../components/Layout/Layout";
-import Link from "next/link";
-
-export default function Home() {
+ 
+export default function Home1() {
   return (
     <>
       <Layout>
