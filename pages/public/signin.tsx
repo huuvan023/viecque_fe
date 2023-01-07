@@ -2,25 +2,47 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Layout from "@Component/Layout/Layout";
 import ImageAssets from "@Component/elements/ImageAssets";
-import { Routes } from "@Routes/routes";
 import { authClient } from "@Axios/auth-client";
+import { Form, Input } from "antd";
+import { LoginModel } from "@Models/login.model";
+import { useRouter } from "next/router";
+import { Routes } from "@Routes/routes";
 
 const Singin = () => {
-  const [username, setUsername] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [loginError, setLoginError] = useState(false);
+  const router = useRouter();
+  const onFinish = ({ username, password }: LoginModel) => {
+    setIsLoading(true);
+    handleLogin({ username, password });
+  };
 
-  async function handleLogin() {
+  const onFinishFailed = (errorInfo: any) => {
+    console.log("Failed:", errorInfo);
+  };
+
+  async function handleLogin({ username, password }: LoginModel) {
     try {
-      await authClient.login({
+      const response = await authClient.login({
         username,
         password,
       });
+      if (response.data.token) {
+        router.push({
+          pathname: Routes.home,
+        });
+      } else {
+        console.log(response.data);
+        setLoginError(true);
+        setIsLoading(false);
+      }
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
     }
   }
   return (
-    <Layout>
+    <Layout isLoading={isLoading}>
       <section className="pt-100 login-register">
         <div className="container">
           <div className="row login-register-cover">
@@ -28,47 +50,44 @@ const Singin = () => {
               <div className="text-center">
                 <p className="font-sm text-brand-2">Welcome back! </p>
                 <h2 className="mt-10 mb-5 text-brand-1">Member Login</h2>
-                <p className="font-sm text-muted mb-30">
-                  Access to all features. No credit card required.
-                </p>
-                <button className="btn social-login hover-up mb-20">
-                  <ImageAssets
-                    src="assets/imgs/template/icons/icon-google.svg"
-                    alt="jobbox"
-                  />
-                  <strong>Sign in with Google</strong>
-                </button>
-                <div className="divider-text-center">
-                  <span>Or continue with</span>
-                </div>
               </div>
-              <form className="login-register text-start mt-20" action="#">
-                <div className="form-group">
-                  <label className="form-label" htmlFor="input-1">
-                    Username or Email address *
-                  </label>
-                  <input
-                    className="form-control"
-                    id="input-1"
-                    type="text"
-                    required
-                    name="fullname"
-                    placeholder="Steven Job"
-                  />
-                </div>
-                <div className="form-group">
-                  <label className="form-label" htmlFor="input-4">
-                    Password *
-                  </label>
-                  <input
-                    className="form-control"
-                    id="input-4"
-                    type="password"
-                    required
-                    name="password"
-                    placeholder="************"
-                  />
-                </div>
+              <Form
+                onFinish={onFinish}
+                onFinishFailed={onFinishFailed}
+                className="login-register text-start mt-20"
+                action="#"
+              >
+                <Form.Item
+                  name="username"
+                  rules={[
+                    { required: true, message: "Please input your username!" },
+                  ]}
+                >
+                  <div>
+                    <label className="form-label" htmlFor="input-1">
+                      Username or Email address *
+                    </label>
+                    <Input placeholder="username" />
+                  </div>
+                </Form.Item>
+                <Form.Item
+                  name="password"
+                  rules={[
+                    { required: true, message: "Please input your password!" },
+                  ]}
+                >
+                  <div>
+                    <label className="form-label" htmlFor="input-1">
+                      Password *
+                    </label>
+                    <Input placeholder="password" type="password" />
+                  </div>
+                </Form.Item>
+                {loginError ? (
+                  <div className="error-login">
+                    Tên đăng nhập/email hoặc mật khẩu không chính xác.
+                  </div>
+                ) : null}
                 <div className="login_footer form-group d-flex justify-content-between">
                   <label className="cb-container">
                     <input type="checkbox" />
@@ -79,7 +98,7 @@ const Singin = () => {
                     <a className="text-muted">Forgot Password</a>
                   </Link>
                 </div>
-                <div className="form-group">
+                <Form.Item>
                   <button
                     className="btn btn-brand-1 hover-up w-100"
                     type="submit"
@@ -87,14 +106,14 @@ const Singin = () => {
                   >
                     Login
                   </button>
-                </div>
+                </Form.Item>
                 <div className="text-muted text-center">
                   {"Don't have an Account?"}
                   <Link legacyBehavior href={Routes.signin}>
                     <a>Sign up</a>
                   </Link>
                 </div>
-              </form>
+              </Form>
             </div>
             <div className="img-1 d-none d-lg-block">
               <ImageAssets

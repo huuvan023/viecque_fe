@@ -35,10 +35,12 @@ export default function handler(
             cookies.set("access_token", data?.token, {
               httpOnly: true,
               sameSite: "lax",
-              expires: new Date(2023, 2, 2),
+              // expires: new Date(2023, 2, 2),
             });
 
-            (res as NextApiResponse).status(200).send("login success");
+            (res as NextApiResponse).status(200).json({
+              token: data?.token,
+            });
           } else {
             cookies.set("access_token");
             (res as NextApiResponse).status(200).json(respondse);

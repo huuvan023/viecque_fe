@@ -5559,6 +5559,16 @@ ul li:last-child .card-list-4 {
   margin-right: 200px !important;
 }
 
+.isloading {
+  position: fixed;
+  top: 25%;
+}
+
+.error-login {
+  color: red;
+  margin: 10px;
+}
+
 /*page about*/
 .page-about {
   background-position: 0 5%;
