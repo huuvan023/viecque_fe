@@ -1,7 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import { Routes } from "../../constants/routes";
-
+import { menuRoutes, Routes } from "routes/index";
 import ImageAssets from "../elements/ImageAssets";
 
 const Logo = () => {

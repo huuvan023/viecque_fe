@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 import ImageAssets from "../../components/elements/ImageAssets";
 import Layout from "../../components/Layout/Layout";
-import { Routes } from "../../constants/routes";
+import { Routes } from "../../routes";
 
 const Register = () => {
   return (

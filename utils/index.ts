@@ -1,11 +1,2 @@
-import { removeVietnameseTones } from "./remove-vietnamese-tones";
-import {
-  convertDateTimeToString,
-  convertDateTimeToDateString,
-} from "./format-time-string";
-
-export const Utils = {
-  convertDateTimeToString,
-  convertDateTimeToDateString,
-  removeVietnameseTones,
-};
+export * from "./format-time-string";
+export * from "./remove-vietnamese-tones";

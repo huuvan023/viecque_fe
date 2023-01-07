@@ -1,7 +1,7 @@
 ﻿import Link from "next/link";
 import "react-perfect-scrollbar/dist/css/styles.css";
 import { useState } from "react";
-import { menuRoutes } from "../../constants/menu_routes";
+import { menuRoutes } from "../../routes/menu_routes";
 
 interface Props {
   openClass: string;

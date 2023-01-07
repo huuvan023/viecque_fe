@@ -3,10 +3,9 @@ import Link from "next/link";
 import React from "react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { menuRoutes } from "../../constants/menu_routes";
 import Logo from "./Logo";
-import PageHead from "./PageHead";
-import { Routes } from "../../constants/routes";
+import { menuRoutes, Routes } from "routes/index";
+
 const Header = ({ handleOpen, handleRemove, openClass }: any) => {
   const router = useRouter();
   const { pathname } = router;

@@ -1,10 +1,24 @@
-import React from "react";
-import Layout from "../../components/Layout/Layout";
+import React, { useState } from "react";
 import Link from "next/link";
-import ImageAssets from "../../components/elements/ImageAssets";
-import { Routes } from "../../constants/routes";
+import Layout from "@Component/Layout/Layout";
+import ImageAssets from "@Component/elements/ImageAssets";
+import { Routes } from "@Routes/routes";
+import { authClient } from "@Axios/auth-client";
 
 const Singin = () => {
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
+  async function handleLogin() {
+    try {
+      await authClient.login({
+        username,
+        password,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <Layout>
       <section className="pt-100 login-register">

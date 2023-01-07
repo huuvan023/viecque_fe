@@ -2,7 +2,7 @@ import React from "react";
 import Layout from "../../components/Layout/Layout";
 import Link from "next/link";
 import ImageAssets from "../../components/elements/ImageAssets";
-import { Routes } from "../../constants/routes";
+import { Routes } from "../../routes";
 
 const ResetPassword = () => {
   return (
