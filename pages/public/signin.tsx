@@ -7,6 +7,7 @@ import { Form, Input } from "antd";
 import { LoginModel } from "@Models/login.model";
 import { useRouter } from "next/router";
 import { Routes } from "@Routes/routes";
+import Auth from "@Component/Layout/Auth";
 
 const Singin = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -32,12 +33,10 @@ const Singin = () => {
           pathname: Routes.home,
         });
       } else {
-        console.log(response.data);
         setLoginError(true);
         setIsLoading(false);
       }
     } catch (error) {
-      console.log(error);
       setIsLoading(false);
     }
   }
@@ -60,7 +59,10 @@ const Singin = () => {
                 <Form.Item
                   name="username"
                   rules={[
-                    { required: true, message: "Please input your username!" },
+                    {
+                      required: true,
+                      message: "Please input your username!",
+                    },
                   ]}
                 >
                   <div>
@@ -73,7 +75,10 @@ const Singin = () => {
                 <Form.Item
                   name="password"
                   rules={[
-                    { required: true, message: "Please input your password!" },
+                    {
+                      required: true,
+                      message: "Please input your password!",
+                    },
                   ]}
                 >
                   <div>

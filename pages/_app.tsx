@@ -1,8 +1,12 @@
 import "../styles/globals.css";
-import "../public/assets/css/style.css";
-
+import "@Public/assets/css/style.css";
 import type { AppProps } from "next/app";
+import { GlobalStateProvider } from "@Store/Provider";
 
 export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+  return (
+    <GlobalStateProvider>
+      <Component {...pageProps} />
+    </GlobalStateProvider>
+  );
 }
