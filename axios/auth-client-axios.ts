@@ -1,5 +1,5 @@
 import { LoginModel } from "@Models/index";
-import axiosClient from "./axios-client";
+import axiosClient from "./axios";
 import { ENPOINT } from "./endpoint";
 
 export const authClient = {
@@ -7,6 +7,6 @@ export const authClient = {
     return axiosClient.post(ENPOINT.login, { username, password });
   },
   logout() {
-    return axiosClient.post("/public/logout");
+    return axiosClient.post(ENPOINT.logout);
   },
 };

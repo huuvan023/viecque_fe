@@ -39,7 +39,7 @@ export default function handler(
             });
 
             (res as NextApiResponse).status(200).json({
-              token: data?.token,
+              success: true,
             });
           } else {
             cookies.set("access_token");

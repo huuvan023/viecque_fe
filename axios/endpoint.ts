@@ -1,6 +1,7 @@
 export const ENPOINT = {
   // POST
   login: "public/login".trim(),
+  logout: "public/logout".trim(),
   registor: "public/register".trim(),
   verify: "public/verify-user".trim(),
   create_feeds: "recruiter/feeds".trim(),

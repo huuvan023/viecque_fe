@@ -1,0 +1,5 @@
+export const AuthError = {
+  UNAUTHORIZED: "UNAUTHORIZED",
+  OK: "OK",
+  INTERNAL_SERVER_ERROR: "INTERNAL_SERVER_ERROR",
+};

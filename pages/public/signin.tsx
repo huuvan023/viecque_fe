@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Layout from "@Component/Layout/Layout";
 import ImageAssets from "@Component/elements/ImageAssets";
-import { authClient } from "@Axios/auth-client";
+import { authClient } from "@Axios/auth-client-axios";
 import { Form, Input } from "antd";
 import { LoginModel } from "@Models/login.model";
 import { useRouter } from "next/router";
@@ -28,7 +28,7 @@ const Singin = () => {
         username,
         password,
       });
-      if (response.data.token) {
+      if (response.data.success) {
         router.push({
           pathname: Routes.home,
         });
