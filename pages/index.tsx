@@ -10,7 +10,10 @@ export default function Home() {
   useEffect(() => {
     (async () => {
       try {
-        const response = await apiUserAxios.getUserInfo();
+        const response = await apiUserAxios.updateUserInfo({
+          fullName: "test",
+          listPhoneNumbers: ["2313123", "312312"],
+        });
         const { data } = response;
         console.log(data.data);
       } catch (error) {

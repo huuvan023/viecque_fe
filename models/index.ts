@@ -6,3 +6,5 @@ export * from "./get-provinces.model";
 export * from "./get-districts.model";
 export * from "./get-wards.model";
 export * from "./get-user-info.model";
+export * from "./update-user-info.model";
+export * from "./update-user-password.model";

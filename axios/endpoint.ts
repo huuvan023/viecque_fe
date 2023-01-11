@@ -28,5 +28,5 @@ export const ENPOINT = {
   // PUT
   update_user_brand: "user/brand".trim(),
   update_feeds: "recruiter/feeds".trim(),
-  update_user_pass_or_info: "user".trim(),
+  update_user: "user".trim(),
 };
