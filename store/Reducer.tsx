@@ -1,4 +1,4 @@
-import { SET_AUTH, SET_LOADING } from "./constants";
+import { SET_LOADING } from "./constants";
 import { ActionGlobalContext, StateGlobalContext } from "./state.model";
 
 const initialState: StateGlobalContext = {
