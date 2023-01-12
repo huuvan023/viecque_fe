@@ -26,6 +26,12 @@ export function useAuth(option?: Partial<swr__internal.PublicConfiguration>) {
   }
 
   const profile: UserProfile | any = data;
+  if (!firstLoading) {
+    // token die - remove token
+    if (!profile) {
+      logout(() => {});
+    }
+  }
   return {
     profile,
     error,
