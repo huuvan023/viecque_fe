@@ -1,5 +1,6 @@
 export interface StateGlobalContext {
-  data1: string;
+  isAuth: boolean;
+  isLoading: boolean;
 }
 export interface ActionGlobalContext {
   type: string;

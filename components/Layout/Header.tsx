@@ -1,23 +1,28 @@
-﻿/* eslint-disable @next/next/no-html-link-for-pages */
-import Link from "next/link";
+﻿import Link from "next/link";
 import React from "react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Logo from "./Logo";
 import { menuRoutes, Routes } from "routes/index";
+import { useAuth } from "hooks/use-auth";
+import { RoutesConst } from "@Constants/routes-const";
 
-const Header = ({ handleOpen, handleRemove, openClass }: any) => {
+const Header = ({ handleOpen, handleRemove, openClass, isAuth }: any) => {
   const router = useRouter();
   const { pathname } = router;
   const [scroll, setScroll] = useState(0);
-
+  const { logout } = useAuth();
   const scrollEvent = () => {
     const scrollCheck = window.scrollY;
     if (scrollCheck !== scroll) {
       setScroll(scrollCheck);
     }
   };
-
+  async function onLogOut() {
+    logout(() => {
+      router.push(Routes.signin);
+    });
+  }
   useEffect(() => {
     document.addEventListener("scroll", scrollEvent);
   });
@@ -39,6 +44,9 @@ const Header = ({ handleOpen, handleRemove, openClass }: any) => {
               <nav className="nav-main-menu">
                 <ul className="main-menu">
                   {menuRoutes.map((item, index) => {
+                    if (item.routesType === RoutesConst.private && !isAuth) {
+                      return;
+                    }
                     return (
                       <li
                         key={index}
@@ -100,15 +108,26 @@ const Header = ({ handleOpen, handleRemove, openClass }: any) => {
             </div>
             <div className="header-right">
               <div className="block-signin">
-                <Link legacyBehavior href={Routes.registor}>
-                  <a className="text-link-bd-btom hover-up">Register</a>
-                </Link>
+                {!isAuth ? (
+                  <>
+                    <Link legacyBehavior href={Routes.registor}>
+                      <a className="text-link-bd-btom hover-up">Register</a>
+                    </Link>
 
-                <Link legacyBehavior href={Routes.signin}>
-                  <a className="btn btn-default btn-shadow ml-40 hover-up">
-                    Sign in
+                    <Link legacyBehavior href={Routes.signin}>
+                      <a className="btn btn-default btn-shadow ml-40 hover-up">
+                        Sign in
+                      </a>
+                    </Link>
+                  </>
+                ) : (
+                  <a
+                    className="btn btn-default btn-shadow ml-40 hover-up"
+                    onClick={onLogOut}
+                  >
+                    Logout
                   </a>
-                </Link>
+                )}
               </div>
             </div>
           </div>

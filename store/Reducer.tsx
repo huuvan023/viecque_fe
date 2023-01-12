@@ -1,23 +1,26 @@
-import { SET_DATA } from "./constants";
+import { SET_AUTH, SET_LOADING } from "./constants";
 import { ActionGlobalContext, StateGlobalContext } from "./state.model";
 
 const initialState: StateGlobalContext = {
-  data1: "dsads",
+  isAuth: false,
+  isLoading: true,
 };
 
 const globalStateReducer = (
   state: StateGlobalContext,
   action: ActionGlobalContext
 ) => {
-  // console.log(state);
-
   switch (action.type) {
-    case SET_DATA:
+    case SET_AUTH:
       return {
         ...state,
-        data1: action.data,
+        isAuth: action.data,
       };
-
+    case SET_LOADING:
+      return {
+        ...state,
+        isLoading: action.data,
+      };
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }

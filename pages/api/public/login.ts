@@ -33,7 +33,7 @@ export default function handler(
 
           if (data) {
             cookies.set("access_token", data?.token, {
-              httpOnly: false,
+              httpOnly: true,
               sameSite: "lax",
               // expires: new Date(2023, 2, 2),
             });

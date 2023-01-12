@@ -4,6 +4,7 @@ import Footer from "./Footer";
 import Header from "./Header";
 import MobileMenu from "./MobileMenu";
 import { Spin } from "antd";
+import { useAuth } from "hooks/use-auth";
 
 interface Props {
   children: React.ReactNode;
@@ -11,7 +12,7 @@ interface Props {
 }
 const Layout = ({ children, isLoading = false }: Props) => {
   const [openClass, setOpenClass] = useState("");
-
+  const { profile, firstLoading } = useAuth();
   const handleOpen = () => {
     document.body.classList.add("mobile-menu-active");
     setOpenClass("sidebar-visible");
@@ -23,25 +24,29 @@ const Layout = ({ children, isLoading = false }: Props) => {
       document.body.classList.remove("mobile-menu-active");
     }
   };
-  return (
-    <>
+  if (firstLoading) {
+    return (
       <Spin
         tip="Đang tải..."
         size="large"
         style={{ position: "fixed", top: "25%" }}
-        spinning={isLoading}
-      >
-        <div className="body-overlay-1" onClick={handleRemove} />
-        <Header
-          handleOpen={handleOpen}
-          handleRemove={handleRemove}
-          openClass={openClass}
-        />
-        <MobileMenu openClass={openClass} />
-        <main className="main">{children}</main>
-        <Footer />
-        <BackToTop />
-      </Spin>
+        spinning={true}
+      ></Spin>
+    );
+  }
+  return (
+    <>
+      <div className="body-overlay-1" onClick={handleRemove} />
+      <Header
+        handleOpen={handleOpen}
+        handleRemove={handleRemove}
+        openClass={openClass}
+        isAuth={profile?.data ? true : false}
+      />
+      <MobileMenu openClass={openClass} />
+      <main className="main">{children}</main>
+      <Footer />
+      <BackToTop />
     </>
   );
 };
