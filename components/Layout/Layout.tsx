@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import BackToTop from "../elements/BackToTop";
 import Footer from "./Footer";
 import Header from "./Header";
 import MobileMenu from "./MobileMenu";
-import { Spin } from "antd";
 import { useAuth } from "hooks/use-auth";
+import Loading from "@Component/elements/Loading";
+import GlobalStateContext from "@Store/Context";
 
 interface Props {
   children: React.ReactNode;
   isLoading?: boolean;
 }
-const Layout = ({ children, isLoading = false }: Props) => {
+const Layout = ({ children, isLoading = true }: Props) => {
+  const [state, dispatch] = useContext(GlobalStateContext);
   const [openClass, setOpenClass] = useState("");
   const { profile, firstLoading } = useAuth();
   const handleOpen = () => {
@@ -25,17 +27,11 @@ const Layout = ({ children, isLoading = false }: Props) => {
     }
   };
   if (firstLoading) {
-    return (
-      <Spin
-        tip="Đang tải..."
-        size="large"
-        style={{ position: "fixed", top: "25%" }}
-        spinning={true}
-      ></Spin>
-    );
+    return <Loading />;
   }
   return (
     <>
+      {isLoading ? <>{state.isLoading ? <Loading /> : null}</> : null}
       <div className="body-overlay-1" onClick={handleRemove} />
       <Header
         handleOpen={handleOpen}

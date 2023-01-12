@@ -5569,6 +5569,17 @@ ul li:last-child .card-list-4 {
   margin: 10px;
 }
 
+.loading {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.7803921569);
+  z-index: 1;
+}
+
 /*page about*/
 .page-about {
   background-position: 0 5%;

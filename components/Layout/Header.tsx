@@ -1,14 +1,24 @@
 ﻿import Link from "next/link";
-import React from "react";
+import React, { useContext } from "react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Logo from "./Logo";
 import { menuRoutes, Routes } from "routes/index";
 import { useAuth } from "hooks/use-auth";
 import { RoutesConst } from "@Constants/routes-const";
+import GlobalStateContext from "@Store/Context";
+import { SET_LOADING } from "@Store/constants";
 
 const Header = ({ handleOpen, handleRemove, openClass, isAuth }: any) => {
   const router = useRouter();
+  const [state, dispatch] = useContext(GlobalStateContext);
+  const handleLoading = (isLoading: boolean) => {
+    dispatch({
+      type: SET_LOADING,
+      data: isLoading,
+    });
+  };
+
   const { pathname } = router;
   const [scroll, setScroll] = useState(0);
   const { logout } = useAuth();
@@ -57,29 +67,55 @@ const Header = ({ handleOpen, handleRemove, openClass, isAuth }: any) => {
                         }
                       >
                         <Link legacyBehavior href={item.path}>
-                          <a className={pathname === item.path ? "active" : ""}>
-                            {item.label}
-                          </a>
+                          <span
+                            style={{ cursor: "pointer" }}
+                            onClick={() => {
+                              if (pathname !== item.path) {
+                                handleLoading(true);
+                              }
+                            }}
+                          >
+                            <a
+                              className={pathname === item.path ? "active" : ""}
+                            >
+                              {item.label}
+                            </a>
+                          </span>
                         </Link>
                         {item.children && item.children.length > 0 ? (
                           <ul className="sub-menu">
                             {item.children.map(
                               (itemChildren, indexChildren) => {
+                                if (
+                                  itemChildren.routesType === RoutesConst.private &&
+                                  !isAuth
+                                ) {
+                                  return;
+                                }
                                 return (
                                   <li key={indexChildren}>
                                     <Link
                                       legacyBehavior
                                       href={itemChildren.path}
                                     >
-                                      <a
-                                        className={
-                                          pathname === itemChildren.path
-                                            ? "active"
-                                            : ""
-                                        }
+                                      <span
+                                        style={{ cursor: "pointer" }}
+                                        onClick={() => {
+                                          if (pathname !== itemChildren.path) {
+                                            handleLoading(true);
+                                          }
+                                        }}
                                       >
-                                        {itemChildren.label}
-                                      </a>
+                                        <a
+                                          className={
+                                            pathname === itemChildren.path
+                                              ? "active"
+                                              : ""
+                                          }
+                                        >
+                                          {itemChildren.label}
+                                        </a>
+                                      </span>
                                     </Link>
                                   </li>
                                 );
@@ -111,22 +147,28 @@ const Header = ({ handleOpen, handleRemove, openClass, isAuth }: any) => {
                 {!isAuth ? (
                   <>
                     <Link legacyBehavior href={Routes.registor}>
-                      <a className="text-link-bd-btom hover-up">Register</a>
+                      <span onClick={() => handleLoading(true)}>
+                        <a className="text-link-bd-btom hover-up">Register</a>
+                      </span>
                     </Link>
 
                     <Link legacyBehavior href={Routes.signin}>
-                      <a className="btn btn-default btn-shadow ml-40 hover-up">
-                        Sign in
-                      </a>
+                      <span onClick={() => handleLoading(true)}>
+                        <a className="btn btn-default btn-shadow ml-40 hover-up">
+                          Sign in
+                        </a>
+                      </span>
                     </Link>
                   </>
                 ) : (
-                  <a
-                    className="btn btn-default btn-shadow ml-40 hover-up"
-                    onClick={onLogOut}
-                  >
-                    Logout
-                  </a>
+                  <span onClick={() => handleLoading(true)}>
+                    <a
+                      className="btn btn-default btn-shadow ml-40 hover-up"
+                      onClick={onLogOut}
+                    >
+                      Logout
+                    </a>
+                  </span>
                 )}
               </div>
             </div>
