@@ -39,7 +39,7 @@ const Layout = ({ children, isLoading = true }: Props) => {
         openClass={openClass}
         isAuth={profile?.data ? true : false}
       />
-      <MobileMenu openClass={openClass} />
+      <MobileMenu openClass={openClass} isAuth={profile?.data ? true : false} />
       <main className="main">{children}</main>
       <Footer />
       <BackToTop />

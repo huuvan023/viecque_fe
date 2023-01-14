@@ -1,17 +1,49 @@
 ﻿import Link from "next/link";
 import "react-perfect-scrollbar/dist/css/styles.css";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { menuRoutes } from "../../routes/menu_routes";
+import { Routes } from "@Routes/index";
+import { useRouter } from "next/router";
+import { SET_LOADING } from "@Store/constants";
+import GlobalStateContext from "@Store/Context";
+import { useAuth } from "hooks/use-auth";
+import { RoutesConst } from "@Constants/routes-const";
 
 interface Props {
   openClass: string;
+  isAuth: boolean;
 }
 const MobileMenu = (props: Props) => {
   const [isActive, setIsActive] = useState({
     status: false,
     key: 0,
   });
+  const router = useRouter();
+  const [state, dispatch] = useContext(GlobalStateContext);
+  const handleLoading = (isLoading: boolean) => {
+    dispatch({
+      type: SET_LOADING,
+      data: isLoading,
+    });
+  };
 
+  const { pathname } = router;
+  const [scroll, setScroll] = useState(0);
+  const { logout } = useAuth();
+  const scrollEvent = () => {
+    const scrollCheck = window.scrollY;
+    if (scrollCheck !== scroll) {
+      setScroll(scrollCheck);
+    }
+  };
+  async function onLogOut() {
+    logout(() => {
+      router.push(Routes.login);
+    });
+  }
+  useEffect(() => {
+    document.addEventListener("scroll", scrollEvent);
+  });
   const handleToggle = (key: number) => {
     if (isActive.key === key) {
       setIsActive({
@@ -34,17 +66,48 @@ const MobileMenu = (props: Props) => {
         <div className="mobile-header-wrapper-inner">
           <div className="mobile-header-content-area">
             <div className="perfect-scroll">
-              <div className="mobile-search mobile-header-border mb-30">
-                <form action="#">
-                  <input type="text" placeholder="Search…" />
-                  <i className="fi-rr-search" />
-                </form>
+              <div className="mobile-search mobile-header-border mb-30 text-center">
+                {!props.isAuth ? (
+                  <>
+                    <Link legacyBehavior href={Routes.registor}>
+                      <span
+                        onClick={() => handleLoading(true)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        <a className="text-link-bd-btom hover-up">Register</a>
+                      </span>
+                    </Link>
+
+                    <Link legacyBehavior href={Routes.login}>
+                      <span onClick={() => handleLoading(true)}>
+                        <a className="btn btn-default btn-shadow ml-40 hover-up">
+                          Sign in
+                        </a>
+                      </span>
+                    </Link>
+                  </>
+                ) : (
+                  <span onClick={() => handleLoading(true)}>
+                    <a
+                      className="btn btn-default btn-shadow ml-40 hover-up"
+                      onClick={onLogOut}
+                    >
+                      Logout
+                    </a>
+                  </span>
+                )}
               </div>
               <div className="mobile-menu-wrap mobile-header-border">
                 {/* mobile menu start*/}
                 <nav>
                   <ul className="mobile-menu font-heading">
                     {menuRoutes.map((item, index) => {
+                      if (
+                        item.routesType === RoutesConst.private &&
+                        !props.isAuth
+                      ) {
+                        return;
+                      }
                       return (
                         <li
                           key={index}
@@ -76,6 +139,13 @@ const MobileMenu = (props: Props) => {
                             >
                               {item.children.map(
                                 (itemChildren, indexChildren) => {
+                                  if (
+                                    itemChildren.routesType ===
+                                      RoutesConst.private &&
+                                    !props.isAuth
+                                  ) {
+                                    return;
+                                  }
                                   return (
                                     <li key={indexChildren}>
                                       <Link

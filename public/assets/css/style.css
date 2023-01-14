@@ -5585,6 +5585,10 @@ ul li:last-child .card-list-4 {
   justify-content: space-between;
 }
 
+.text-center {
+  text-align: center;
+}
+
 /*page about*/
 .page-about {
   background-position: 0 5%;
