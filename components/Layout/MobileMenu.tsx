@@ -68,7 +68,14 @@ const MobileMenu = (props: Props) => {
             <div className="perfect-scroll">
               <div className="mobile-search mobile-header-border mb-30 text-center">
                 {!props.isAuth ? (
-                  <>
+                  <div className="flex-menu-mobile">
+                    <Link legacyBehavior href={Routes.login}>
+                      <span onClick={() => handleLoading(true)}>
+                        <a className="btn btn-default btn-shadow ml-40 hover-up">
+                          Sign in
+                        </a>
+                      </span>
+                    </Link>
                     <Link legacyBehavior href={Routes.registor}>
                       <span
                         onClick={() => handleLoading(true)}
@@ -77,19 +84,11 @@ const MobileMenu = (props: Props) => {
                         <a className="text-link-bd-btom hover-up">Register</a>
                       </span>
                     </Link>
-
-                    <Link legacyBehavior href={Routes.login}>
-                      <span onClick={() => handleLoading(true)}>
-                        <a className="btn btn-default btn-shadow ml-40 hover-up">
-                          Sign in
-                        </a>
-                      </span>
-                    </Link>
-                  </>
+                  </div>
                 ) : (
                   <span onClick={() => handleLoading(true)}>
                     <a
-                      className="btn btn-default btn-shadow ml-40 hover-up"
+                      className="btn btn-default btn-shadow hover-up"
                       onClick={onLogOut}
                     >
                       Logout

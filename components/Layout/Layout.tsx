@@ -23,8 +23,8 @@ const Layout = ({ children, isLoading = true }: Props) => {
   const handleRemove = () => {
     if (openClass === "sidebar-visible") {
       setOpenClass("");
-      document.body.classList.remove("mobile-menu-active");
     }
+    document.body.classList.remove("mobile-menu-active");
   };
   if (firstLoading) {
     return <Loading />;

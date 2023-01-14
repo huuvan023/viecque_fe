@@ -9,7 +9,13 @@ import { RoutesConst } from "@Constants/routes-const";
 import GlobalStateContext from "@Store/Context";
 import { SET_LOADING } from "@Store/constants";
 
-const Header = ({ handleOpen, handleRemove, openClass, isAuth }: any) => {
+interface Props {
+  openClass: string;
+  isAuth: boolean;
+  handleOpen: Function;
+  handleRemove: Function;
+}
+const Header = ({ handleOpen, handleRemove, openClass, isAuth }: Props) => {
   const router = useRouter();
   const [state, dispatch] = useContext(GlobalStateContext);
   const handleLoading = (isLoading: boolean) => {

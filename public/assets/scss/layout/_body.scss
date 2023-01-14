@@ -20,6 +20,12 @@
   display: flex;
   justify-content: space-between;
 }
+
 .text-center {
   text-align: center;
+}
+.flex-menu-mobile {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }

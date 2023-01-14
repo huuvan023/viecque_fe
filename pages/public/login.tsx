@@ -14,7 +14,7 @@ const Singin = () => {
   const { login } = useAuth();
   const [loginError, setLoginError] = useState(false);
   const router = useRouter();
-  const [isLoading, setisLoading] = useState(false);
+  const [isLoading, seIsLoading] = useState(false);
   const [email, setEmail] = useState("");
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const Singin = () => {
   }, [router]);
 
   const onFinish = (dataLogin: LoginModel) => {
-    setisLoading(true);
+    seIsLoading(true);
     handleLogin({ ...dataLogin, username: email });
   };
 
@@ -32,18 +32,19 @@ const Singin = () => {
 
   async function handleLogin({ username, password }: LoginModel) {
     login({ username, password }, (response: any) => {
-      setisLoading(true);
+      seIsLoading(true);
       if (response.data.success) {
         router.push({
           pathname: Routes.home,
         });
       } else {
         setLoginError(true);
-        setisLoading(false);
+        seIsLoading(false);
       }
     });
   }
   const onForgotPassword = () => {
+    seIsLoading(true);
     router.push({
       pathname: Routes.resetPassword,
       query: email
@@ -117,7 +118,7 @@ const Singin = () => {
                   </Form.Item>
                   <div className="text-muted text-center">
                     {"Bạn chưa có tài khoản?"}
-                    <Link legacyBehavior href={Routes.login}>
+                    <Link legacyBehavior href={Routes.registor}>
                       <a>Đăng ký</a>
                     </Link>
                   </div>
