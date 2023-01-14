@@ -5589,9 +5589,15 @@ ul li:last-child .card-list-4 {
   text-align: center;
 }
 
-.flex-menu-mobile {
+.flex-menu-login-mobile {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-menu-logout-mobile {
+  display: flex;
+  justify-content: flex-end;
   align-items: center;
 }
 

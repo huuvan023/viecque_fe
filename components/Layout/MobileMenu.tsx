@@ -8,6 +8,7 @@ import { SET_LOADING } from "@Store/constants";
 import GlobalStateContext from "@Store/Context";
 import { useAuth } from "hooks/use-auth";
 import { RoutesConst } from "@Constants/routes-const";
+import Logo from "./Logo";
 
 interface Props {
   openClass: string;
@@ -67,11 +68,15 @@ const MobileMenu = (props: Props) => {
           <div className="mobile-header-content-area">
             <div className="perfect-scroll">
               <div className="mobile-search mobile-header-border mb-30 text-center">
+                <Logo></Logo>
+              </div>
+              <div className="mobile-menu-wrap mobile-header-border">
+                {/* mobile menu start*/}
                 {!props.isAuth ? (
-                  <div className="flex-menu-mobile">
+                  <div className="flex-menu-login-mobile">
                     <Link legacyBehavior href={Routes.login}>
                       <span onClick={() => handleLoading(true)}>
-                        <a className="btn btn-default btn-shadow ml-40 hover-up">
+                        <a className="btn btn-default btn-shadow hover-up">
                           Sign in
                         </a>
                       </span>
@@ -86,18 +91,17 @@ const MobileMenu = (props: Props) => {
                     </Link>
                   </div>
                 ) : (
-                  <span onClick={() => handleLoading(true)}>
-                    <a
-                      className="btn btn-default btn-shadow hover-up"
-                      onClick={onLogOut}
-                    >
-                      Logout
-                    </a>
-                  </span>
+                  <div className="flex-menu-logout-mobile">
+                    <span onClick={() => handleLoading(true)}>
+                      <a
+                        className="btn btn-default btn-shadow hover-up"
+                        onClick={onLogOut}
+                      >
+                        Logout
+                      </a>
+                    </span>
+                  </div>
                 )}
-              </div>
-              <div className="mobile-menu-wrap mobile-header-border">
-                {/* mobile menu start*/}
                 <nav>
                   <ul className="mobile-menu font-heading">
                     {menuRoutes.map((item, index) => {
