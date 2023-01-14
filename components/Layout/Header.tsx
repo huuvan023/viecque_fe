@@ -87,7 +87,8 @@ const Header = ({ handleOpen, handleRemove, openClass, isAuth }: any) => {
                             {item.children.map(
                               (itemChildren, indexChildren) => {
                                 if (
-                                  itemChildren.routesType === RoutesConst.private &&
+                                  itemChildren.routesType ===
+                                    RoutesConst.private &&
                                   !isAuth
                                 ) {
                                   return;
@@ -147,7 +148,10 @@ const Header = ({ handleOpen, handleRemove, openClass, isAuth }: any) => {
                 {!isAuth ? (
                   <>
                     <Link legacyBehavior href={Routes.registor}>
-                      <span onClick={() => handleLoading(true)}>
+                      <span
+                        onClick={() => handleLoading(true)}
+                        style={{ cursor: "pointer" }}
+                      >
                         <a className="text-link-bd-btom hover-up">Register</a>
                       </span>
                     </Link>

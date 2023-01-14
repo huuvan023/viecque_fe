@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { Routes } from "@Routes/routes";
 import { useAuth } from "hooks/use-auth";
 import Auth from "@Component/Layout/Auth";
+import AppInput from "@Component/elements/Input";
 
 const Singin = () => {
   const { login } = useAuth();
@@ -54,38 +55,22 @@ const Singin = () => {
                   className="login-register text-start mt-20"
                   action="#"
                 >
-                  <Form.Item
+                  <AppInput
+                    label="Email"
+                    required={true}
+                    requiredMessage="Vui lòng điền Email!"
+                    placeholder="Email"
                     name="username"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input your username!",
-                      },
-                    ]}
-                  >
-                    <div>
-                      <label className="form-label" htmlFor="input-1">
-                        Username or Email address *
-                      </label>
-                      <Input placeholder="username" />
-                    </div>
-                  </Form.Item>
-                  <Form.Item
+                  />
+                  <AppInput
+                    type="password"
+                    label="Password"
+                    required={true}
+                    requiredMessage="Vui lòng điền Password!"
+                    placeholder="Password"
                     name="password"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input your password!",
-                      },
-                    ]}
-                  >
-                    <div>
-                      <label className="form-label" htmlFor="input-1">
-                        Password *
-                      </label>
-                      <Input placeholder="password" type="password" />
-                    </div>
-                  </Form.Item>
+                  />
+
                   {loginError ? (
                     <div className="error-login">
                       Tên đăng nhập/email hoặc mật khẩu không chính xác.

@@ -4,9 +4,32 @@ import React, { useState } from "react";
 import ImageAssets from "@Component/elements/ImageAssets";
 import Layout from "@Component/Layout/Layout";
 import { Routes } from "@Routes/index";
+import { Form, Input } from "antd";
+import AppInput from "@Component/elements/Input";
+import { RegisterModel } from "@Models/register.model";
+import { authClient } from "@Axios/auth-client-axios";
 
 const Register = () => {
   const [isLoading, setisLoading] = useState(false);
+  const [messageErr, setMessageErr] = useState("");
+  const onFinish = (data: RegisterModel) => {
+    setisLoading(true);
+    handleLogin(data);
+  };
+  async function handleLogin(register: RegisterModel) {
+    try {
+      const response = await authClient.regisrer(register);
+      const data = await response.data;
+      setMessageErr("");
+      console.log(data);
+    } catch (error: any) {
+      setMessageErr(error.response.data.message);
+    }
+    setisLoading(false);
+  }
+  const onFinishFailed = (errorInfo: any) => {
+    console.log("Failed:", errorInfo);
+  };
   return (
     <Auth>
       <Layout isLoading={isLoading}>
@@ -15,115 +38,73 @@ const Register = () => {
             <div className="row login-register-cover">
               <div className="col-lg-4 col-md-6 col-sm-12 mx-auto">
                 <div className="text-center">
-                  <p className="font-sm text-brand-2">Register </p>
                   <h2 className="mt-10 mb-5 text-brand-1">
                     Start for free Today
                   </h2>
-                  <p className="font-sm text-muted mb-30">
-                    Access to all features. No credit card required.
-                  </p>
-                  <button className="btn social-login hover-up mb-20">
-                    <ImageAssets
-                      src="assets/imgs/template/icons/icon-google.svg"
-                      alt="jobbox"
-                    />
-                    <strong>Sign up with Google</strong>
-                  </button>
-                  <div className="divider-text-center">
-                    <span>Or continue with</span>
-                  </div>
                 </div>
-                <form className="login-register text-start mt-20" action="#">
-                  <div className="form-group">
-                    <label className="form-label" htmlFor="input-1">
-                      Full Name *
-                    </label>
-                    <input
-                      className="form-control"
-                      id="input-1"
-                      type="text"
-                      required
-                      name="fullname"
-                      placeholder="Steven Job"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label className="form-label" htmlFor="input-2">
-                      Email *
-                    </label>
-                    <input
-                      className="form-control"
-                      id="input-2"
-                      type="email"
-                      required
-                      name="emailaddress"
-                      placeholder="stevenjob@gmail.com"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label className="form-label" htmlFor="input-3">
-                      Username *
-                    </label>
-                    <input
-                      className="form-control"
-                      id="input-3"
-                      type="text"
-                      required
-                      name="username"
-                      placeholder="stevenjob"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label className="form-label" htmlFor="input-4">
-                      Password *
-                    </label>
-                    <input
-                      className="form-control"
-                      id="input-4"
-                      type="password"
-                      required
-                      name="password"
-                      placeholder="************"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label className="form-label" htmlFor="input-5">
-                      Re-Password *
-                    </label>
-                    <input
-                      className="form-control"
-                      id="input-5"
-                      type="password"
-                      required
-                      name="re-password"
-                      placeholder="************"
-                    />
-                  </div>
+
+                <Form
+                  onFinish={onFinish}
+                  onFinishFailed={onFinishFailed}
+                  className="login-register text-start mt-20"
+                  action="#"
+                >
+                  <AppInput
+                    type="email"
+                    label="Email"
+                    required={true}
+                    requiredMessage="Vui lòng điền email!"
+                    placeholder="Email"
+                    name="username"
+                  />
+                  <span style={{ color: "red" }}>{messageErr}</span>
+                  <AppInput
+                    label="Password"
+                    required={true}
+                    requiredMessage="Vui lòng điền password!"
+                    placeholder="Password"
+                    name="password"
+                  />
+                  <AppInput
+                    label="Số điện thoại"
+                    required={true}
+                    requiredMessage="Vui lòng điền số điện thoại!"
+                    placeholder="Số điện thoại"
+                    name="phoneNumber"
+                  />
+                  <AppInput
+                    label="Họ và tên"
+                    required={true}
+                    requiredMessage="Vui lòng điền số họ và tên!"
+                    placeholder="Họ và tên"
+                    name="fullName"
+                  />
+
                   <div className="login_footer form-group d-flex justify-content-between">
                     <label className="cb-container">
-                      <input type="checkbox" />
+                      <Input type="checkbox" />
                       <span className="text-small">
-                        Agree our terms and policy
+                        Chấp nhận điều khoản và dịch vụ
                       </span>
                       <span className="checkmark" />
                     </label>
                   </div>
-                  <div className="form-group">
+                  <Form.Item>
                     <button
                       className="btn btn-brand-1 hover-up w-100"
                       type="submit"
                       name="login"
                     >
-                      Submit &amp; Register
+                      Đăng ký
                     </button>
-                  </div>
+                  </Form.Item>
                   <div className="text-muted text-center">
-                    Already have an account?
+                    Bạn đã có tài khoản?
                     <Link legacyBehavior href={Routes.signin}>
-                      <a>Sign in</a>
+                      <a>Đăng nhập</a>
                     </Link>
                   </div>
-                </form>
+                </Form>
               </div>
               <div className="img-1 d-none d-lg-block">
                 <ImageAssets

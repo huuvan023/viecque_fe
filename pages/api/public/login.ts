@@ -32,10 +32,12 @@ export default function handler(
           const cookies = new Cookies(req, res, { secure: false });
 
           if (data) {
+            const expirationDate = new Date();
+            expirationDate.setHours(expirationDate.getHours() + 4);
             cookies.set("access_token", data?.token, {
               httpOnly: true,
               sameSite: "lax",
-              // expires: new Date(2023, 2, 2),
+              expires: expirationDate,
             });
 
             (res as NextApiResponse).status(200).json({

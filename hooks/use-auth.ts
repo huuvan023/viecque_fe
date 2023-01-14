@@ -6,8 +6,13 @@ import * as swr__internal from "swr/_internal";
 
 export function useAuth(option?: Partial<swr__internal.PublicConfiguration>) {
   const { data, error, mutate } = useSwr(ENPOINT.get_user_info, {
-    dedupingInterval: 1000, // milisecond
+    dedupingInterval: 1000, // 1s reload data
     revalidateOnFocus: true,
+    onError(err) {
+      // Unauthorized logout
+      // token die
+      logout(() => {});
+    },
     ...option,
   });
 
@@ -26,12 +31,7 @@ export function useAuth(option?: Partial<swr__internal.PublicConfiguration>) {
   }
 
   const profile: UserProfile | any = data;
-  if (!firstLoading) {
-    // token die - remove token
-    if (!profile) {
-      logout(() => {});
-    }
-  }
+
   return {
     profile,
     error,
