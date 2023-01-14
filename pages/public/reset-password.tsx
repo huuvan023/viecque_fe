@@ -1,12 +1,52 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "@Component/Layout/Layout";
-import Link from "next/link";
 import ImageAssets from "@Component/elements/ImageAssets";
-import { Routes } from "@Routes/index";
 import Auth from "@Component/Layout/Auth";
+import { Form } from "antd";
+import AppInput from "@Component/elements/Input";
+import { useRouter } from "next/router";
+import { apiUserAxios } from "@Axios/api-user/api-user";
+import { openNotification } from "@Utils/notification";
+import { Routes } from "@Routes/routes";
 
 const ResetPassword = () => {
   const [isLoading, setisLoading] = useState(false);
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  useEffect(() => {
+    setEmail((router.query.email as string) || "");
+  }, [router]);
+
+  const onFinish = () => {
+    setisLoading(true);
+    onResetPassword();
+  };
+  const onResetPassword = async () => {
+    try {
+      const response = await apiUserAxios.resetPassword(email);
+      const data = response.data;
+
+      openNotification(
+        "success",
+        "Thành công",
+        "Vui lòng kiểm tra mật khẩu trong email!"
+      );
+      router.push({
+        pathname: Routes.login,
+        query: {
+          email,
+        },
+      });
+    } catch (error: any) {
+      const message = error.response.data.message;
+      openNotification("error", "Thất bại", message);
+      setisLoading(false);
+    }
+  };
+  const onFinishFailed = (errorInfo: any) => {
+    console.log("Failed:", errorInfo);
+  };
+
   return (
     <Auth>
       <Layout isLoading={isLoading}>
@@ -16,74 +56,37 @@ const ResetPassword = () => {
               <div className="col-lg-4 col-md-6 col-sm-12 mx-auto">
                 <div className="text-center">
                   <p className="font-sm text-brand-2">Welcome back! </p>
-                  <h2 className="mt-10 mb-5 text-brand-1">Member Login</h2>
-                  <p className="font-sm text-muted mb-30">
-                    Access to all features. No credit card required.
-                  </p>
-                  <button className="btn social-login hover-up mb-20">
-                    <ImageAssets
-                      src="assets/imgs/template/icons/icon-google.svg"
-                      alt="jobbox"
-                    />
-                    <strong>Sign in with Google</strong>
-                  </button>
-                  <div className="divider-text-center">
-                    <span>Or continue with</span>
-                  </div>
+                  <h2 className="mt-10 mb-5 text-brand-1">
+                    Khôi phục mật khẩu
+                  </h2>
                 </div>
-                <form className="login-register text-start mt-20" action="#">
-                  <div className="form-group">
-                    <label className="form-label" htmlFor="input-1">
-                      Username or Email address *
-                    </label>
-                    <input
-                      className="form-control"
-                      id="input-1"
-                      type="text"
-                      required
-                      name="fullname"
-                      placeholder="Steven Job"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label className="form-label" htmlFor="input-4">
-                      Password *
-                    </label>
-                    <input
-                      className="form-control"
-                      id="input-4"
-                      type="password"
-                      required
-                      name="password"
-                      placeholder="************"
-                    />
-                  </div>
-                  <div className="login_footer form-group d-flex justify-content-between">
-                    <label className="cb-container">
-                      <input type="checkbox" />
-                      <span className="text-small">Remenber me</span>
-                      <span className="checkmark" />
-                    </label>
-                    <Link legacyBehavior href={Routes.resetPassword}>
-                      <a className="text-muted">Forgot Password</a>
-                    </Link>
-                  </div>
-                  <div className="form-group">
+                <Form
+                  onFinish={onFinish}
+                  onFinishFailed={onFinishFailed}
+                  className="login-register text-start mt-20"
+                  action="#"
+                >
+                  <AppInput
+                    label="Email"
+                    required={true}
+                    requiredMessage="Vui lòng điền Email!"
+                    placeholder="Email"
+                    name="email"
+                    value={email}
+                    onChange={(event) => {
+                      setEmail(event.target.value);
+                    }}
+                  />
+                  <Form.Item>
                     <button
                       className="btn btn-brand-1 hover-up w-100"
                       type="submit"
                       name="login"
                     >
-                      Login
+                      Gửi
                     </button>
-                  </div>
-                  <div className="text-muted text-center">
-                    {"Don't have an Account?"}
-                    <Link legacyBehavior href={Routes.signin}>
-                      <a>Sign up</a>
-                    </Link>
-                  </div>
-                </form>
+                  </Form.Item>
+                </Form>
               </div>
               <div className="img-1 d-none d-lg-block">
                 <ImageAssets

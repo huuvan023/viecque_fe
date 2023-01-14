@@ -125,7 +125,7 @@ const Register = () => {
                   </Form.Item>
                   <div className="text-muted text-center">
                     Bạn đã có tài khoản?
-                    <Link legacyBehavior href={Routes.signin}>
+                    <Link legacyBehavior href={Routes.login}>
                       <a>Đăng nhập</a>
                     </Link>
                   </div>

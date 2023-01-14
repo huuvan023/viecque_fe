@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Layout from "@Component/Layout/Layout";
 import ImageAssets from "@Component/elements/ImageAssets";
-import { Form, Input } from "antd";
+import { Form } from "antd";
 import { LoginModel } from "@Models/login.model";
 import { useRouter } from "next/router";
 import { Routes } from "@Routes/routes";
@@ -15,9 +15,15 @@ const Singin = () => {
   const [loginError, setLoginError] = useState(false);
   const router = useRouter();
   const [isLoading, setisLoading] = useState(false);
-  const onFinish = ({ username, password }: LoginModel) => {
+  const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    setEmail((router.query.email as string) || "");
+  }, [router]);
+
+  const onFinish = (dataLogin: LoginModel) => {
     setisLoading(true);
-    handleLogin({ username, password });
+    handleLogin({ ...dataLogin, username: email });
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -37,7 +43,16 @@ const Singin = () => {
       }
     });
   }
-
+  const onForgotPassword = () => {
+    router.push({
+      pathname: Routes.resetPassword,
+      query: email
+        ? {
+            email,
+          }
+        : {},
+    });
+  };
   return (
     <Auth>
       <Layout isLoading={isLoading}>
@@ -60,7 +75,11 @@ const Singin = () => {
                     required={true}
                     requiredMessage="Vui lòng điền Email!"
                     placeholder="Email"
-                    name="username"
+                    name="email"
+                    value={email}
+                    onChange={(event) => {
+                      setEmail(event.target.value);
+                    }}
                   />
                   <AppInput
                     type="password"
@@ -82,9 +101,10 @@ const Singin = () => {
                       <span className="text-small">Remenber me</span>
                       <span className="checkmark" />
                     </label>
-                    <Link legacyBehavior href={Routes.resetPassword}>
-                      <a className="text-muted">Forgot Password</a>
-                    </Link>
+
+                    <a className="text-muted" onClick={onForgotPassword}>
+                      Quên mật khẩu
+                    </a>
                   </div>
                   <Form.Item>
                     <button
@@ -92,13 +112,13 @@ const Singin = () => {
                       type="submit"
                       name="login"
                     >
-                      Login
+                      Đăng nhập
                     </button>
                   </Form.Item>
                   <div className="text-muted text-center">
-                    {"Don't have an Account?"}
-                    <Link legacyBehavior href={Routes.signin}>
-                      <a>Sign up</a>
+                    {"Bạn chưa có tài khoản?"}
+                    <Link legacyBehavior href={Routes.login}>
+                      <a>Đăng ký</a>
                     </Link>
                   </div>
                 </Form>

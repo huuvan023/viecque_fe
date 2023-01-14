@@ -5,5 +5,5 @@ export class Routes {
   static resetPassword = "/public/reset-password";
   static registor = "/public/register";
   static veryUser = "/public/register/very-user";
-  static signin = "/public/signin";
+  static login = "/public/login";
 }

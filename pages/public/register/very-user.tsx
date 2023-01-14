@@ -18,7 +18,7 @@ const Register = () => {
   const [second, setSecond] = useState(120);
 
   useEffect(() => {
-    setEmail(router.query.email as string);
+    setEmail((router.query.email as string) || "");
   }, [router]);
 
   useEffect(() => {
@@ -53,7 +53,10 @@ const Register = () => {
       );
       setisLoading(false);
       router.push({
-        pathname: Routes.signin,
+        pathname: Routes.login,
+        query: {
+          email,
+        },
       });
     } catch (error: any) {
       openNotification(
@@ -150,7 +153,7 @@ const Register = () => {
 
                   <div className="text-muted text-center">
                     Bạn đã có tài khoản?
-                    <Link legacyBehavior href={Routes.signin}>
+                    <Link legacyBehavior href={Routes.login}>
                       <a>Đăng nhập</a>
                     </Link>
                   </div>

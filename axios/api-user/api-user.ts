@@ -34,10 +34,15 @@ export const apiUserAxios = {
   register(data: RegisterModel) {
     return axiosClient.post(ENPOINT.registor, data);
   },
+
   resendVerifyCode(email: string) {
     return axiosClient.get(`${ENPOINT.resend_verify_code}?email=${email}`);
   },
-  // /public/resend-verify-code?email=jabil58648@vingood.com
+
+  resetPassword(email: string) {
+    return axiosClient.get(`${ENPOINT.reset_password}?email=${email}`);
+  },
+
   veryUser(data: VerifyUserModel) {
     return axiosClient.post(ENPOINT.verify, data);
   },

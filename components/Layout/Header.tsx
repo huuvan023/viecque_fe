@@ -30,7 +30,7 @@ const Header = ({ handleOpen, handleRemove, openClass, isAuth }: any) => {
   };
   async function onLogOut() {
     logout(() => {
-      router.push(Routes.signin);
+      router.push(Routes.login);
     });
   }
   useEffect(() => {
@@ -156,7 +156,7 @@ const Header = ({ handleOpen, handleRemove, openClass, isAuth }: any) => {
                       </span>
                     </Link>
 
-                    <Link legacyBehavior href={Routes.signin}>
+                    <Link legacyBehavior href={Routes.login}>
                       <span onClick={() => handleLoading(true)}>
                         <a className="btn btn-default btn-shadow ml-40 hover-up">
                           Sign in
