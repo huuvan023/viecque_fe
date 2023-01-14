@@ -5580,6 +5580,11 @@ ul li:last-child .card-list-4 {
   z-index: 1;
 }
 
+.box-resendCode {
+  display: flex;
+  justify-content: space-between;
+}
+
 /*page about*/
 .page-about {
   background-position: 0 5%;

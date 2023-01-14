@@ -12,7 +12,7 @@ interface Props {
   isLoading?: boolean;
 }
 const Layout = ({ children, isLoading = true }: Props) => {
-  const [state, dispatch] = useContext(GlobalStateContext);
+  const [store, dispatch] = useContext(GlobalStateContext);
   const [openClass, setOpenClass] = useState("");
   const { profile, firstLoading } = useAuth();
   const handleOpen = () => {
@@ -31,7 +31,7 @@ const Layout = ({ children, isLoading = true }: Props) => {
   }
   return (
     <>
-      {isLoading ? <>{state.isLoading ? <Loading /> : null}</> : null}
+      {isLoading ? <>{store.isLoading ? <Loading /> : null}</> : null}
       <div className="body-overlay-1" onClick={handleRemove} />
       <Header
         handleOpen={handleOpen}

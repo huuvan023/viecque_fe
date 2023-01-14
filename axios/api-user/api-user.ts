@@ -2,8 +2,10 @@ import {
   GetUserInfoModel,
   NewUserInfoModel,
   NewUserPasswordModel,
+  RegisterModel,
   UpdateUserInfoModel,
   UpdateUserPasswordModel,
+  VerifyUserModel,
 } from "@Models/index";
 import axiosClient from "@Axios/axios";
 import { ENPOINT } from "@Axios/endpoint";
@@ -27,5 +29,16 @@ export const apiUserAxios = {
       `${ENPOINT.update_user}?keyUpdate=INFOS`,
       newPassword
     );
+  },
+
+  register(data: RegisterModel) {
+    return axiosClient.post(ENPOINT.registor, data);
+  },
+  resendVerifyCode(email: string) {
+    return axiosClient.get(`${ENPOINT.resend_verify_code}?email=${email}`);
+  },
+  // /public/resend-verify-code?email=jabil58648@vingood.com
+  veryUser(data: VerifyUserModel) {
+    return axiosClient.post(ENPOINT.verify, data);
   },
 };

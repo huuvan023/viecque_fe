@@ -8,3 +8,4 @@ export * from "./get-wards.model";
 export * from "./get-user-info.model";
 export * from "./update-user-info.model";
 export * from "./update-user-password.model";
+export * from "./verify-user.model"

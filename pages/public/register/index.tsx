@@ -7,29 +7,44 @@ import { Routes } from "@Routes/index";
 import { Form, Input } from "antd";
 import AppInput from "@Component/elements/Input";
 import { RegisterModel } from "@Models/register.model";
-import { authClient } from "@Axios/auth-client-axios";
+import { apiUserAxios } from "@Axios/api-user/api-user";
+import { useRouter } from "next/router";
 
 const Register = () => {
   const [isLoading, setisLoading] = useState(false);
   const [messageErr, setMessageErr] = useState("");
+  const [checkbox, setCheckbox] = useState(false);
+  const [checkboxMessage, setCheckboxMessage] = useState("");
+  const router = useRouter();
   const onFinish = (data: RegisterModel) => {
-    setisLoading(true);
-    handleLogin(data);
+    if (checkbox) {
+      setisLoading(true);
+      handleRegister(data);
+    } else {
+      setCheckboxMessage("Vui lòng chấp nhận điều khoản và dịch vụ");
+    }
   };
-  async function handleLogin(register: RegisterModel) {
+  async function handleRegister(register: RegisterModel) {
     try {
-      const response = await authClient.regisrer(register);
+      const response = await apiUserAxios.register(register);
       const data = await response.data;
       setMessageErr("");
-      console.log(data);
+      router.push({
+        pathname: Routes.veryUser,
+        query: {
+          email: register.username,
+        },
+      });
+      // setisLoading(false);
     } catch (error: any) {
       setMessageErr(error.response.data.message);
+      setisLoading(false);
     }
-    setisLoading(false);
   }
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
+
   return (
     <Auth>
       <Layout isLoading={isLoading}>
@@ -56,8 +71,9 @@ const Register = () => {
                     requiredMessage="Vui lòng điền email!"
                     placeholder="Email"
                     name="username"
+                    messageErr={messageErr}
                   />
-                  <span style={{ color: "red" }}>{messageErr}</span>
+
                   <AppInput
                     label="Password"
                     required={true}
@@ -79,16 +95,25 @@ const Register = () => {
                     placeholder="Họ và tên"
                     name="fullName"
                   />
+                  <Form.Item name="check">
+                    <div className="login_footer form-group d-flex justify-content-between">
+                      <label className="cb-container">
+                        <Input
+                          type="checkbox"
+                          onChange={() => {
+                            setCheckbox((check) => !check);
+                            setCheckboxMessage("");
+                          }}
+                        />
+                        <span className="text-small">
+                          Chấp nhận điều khoản và dịch vụ
+                        </span>
+                        <div style={{ color: "red" }}>{checkboxMessage}</div>
+                        <span className="checkmark" />
+                      </label>
+                    </div>
+                  </Form.Item>
 
-                  <div className="login_footer form-group d-flex justify-content-between">
-                    <label className="cb-container">
-                      <Input type="checkbox" />
-                      <span className="text-small">
-                        Chấp nhận điều khoản và dịch vụ
-                      </span>
-                      <span className="checkmark" />
-                    </label>
-                  </div>
                   <Form.Item>
                     <button
                       className="btn btn-brand-1 hover-up w-100"
