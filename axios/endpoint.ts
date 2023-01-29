@@ -1,8 +1,8 @@
 export const ENPOINT = {
   // auth
-  login: "auth/login".trim(),
-  logout: "auth/logout".trim(),
-  checkAuth: "auth/checkAuth".trim(),
+  login: "api/auth/login".trim(),
+  logout: "api/auth/logout".trim(),
+  checkAuth: "api/auth/checkAuth".trim(),
 
   registor: "public/register".trim(),
   verify: "public/verify-user".trim(),
@@ -16,7 +16,7 @@ export const ENPOINT = {
 
   user_brand: "user/brand".trim(),
   vnpay: "user/payment/vnpay".trim(),
-  get_user_info: "user".trim(),
+  user: "user".trim(),
   get_all_feeds: "admin/feeds".trim(),
   filter_all_feeds: "admin/filter-feeds".trim(),
   approve_feeds: "admin/feeds/approve".trim(),

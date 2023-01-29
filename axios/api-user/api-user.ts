@@ -13,20 +13,20 @@ import { AxiosResponse } from "axios";
 
 export const apiUserAxios = {
   getUserInfo(): Promise<AxiosResponse<GetUserInfoModel>> {
-    return axiosClient.get(ENPOINT.get_user_info);
+    return axiosClient.get(ENPOINT.user);
   },
 
   updateUserInfo(
     newInfo: NewUserInfoModel
   ): Promise<AxiosResponse<UpdateUserInfoModel>> {
-    return axiosClient.put(`${ENPOINT.update_user}?keyUpdate=INFOS`, newInfo);
+    return axiosClient.put(`${ENPOINT.user}?keyUpdate=INFOS`, newInfo);
   },
 
   updateUserPassword(
     newPassword: NewUserPasswordModel
   ): Promise<AxiosResponse<UpdateUserPasswordModel>> {
     return axiosClient.put(
-      `${ENPOINT.update_user}?keyUpdate=INFOS`,
+      `${ENPOINT.user}?keyUpdate=INFOS`,
       newPassword
     );
   },

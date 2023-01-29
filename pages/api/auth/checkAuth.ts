@@ -1,9 +1,12 @@
+import { AuthError } from "./../../../constants/auth-error";
+import { apiUserAxios } from "@Axios/api-user/api-user";
 import { ENPOINT } from "@Axios/endpoint";
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import api from "@Env/index";
 import Cookies from "cookies";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { RequestInit } from "next/dist/server/web/spec-extension/request";
+import axios from "axios";
 
 export default async function handler(
   req: NextApiRequest,
@@ -15,7 +18,7 @@ export default async function handler(
 
   const cookies = new Cookies(req, res);
   if (!cookies.get("access_token")) {
-    res.status(200).json(null);
+    return res.status(200).json(null);
   }
   var myHeaders = new Headers();
   if (cookies.get("access_token")) {
@@ -31,11 +34,15 @@ export default async function handler(
   fetch("http://banhmisua.cf/user", requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      (res as NextApiResponse).status(result.status).json(result);
-      // console.log(result.status);
+      if (result.error === AuthError.OK) {
+        return (res as NextApiResponse)
+          .status(result.status)
+          .json({ success: true });
+      } else {
+        return (res as NextApiResponse).status(result.status).json(result);
+      }
     })
     .catch((error) => {
-      const cookies = new Cookies(req, res, { secure: false });
-      cookies.set("access_token");
+      return (res as NextApiResponse).status(401).json(error);
     });
 }
