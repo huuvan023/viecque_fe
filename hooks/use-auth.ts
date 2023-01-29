@@ -5,7 +5,7 @@ import useSwr from "swr";
 import * as swr__internal from "swr/_internal";
 
 export function useAuth(option?: Partial<swr__internal.PublicConfiguration>) {
-  const { data, error, mutate } = useSwr(ENPOINT.get_user_info, {
+  const { data, error, mutate } = useSwr(ENPOINT.checkAuth, {
     dedupingInterval: 1000, // 1s reload data
     revalidateOnFocus: true,
     onError(err) {
