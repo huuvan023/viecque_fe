@@ -14,6 +14,9 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
+  const parserReqUrl = req.url;
+  const newstr = parserReqUrl!.replace("/api", "");
+  req.url = newstr;
   const cookies = new Cookies(req, res);
   if (!cookies.get("access_token")) {
     res.status(200).json(null);

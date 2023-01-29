@@ -18,6 +18,10 @@ export default function handler(
     return res.status(200).json({ message: "Method not found" });
   }
   return new Promise((resolve) => {
+    const parserReqUrl = req.url;
+    const newstr = parserReqUrl!.replace("/api", "");
+    req.url = newstr;
+
     req.headers.cookie = "";
 
     const handleLoginRsponse: ProxyResCallback = (proxyRes, req, res) => {

@@ -15,6 +15,9 @@ export default function handler(
   res: NextApiResponse<any>
 ) {
   return new Promise((resolve) => {
+    const parserReqUrl = req.url;
+    const newstr = parserReqUrl!.replace("/api", "");
+    req.url = newstr;
     // convert cookies to token
     const cookies = new Cookies(req, res);
     if (cookies.get("access_token")) {
