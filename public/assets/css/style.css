@@ -5576,7 +5576,7 @@ ul li:last-child .card-list-4 {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(255, 255, 255, 0.7803921569);
+  background: rgba(255, 255, 255, 0.9529411765);
   z-index: 1;
 }
 

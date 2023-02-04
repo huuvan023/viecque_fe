@@ -6,31 +6,25 @@ import { Routes } from "@Routes/index";
 import { useRouter } from "next/router";
 import { SET_LOADING } from "@Store/constants";
 import GlobalStateContext from "@Store/Context";
-import { useAuth } from "hooks/use-auth";
+import { useAuth } from "@Hooks/use-auth";
 import { RoutesConst } from "@Constants/routes-const";
 import Logo from "./Logo";
+import { useLoading } from "@Hooks/use-loading";
 
 interface Props {
   openClass: string;
   isAuth: boolean;
 }
 const MobileMenu = (props: Props) => {
+  const { logout } = useAuth();
+  const { setLoading } = useLoading();
+  const router = useRouter();
+  const [scroll, setScroll] = useState(0);
   const [isActive, setIsActive] = useState({
     status: false,
     key: 0,
   });
-  const router = useRouter();
-  const [state, dispatch] = useContext(GlobalStateContext);
-  const handleLoading = (isLoading: boolean) => {
-    dispatch({
-      type: SET_LOADING,
-      data: isLoading,
-    });
-  };
 
-  const { pathname } = router;
-  const [scroll, setScroll] = useState(0);
-  const { logout } = useAuth();
   const scrollEvent = () => {
     const scrollCheck = window.scrollY;
     if (scrollCheck !== scroll) {
@@ -75,7 +69,7 @@ const MobileMenu = (props: Props) => {
                 {!props.isAuth ? (
                   <div className="flex-menu-login-mobile">
                     <Link legacyBehavior href={Routes.login}>
-                      <span onClick={() => handleLoading(true)}>
+                      <span onClick={() => setLoading(true)}>
                         <a className="btn btn-default btn-shadow hover-up">
                           Sign in
                         </a>
@@ -83,7 +77,7 @@ const MobileMenu = (props: Props) => {
                     </Link>
                     <Link legacyBehavior href={Routes.registor}>
                       <span
-                        onClick={() => handleLoading(true)}
+                        onClick={() => setLoading(true)}
                         style={{ cursor: "pointer" }}
                       >
                         <a className="text-link-bd-btom hover-up">Register</a>
@@ -92,7 +86,7 @@ const MobileMenu = (props: Props) => {
                   </div>
                 ) : (
                   <div className="flex-menu-logout-mobile">
-                    <span onClick={() => handleLoading(true)}>
+                    <span onClick={() => setLoading(true)}>
                       <a
                         className="btn btn-default btn-shadow hover-up"
                         onClick={onLogOut}
