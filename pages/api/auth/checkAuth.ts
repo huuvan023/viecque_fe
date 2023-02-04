@@ -1,7 +1,4 @@
-import { AuthError } from "./../../../constants/auth-error";
-import { apiUserAxios } from "@Axios/api-user/api-user";
-import { ENPOINT } from "@Axios/endpoint";
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { AuthError } from "@Constants/auth-error";
 import api from "@Env/index";
 import Cookies from "cookies";
 import type { NextApiRequest, NextApiResponse } from "next";
@@ -31,7 +28,7 @@ export default async function handler(
     redirect: "follow",
   };
 
-  fetch("http://banhmisua.cf/user", requestOptions)
+  fetch(`${api}/user`, requestOptions)
     .then((response) => response.json())
     .then((result) => {
       if (result.error === AuthError.OK) {
