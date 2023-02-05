@@ -9,4 +9,5 @@ export class Routes {
 
   // user
   static contact = "/contact";
+  static userSetting = "/user/user-setting";
 }

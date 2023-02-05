@@ -4,6 +4,7 @@ import * as antd from "antd";
 declare type LiteralUnion<T extends U, U> = T | (U & {});
 interface Props {
   label: string;
+  disabled?: boolean;
   required?: boolean;
   requiredMessage?: string;
   placeholder: string;
@@ -54,6 +55,8 @@ export default function AppInput(props: Props) {
           {props.required ? <span style={{ color: "red" }}>*</span> : null}
         </label>
         <antd.Input
+          name={props.name}
+          disabled={props.disabled}
           value={props.value}
           onChange={props.onChange}
           placeholder={props.placeholder}

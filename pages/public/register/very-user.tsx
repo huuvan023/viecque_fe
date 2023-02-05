@@ -7,16 +7,14 @@ import { Form } from "antd";
 import AppInput from "@Component/elements/Input";
 import { useRouter } from "next/router";
 import { VerifyUserModel } from "@Models/index";
-import { apiUserAxios } from "@Axios/user/api-user";
+import { apiCreateUserAxios } from "@Axios/user/api-create-user";
 import { openNotification } from "@Utils/notification";
 import { GetServerSidePropsContext } from "next";
 import { parserTokenByCookie } from "@Utils/perserCookie";
 import { useLoading } from "@Hooks/use-loading";
+import NoAuthentication from "@Component/auth/NoAuth";
 
-interface Props {
-  token: string;
-}
-const Register = ({ token }: Props) => {
+const Register = () => {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [isResendCode, setIsResendCode] = useState(true);
@@ -50,7 +48,7 @@ const Register = ({ token }: Props) => {
 
   const onVeryEmail = async (dataVeryUesr: VerifyUserModel) => {
     try {
-      const response = await apiUserAxios.veryUser(dataVeryUesr);
+      const response = await apiCreateUserAxios.veryUser(dataVeryUesr);
       const data = await response.data;
       openNotification(
         "success",
@@ -81,7 +79,7 @@ const Register = ({ token }: Props) => {
   const onResendVeryCode = async () => {
     if (isResendCode) {
       try {
-        const response = await apiUserAxios.resendVerifyCode(email);
+        const response = await apiCreateUserAxios.resendVerifyCode(email);
         const data = await response.data;
         openNotification(
           "success",
@@ -97,7 +95,7 @@ const Register = ({ token }: Props) => {
   };
 
   return (
-    <>
+    <NoAuthentication>
       <Layout>
         <section className="pt-100 login-register">
           <div className="container">
@@ -136,7 +134,9 @@ const Register = ({ token }: Props) => {
                     <div className="box-resendCode">
                       <a
                         className="resendCode"
-                        style={{ cursor: !isResendCode ? "not-allowed" : "allowed" }}
+                        style={{
+                          cursor: !isResendCode ? "not-allowed" : "allowed",
+                        }}
                         onClick={onResendVeryCode}
                       >
                         Gửi lại mã xác nhận
@@ -182,20 +182,8 @@ const Register = ({ token }: Props) => {
           </div>
         </section>
       </Layout>
-    </>
+    </NoAuthentication>
   );
 };
 
 export default Register;
-
-export async function getServerSideProps(
-  context: GetServerSidePropsContext
-): Promise<{ props: Props }> {
-  const token = parserTokenByCookie(context.req?.headers?.cookie!);
-
-  return {
-    props: {
-      token,
-    },
-  };
-}

@@ -3,8 +3,11 @@ import useSwr from "swr";
 import * as swr__internal from "swr/_internal";
 import { authClient } from "@Axios/auth-client-axios";
 import { ENPOINT } from "@Axios/endpoint";
+import { Routes } from "@Routes/routes";
+import { useRouter } from "next/router";
 
 export function useAuth(option?: Partial<swr__internal.PublicConfiguration>) {
+  const router = useRouter();
   const { data, error, mutate } = useSwr(ENPOINT.checkAuth, {
     dedupingInterval: 1000, // 1s reload data
     revalidateOnFocus: true,

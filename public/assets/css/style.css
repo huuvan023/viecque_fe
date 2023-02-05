@@ -5653,6 +5653,41 @@ ul li:last-child .card-list-4 {
   border-radius: 0px 10px 10px 0px;
 }
 
+.user-profile-screen .list-number-phone {
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+}
+.user-profile-screen .list-add-btn {
+  width: 100%;
+  border-color: darkblue;
+}
+.user-profile-screen .list-number-phone-item {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 17px;
+  font-weight: 600;
+}
+.user-profile-screen .text-right {
+  text-align: end;
+}
+.user-profile-screen .text-center {
+  text-align: center;
+}
+.user-profile-screen .btn-edit-brands {
+  border: none;
+  background: none;
+  font-weight: 500;
+  color: #3c65f5;
+  border-radius: 10px;
+}
+.user-profile-screen .btn-edit-brands:hover {
+  color: white;
+  background-color: rgb(182, 182, 182);
+}
+
 /*page about*/
 .page-about {
   background-position: 0 5%;

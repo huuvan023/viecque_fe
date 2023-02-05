@@ -12,7 +12,7 @@ export interface MenuRoutes {
 }
 export const menuRoutes: MenuRoutes[] = [
   {
-    label: "Trang chủ",
+    label: "Tìm việc làm",
     path: Routes.home,
     routesType: RoutesConst.public,
   },

@@ -4,29 +4,20 @@ import ImageAssets from "@Component/elements/ImageAssets";
 import { Form } from "antd";
 import AppInput from "@Component/elements/Input";
 import { useRouter } from "next/router";
-import { apiUserAxios } from "@Axios/user/api-user";
+import { apiCreateUserAxios } from "@Axios/user/api-create-user";
 import { openNotification } from "@Utils/notification";
 import { Routes } from "@Routes/routes";
 import { useLoading } from "@Hooks/use-loading";
-import { GetServerSidePropsContext } from "next";
-import { parserTokenByCookie } from "@Utils/perserCookie";
-interface Props {
-  token: string;
-}
-const ResetPassword = ({ token }: Props) => {
+import NoAuthentication from "@Component/auth/NoAuth";
+
+const ResetPassword = () => {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const { setLoading } = useLoading();
 
   useEffect(() => {
-    if (!token) {
-      setEmail((router.query.email as string) || "");
-      setLoading(false);
-      return;
-    }
-    router.push({
-      pathname: Routes.home,
-    });
+    setEmail((router.query.email as string) || "");
+    setLoading(false);
   }, [router]);
 
   const onFinish = () => {
@@ -35,7 +26,7 @@ const ResetPassword = ({ token }: Props) => {
   };
   const onResetPassword = async () => {
     try {
-      const response = await apiUserAxios.resetPassword(email);
+      const response = await apiCreateUserAxios.resetPassword(email);
       const data = response.data;
 
       openNotification(
@@ -60,7 +51,7 @@ const ResetPassword = ({ token }: Props) => {
   };
 
   return (
-    <>
+    <NoAuthentication>
       <Layout>
         <section className="pt-100 login-register">
           <div className="container">
@@ -117,20 +108,8 @@ const ResetPassword = ({ token }: Props) => {
           </div>
         </section>
       </Layout>
-    </>
+    </NoAuthentication>
   );
 };
 
 export default ResetPassword;
-
-export async function getServerSideProps(
-  context: GetServerSidePropsContext
-): Promise<{ props: Props }> {
-  const token = parserTokenByCookie(context.req?.headers?.cookie!);
-
-  return {
-    props: {
-      token,
-    },
-  };
-}

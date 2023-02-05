@@ -3,7 +3,7 @@ import axiosClient from "@Axios/axios";
 import { ENPOINT } from "@Axios/endpoint";
 import { AxiosResponse } from "axios";
 
-export const apiUserAxios = {
+export const apiCreateUserAxios = {
   register(data: RegisterModel): Promise<AxiosResponse<ResponseModel<null>>> {
     return axiosClient.post(ENPOINT.registor, data);
   },

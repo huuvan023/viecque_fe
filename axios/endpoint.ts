@@ -4,9 +4,12 @@ export const ENPOINT = {
   logout: "/auth/logout",
   checkAuth: "/auth/checkAuth",
 
-  // user
+  // create user
   registor: "public/register",
   verify: "public/verify-user",
   resend_verify_code: "public/resend-verify-code",
   reset_password: "public/forgot-password",
+
+  // user profile
+  user: "/user",
 };

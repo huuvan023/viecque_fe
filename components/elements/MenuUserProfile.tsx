@@ -24,7 +24,14 @@ export default function MenuUserProfile({}: Props) {
       setLoading(true);
     });
   }
-  async function onSettingUser() {}
+  async function onSettingUser() {
+    if (Routes.userSetting === router.pathname) {
+      return;
+    }
+
+    router.push(Routes.userSetting);
+    setLoading(true);
+  }
 
   async function onContact() {
     if (Routes.contact === router.pathname) {

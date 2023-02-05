@@ -10,25 +10,17 @@ import { RegisterModel } from "@Models/index";
 import { GetServerSidePropsContext } from "next";
 import { useLoading } from "@Hooks/use-loading";
 import { parserTokenByCookie } from "@Utils/perserCookie";
-import { apiUserAxios } from "@Axios/user/api-user";
+import { apiCreateUserAxios } from "@Axios/user/api-create-user";
+import NoAuthentication from "@Component/auth/NoAuth";
 
-interface Props {
-  token: string;
-}
-const Register = ({ token }: Props) => {
+const Register = () => {
   const { setLoading } = useLoading();
   const [messageErr, setMessageErr] = useState("");
   const [checkbox, setCheckbox] = useState(false);
   const [checkboxMessage, setCheckboxMessage] = useState("");
   const router = useRouter();
   useEffect(() => {
-    if (!token) {
-      setLoading(false);
-      return;
-    }
-    router.push({
-      pathname: Routes.home,
-    });
+    setLoading(false);
   }, []);
 
   const onFinish = (data: RegisterModel) => {
@@ -42,7 +34,7 @@ const Register = ({ token }: Props) => {
   async function handleRegister(register: RegisterModel) {
     try {
       console.log(register);
-      const response = await apiUserAxios.register(register);
+      const response = await apiCreateUserAxios.register(register);
       const data = await response.data;
       setMessageErr("");
       router.push({
@@ -62,7 +54,7 @@ const Register = ({ token }: Props) => {
   };
 
   return (
-    <>
+    <NoAuthentication>
       <Layout>
         <section className="pt-100 login-register">
           <div className="container">
@@ -164,19 +156,7 @@ const Register = ({ token }: Props) => {
           </div>
         </section>
       </Layout>
-    </>
+    </NoAuthentication>
   );
 };
 export default Register;
-
-export async function getServerSideProps(
-  context: GetServerSidePropsContext
-): Promise<{ props: Props }> {
-  const token = parserTokenByCookie(context.req?.headers?.cookie!);
-
-  return {
-    props: {
-      token,
-    },
-  };
-}
