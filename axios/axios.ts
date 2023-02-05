@@ -1,8 +1,7 @@
-import env from "@Env/index";
 import axios from "axios";
 
 const AxiosClient = axios.create({
-  baseURL: env,
+  baseURL: "/api",
   headers: {
     "Content-Type": "application/json",
   },

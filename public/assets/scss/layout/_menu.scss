@@ -1,0 +1,41 @@
+.avatar-menu {
+  height: 50px;
+  width: 50px;
+  background-color: #c1c1c1;
+  display: flex;
+  border-radius: 9px;
+  justify-content: center;
+  align-items: center;
+}
+.button-logout {
+  justify-content: start;
+  align-items: center;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  background-color: #3c65f5;
+  color: #fff;
+  margin-top: 5px;
+
+  a {
+    margin-left: 10px;
+    color: #fff;
+  }
+}
+.button-menu {
+  justify-content: start;
+  align-items: center;
+  padding: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  border-top: 1px solid #bdbdbd;
+  a {
+    margin-left: 10px;
+  }
+}
+.profile-mobile-menu {
+  margin-top: 20px;
+  border-top: 1px solid;
+  padding-top: 14px;
+}

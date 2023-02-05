@@ -3,7 +3,6 @@ import api from "@Env/index";
 import Cookies from "cookies";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { RequestInit } from "next/dist/server/web/spec-extension/request";
-import axios from "axios";
 
 export default async function handler(
   req: NextApiRequest,
@@ -28,7 +27,7 @@ export default async function handler(
     redirect: "follow",
   };
 
-  fetch(`${api}/user`, requestOptions)
+  await fetch(`${api}/user`, requestOptions)
     .then((response) => response.json())
     .then((result) => {
       if (result.error === AuthError.OK) {

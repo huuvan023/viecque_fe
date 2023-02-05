@@ -1,0 +1,39 @@
+.home-screen {
+  .size-box-width {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  .size-box-height {
+    height: 10px;
+  }
+  .save-box {
+    position: absolute;
+    right: 17px;
+    padding: 2px 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    border: 1px solid #c1c1c1;
+    cursor: pointer;
+    span {
+      font-weight: 500;
+      color: #6741ff;
+      font-size: 12px;
+    }
+    .save-icon {
+      width: 15px;
+      height: 15px;
+      margin-right: 10px;
+    }
+    &:hover {
+      background-color: #fffaf2;
+    }
+  }
+  .search-input {
+    border-radius: 10px 0px 0px 10px;
+  }
+  .search-button {
+    border-radius: 0px 10px 10px 0px;
+  }
+}

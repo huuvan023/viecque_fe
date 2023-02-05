@@ -53,7 +53,8 @@ TABLE CONTENT
 'layout/sidebar',
 'layout/footer',
 'layout/spacing',
-'layout/body';
+'layout/body',
+'layout/home_screen';
 // Page-specific styles
 @import 'pages/pages',
 'pages/blog',
@@ -72,6 +73,6 @@ TABLE CONTENT
 'pages/homepage5',
 'pages/homepage6';
 // Responsive
-@import 'layout/responsive';
+@import 'layout/responsive', 'layout/menu'
 
 

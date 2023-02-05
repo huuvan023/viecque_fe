@@ -3,7 +3,6 @@ import { useLoading } from "@Hooks/use-loading";
 import React, { useEffect } from "react";
 import Link from "next/link";
 import ImageAssets from "@Component/elements/ImageAssets";
-import SearchBox from "@Component/Layout/searchBox";
 export default function Home() {
   const { setLoading } = useLoading();
   useEffect(() => {
@@ -14,7 +13,7 @@ export default function Home() {
     <>
       <Layout>
         <div className="container home-screen">
-          <SearchBox />
+          {/* <SearchHomeScreen /> */}
           <div style={{ height: "20px" }}></div>
           <div className="row">
             <div className="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">

@@ -16,9 +16,4 @@ export const menuRoutes: MenuRoutes[] = [
     path: Routes.home,
     routesType: RoutesConst.public,
   },
-  {
-    label: "Trang Private",
-    path: Routes.test,
-    routesType: RoutesConst.private,
-  },
 ];
