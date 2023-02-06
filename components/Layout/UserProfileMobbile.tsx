@@ -13,15 +13,10 @@ type Props = {
 };
 
 export default function UserProfileMobile({ isAuth = false }: Props) {
-  const { logout, profile } = useAuth();
+  const { profile } = useAuth();
   const router = useRouter();
   const [state, dispatch] = useContext(GlobalStateContext);
 
-  async function onLogOut() {
-    logout(() => {
-      router.push(Routes.login);
-    });
-  }
   const handleLoading = (isLoading: boolean) => {
     dispatch({
       type: SET_LOADING,

@@ -22,9 +22,13 @@ export function useAuth(option?: Partial<swr__internal.PublicConfiguration>) {
   const firstLoading = data === undefined && error === undefined;
 
   async function login(user: LoginModel, callback: Function) {
-    const response = await authClient.login(user);
-    await mutate();
-    callback(response);
+    try {
+      const response = await authClient.login(user);
+      await mutate();
+      callback(response);
+    } catch (error) {
+      callback(error);
+    }
   }
 
   async function logout(callback: Function) {
