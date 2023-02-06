@@ -58,7 +58,6 @@ export default function UserInfo() {
         "Thành công",
         "Cập nhật thông tin tài khoản thành công"
       );
-      setLoading(false);
       router.push(Routes.home);
     } catch (error: any) {
       const message = error.response.data.message;
