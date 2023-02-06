@@ -51,6 +51,7 @@ const UserBrands = () => {
           <List.Item
             actions={[
               <button
+                key={Math.floor(Math.random() * 1000000)}
                 className="btn-edit-brands"
                 onClick={() => {
                   onEdit(item!);
