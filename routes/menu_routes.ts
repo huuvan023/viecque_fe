@@ -12,13 +12,8 @@ export interface MenuRoutes {
 }
 export const menuRoutes: MenuRoutes[] = [
   {
-    label: "Trang chủ",
+    label: "Tìm việc làm",
     path: Routes.home,
     routesType: RoutesConst.public,
-  },
-  {
-    label: "Trang Private",
-    path: Routes.test,
-    routesType: RoutesConst.private,
   },
 ];

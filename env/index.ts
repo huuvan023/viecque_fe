@@ -1,6 +1,6 @@
 import { hostDev } from "./dev.env";
 import { hostProd } from "./dev.env";
 
-const api = hostProd;
+const env = hostProd;
 
-export default api;
+export default env;

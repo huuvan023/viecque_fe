@@ -1,4 +1,4 @@
-import { LoginModel, RegisterModel } from "@Models/index";
+import { LoginModel } from "@Models/index";
 import axiosClient from "./axios";
 import { ENPOINT } from "./endpoint";
 

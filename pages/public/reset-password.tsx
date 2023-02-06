@@ -1,29 +1,32 @@
 import React, { useEffect, useState } from "react";
 import Layout from "@Component/Layout/Layout";
 import ImageAssets from "@Component/elements/ImageAssets";
-import Auth from "@Component/Layout/Auth";
 import { Form } from "antd";
 import AppInput from "@Component/elements/Input";
 import { useRouter } from "next/router";
-import { apiUserAxios } from "@Axios/api-user/api-user";
+import { apiCreateUserAxios } from "@Axios/user/api-create-user";
 import { openNotification } from "@Utils/notification";
 import { Routes } from "@Routes/routes";
+import { useLoading } from "@Hooks/use-loading";
+import NoAuthentication from "@Component/auth/NoAuth";
 
 const ResetPassword = () => {
-  const [isLoading, setisLoading] = useState(false);
   const router = useRouter();
   const [email, setEmail] = useState("");
+  const { setLoading } = useLoading();
+
   useEffect(() => {
     setEmail((router.query.email as string) || "");
+    setLoading(false);
   }, [router]);
 
   const onFinish = () => {
-    setisLoading(true);
+    setLoading(true);
     onResetPassword();
   };
   const onResetPassword = async () => {
     try {
-      const response = await apiUserAxios.resetPassword(email);
+      const response = await apiCreateUserAxios.resetPassword(email);
       const data = response.data;
 
       openNotification(
@@ -40,7 +43,7 @@ const ResetPassword = () => {
     } catch (error: any) {
       const message = error.response.data.message;
       openNotification("error", "Thất bại", message);
-      setisLoading(false);
+      setLoading(false);
     }
   };
   const onFinishFailed = (errorInfo: any) => {
@@ -48,8 +51,8 @@ const ResetPassword = () => {
   };
 
   return (
-    <Auth>
-      <Layout isLoading={isLoading}>
+    <NoAuthentication>
+      <Layout>
         <section className="pt-100 login-register">
           <div className="container">
             <div className="row login-register-cover">
@@ -105,7 +108,7 @@ const ResetPassword = () => {
           </div>
         </section>
       </Layout>
-    </Auth>
+    </NoAuthentication>
   );
 };
 

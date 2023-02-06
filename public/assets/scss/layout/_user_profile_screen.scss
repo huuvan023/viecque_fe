@@ -1,0 +1,36 @@
+.user-profile-screen {
+  .list-number-phone {
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+  }
+  .list-add-btn {
+    width: 100%;
+    border-color: darkblue;
+  }
+  .list-number-phone-item {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 17px;
+    font-weight: 600;
+  }
+  .text-right {
+    text-align: end;
+  }
+  .text-center {
+    text-align: center;
+  }
+  .btn-edit-brands {
+    border: none;
+    background: none;
+    font-weight: 500;
+    color: #3c65f5;
+    border-radius: 10px;
+    &:hover {
+      color: white;
+      background-color: rgb(182, 182, 182);
+    }
+  }
+}

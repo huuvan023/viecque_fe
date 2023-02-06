@@ -2009,7 +2009,7 @@ label {
 .card-grid-2 .card-block-info {
   display: inline-block;
   width: 100%;
-  padding: 5px 10px 20px 10px;
+  padding: 5px 10px 10px 10px;
 }
 .card-grid-2 .card-block-info .card-2-img-text {
   display: inline-block;
@@ -2123,7 +2123,7 @@ label {
   background: url(../imgs/template/icons/flash.svg) no-repeat 0px 0px;
 }
 .card-grid-2 .card-grid-2-image-left {
-  padding: 30px 20px 15px 20px;
+  padding: 10px 10px 0px 10px;
   display: flex;
   position: relative;
 }
@@ -3347,7 +3347,7 @@ ul li:last-child .card-list-4 {
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 999;
+  z-index: 990;
   left: 0;
   -webkit-transition: all 0.3s ease 0s;
   transition: all 0.3s ease 0s;
@@ -3376,13 +3376,18 @@ ul li:last-child .card-list-4 {
 .header-brand-2 .main-menu > li > a:hover {
   color: #ffffff;
 }
-.header-brand-2 .main-menu > li > a:hover::before, .header-brand-2 .main-menu > li > a .active::before {
+.header-brand-2 .main-menu > li > a:hover::before,
+.header-brand-2 .main-menu > li > a .active::before {
   background-color: #ffffff;
 }
-.header-brand-2 .main-menu li a, .header-brand-2 .main-menu li a.active {
+.header-brand-2 .main-menu li a,
+.header-brand-2 .main-menu li a.active {
   color: #ffffff;
 }
-.header-brand-2 .main-menu li a:hover::before, .header-brand-2 .main-menu li a .active::before, .header-brand-2 .main-menu li a.active:hover::before, .header-brand-2 .main-menu li a.active .active::before {
+.header-brand-2 .main-menu li a:hover::before,
+.header-brand-2 .main-menu li a .active::before,
+.header-brand-2 .main-menu li a.active:hover::before,
+.header-brand-2 .main-menu li a.active .active::before {
   background-color: #ffffff;
 }
 .header-brand-2 .main-menu li a {
@@ -3422,7 +3427,6 @@ ul li:last-child .card-list-4 {
 }
 
 .perfect-scroll {
-  height: 100vh;
   width: 300px;
   position: relative;
 }
@@ -3681,7 +3685,6 @@ ul li:last-child .card-list-4 {
   top: 7px;
   right: 15px;
   display: none;
-  z-index: 999999;
 }
 .burger-icon > span {
   display: block;
@@ -5601,6 +5604,90 @@ ul li:last-child .card-list-4 {
   align-items: center;
 }
 
+.icon-close-menu-mobile {
+  text-align: end;
+}
+.icon-close-menu-mobile button {
+  margin: 11px;
+  border: none;
+  background: none;
+  font-size: 28px;
+  color: #4f5e64;
+}
+
+.home-screen .size-box-width {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.home-screen .size-box-height {
+  height: 10px;
+}
+.home-screen .save-box {
+  position: absolute;
+  right: 17px;
+  padding: 2px 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+  border: 1px solid #c1c1c1;
+  cursor: pointer;
+}
+.home-screen .save-box span {
+  font-weight: 500;
+  color: #6741ff;
+  font-size: 12px;
+}
+.home-screen .save-box .save-icon {
+  width: 15px;
+  height: 15px;
+  margin-right: 10px;
+}
+.home-screen .save-box:hover {
+  background-color: #fffaf2;
+}
+.home-screen .search-input {
+  border-radius: 10px 0px 0px 10px;
+}
+.home-screen .search-button {
+  border-radius: 0px 10px 10px 0px;
+}
+
+.user-profile-screen .list-number-phone {
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+}
+.user-profile-screen .list-add-btn {
+  width: 100%;
+  border-color: darkblue;
+}
+.user-profile-screen .list-number-phone-item {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 17px;
+  font-weight: 600;
+}
+.user-profile-screen .text-right {
+  text-align: end;
+}
+.user-profile-screen .text-center {
+  text-align: center;
+}
+.user-profile-screen .btn-edit-brands {
+  border: none;
+  background: none;
+  font-weight: 500;
+  color: #3c65f5;
+  border-radius: 10px;
+}
+.user-profile-screen .btn-edit-brands:hover {
+  color: white;
+  background-color: rgb(182, 182, 182);
+}
+
 /*page about*/
 .page-about {
   background-position: 0 5%;
@@ -6798,6 +6885,7 @@ ul li:last-child .card-list-4 {
 
 .paginations {
   margin: 20px 0px 50px 0px;
+  text-align: center;
 }
 .paginations .pager {
   padding: 0px;
@@ -7047,7 +7135,7 @@ ul li:last-child .card-list-4 {
 }
 
 .content-page .card-grid-2 .card-block-info {
-  padding: 0px 20px 30px 20px;
+  padding: 0px 20px 10px 20px;
   position: relative;
 }
 .content-page .card-grid-2 .card-block-info .btn-dots-abs-right {
@@ -8503,6 +8591,49 @@ ul li:last-child .card-list-4 {
   .header-right {
     display: none;
   }
+}
+.avatar-menu {
+  height: 50px;
+  width: 50px;
+  background-color: #c1c1c1;
+  display: flex;
+  border-radius: 9px;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-logout {
+  justify-content: start;
+  align-items: center;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  background-color: #3c65f5;
+  color: #fff;
+  margin-top: 5px;
+}
+.button-logout a {
+  margin-left: 10px;
+  color: #fff;
+}
+
+.button-menu {
+  justify-content: start;
+  align-items: center;
+  padding: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  border-top: 1px solid #bdbdbd;
+}
+.button-menu a {
+  margin-left: 10px;
+}
+
+.profile-mobile-menu {
+  margin-top: 20px;
+  border-top: 1px solid;
+  padding-top: 14px;
 }
 
 /*# sourceMappingURL=style.css.map */

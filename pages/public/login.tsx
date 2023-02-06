@@ -3,26 +3,27 @@ import Link from "next/link";
 import Layout from "@Component/Layout/Layout";
 import ImageAssets from "@Component/elements/ImageAssets";
 import { Form } from "antd";
-import { LoginModel } from "@Models/login.model";
+import { LoginModel } from "@Models/auth-model/login.model";
 import { useRouter } from "next/router";
 import { Routes } from "@Routes/routes";
-import { useAuth } from "hooks/use-auth";
-import Auth from "@Component/Layout/Auth";
+import { useAuth } from "@Hooks/use-auth";
 import AppInput from "@Component/elements/Input";
+import { useLoading } from "@Hooks/use-loading";
+import NoAuthentication from "@Component/auth/NoAuth";
 
 const Singin = () => {
   const { login } = useAuth();
+  const { setLoading } = useLoading();
   const [loginError, setLoginError] = useState(false);
   const router = useRouter();
-  const [isLoading, seIsLoading] = useState(false);
   const [email, setEmail] = useState("");
 
   useEffect(() => {
     setEmail((router.query.email as string) || "");
+    setLoading(false);
   }, [router]);
 
   const onFinish = (dataLogin: LoginModel) => {
-    seIsLoading(true);
     handleLogin({ ...dataLogin, username: email });
   };
 
@@ -32,19 +33,16 @@ const Singin = () => {
 
   async function handleLogin({ username, password }: LoginModel) {
     login({ username, password }, (response: any) => {
-      seIsLoading(true);
       if (response.data.success) {
         router.push({
           pathname: Routes.home,
         });
       } else {
         setLoginError(true);
-        seIsLoading(false);
       }
     });
   }
   const onForgotPassword = () => {
-    seIsLoading(true);
     router.push({
       pathname: Routes.resetPassword,
       query: email
@@ -55,8 +53,8 @@ const Singin = () => {
     });
   };
   return (
-    <Auth>
-      <Layout isLoading={isLoading}>
+    <NoAuthentication>
+      <Layout>
         <section className="pt-100 login-register">
           <div className="container">
             <div className="row login-register-cover">
@@ -141,7 +139,7 @@ const Singin = () => {
           </div>
         </section>
       </Layout>
-    </Auth>
+    </NoAuthentication>
   );
 };
 

@@ -1,32 +1,40 @@
-import Auth from "@Component/Layout/Auth";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ImageAssets from "@Component/elements/ImageAssets";
 import Layout from "@Component/Layout/Layout";
 import { Routes } from "@Routes/index";
 import { Form, Input } from "antd";
 import AppInput from "@Component/elements/Input";
-import { RegisterModel } from "@Models/register.model";
-import { apiUserAxios } from "@Axios/api-user/api-user";
 import { useRouter } from "next/router";
+import { RegisterModel } from "@Models/index";
+import { GetServerSidePropsContext } from "next";
+import { useLoading } from "@Hooks/use-loading";
+import { parserTokenByCookie } from "@Utils/perserCookie";
+import { apiCreateUserAxios } from "@Axios/user/api-create-user";
+import NoAuthentication from "@Component/auth/NoAuth";
 
 const Register = () => {
-  const [isLoading, setisLoading] = useState(false);
+  const { setLoading } = useLoading();
   const [messageErr, setMessageErr] = useState("");
   const [checkbox, setCheckbox] = useState(false);
   const [checkboxMessage, setCheckboxMessage] = useState("");
   const router = useRouter();
+  useEffect(() => {
+    setLoading(false);
+  }, []);
+
   const onFinish = (data: RegisterModel) => {
     if (checkbox) {
-      setisLoading(true);
       handleRegister(data);
+      setLoading(true);
     } else {
       setCheckboxMessage("Vui lòng chấp nhận điều khoản và dịch vụ");
     }
   };
   async function handleRegister(register: RegisterModel) {
     try {
-      const response = await apiUserAxios.register(register);
+      console.log(register);
+      const response = await apiCreateUserAxios.register(register);
       const data = await response.data;
       setMessageErr("");
       router.push({
@@ -35,10 +43,10 @@ const Register = () => {
           email: register.username,
         },
       });
-      // setisLoading(false);
+      setLoading(false);
     } catch (error: any) {
       setMessageErr(error.response.data.message);
-      setisLoading(false);
+      setLoading(false);
     }
   }
   const onFinishFailed = (errorInfo: any) => {
@@ -46,8 +54,8 @@ const Register = () => {
   };
 
   return (
-    <Auth>
-      <Layout isLoading={isLoading}>
+    <NoAuthentication>
+      <Layout>
         <section className="pt-100 login-register">
           <div className="container">
             <div className="row login-register-cover">
@@ -148,8 +156,7 @@ const Register = () => {
           </div>
         </section>
       </Layout>
-    </Auth>
+    </NoAuthentication>
   );
 };
-
 export default Register;

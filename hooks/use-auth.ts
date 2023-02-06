@@ -1,11 +1,14 @@
-import { authClient } from "./../axios/auth-client-axios";
-import { LoginModel, UserProfile } from "@Models/index";
-import { ENPOINT } from "@Axios/endpoint";
+import { LoginModel } from "@Models/index";
 import useSwr from "swr";
 import * as swr__internal from "swr/_internal";
+import { authClient } from "@Axios/auth-client-axios";
+import { ENPOINT } from "@Axios/endpoint";
+import { Routes } from "@Routes/routes";
+import { useRouter } from "next/router";
 
 export function useAuth(option?: Partial<swr__internal.PublicConfiguration>) {
-  const { data, error, mutate } = useSwr(ENPOINT.get_user_info, {
+  const router = useRouter();
+  const { data, error, mutate } = useSwr(ENPOINT.checkAuth, {
     dedupingInterval: 1000, // 1s reload data
     revalidateOnFocus: true,
     onError(err) {
@@ -30,7 +33,7 @@ export function useAuth(option?: Partial<swr__internal.PublicConfiguration>) {
     callback();
   }
 
-  const profile: UserProfile | any = data;
+  const profile: any = data;
 
   return {
     profile,

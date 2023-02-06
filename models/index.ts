@@ -1,11 +1,11 @@
-export * from "./create-feeds.model";
-export * from "./login.model";
-export * from "./register.model";
-export * from "./verify-user.model";
-export * from "./get-provinces.model";
-export * from "./get-districts.model";
-export * from "./get-wards.model";
-export * from "./get-user-info.model";
-export * from "./update-user-info.model";
-export * from "./update-user-password.model";
-export * from "./verify-user.model"
+// root
+export * from "./response.model";
+
+//auth-model
+export * from "./auth-model/login.model";
+export * from "./auth-model/register.model";
+export * from "./auth-model/verify-user.model";
+
+//user
+export * from "./user/user-profile.model";
+export * from "./user/brands.model";

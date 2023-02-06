@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import httpProxy from "http-proxy";
 import Cookies from "cookies";
-import api from "@Env/index";
+import env from "@Env/index";
 
 export const config = {
   api: {
@@ -26,7 +26,7 @@ export default function handler(
 
     req.headers.cookie = "";
     proxy.web(req, res, {
-      target: api,
+      target: env,
       changeOrigin: true,
       selfHandleResponse: false,
     });

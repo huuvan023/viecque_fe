@@ -1,4 +1,3 @@
-import Auth from "@Component/Layout/Auth";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import ImageAssets from "@Component/elements/ImageAssets";
@@ -8,17 +7,22 @@ import { Form } from "antd";
 import AppInput from "@Component/elements/Input";
 import { useRouter } from "next/router";
 import { VerifyUserModel } from "@Models/index";
-import { apiUserAxios } from "@Axios/api-user/api-user";
+import { apiCreateUserAxios } from "@Axios/user/api-create-user";
 import { openNotification } from "@Utils/notification";
+import { GetServerSidePropsContext } from "next";
+import { parserTokenByCookie } from "@Utils/perserCookie";
+import { useLoading } from "@Hooks/use-loading";
+import NoAuthentication from "@Component/auth/NoAuth";
+
 const Register = () => {
-  const [isLoading, setisLoading] = useState(false);
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [isResendCode, setIsResendCode] = useState(true);
   const [second, setSecond] = useState(120);
-
+  const { setLoading } = useLoading();
   useEffect(() => {
     setEmail((router.query.email as string) || "");
+    setLoading(false);
   }, [router]);
 
   useEffect(() => {
@@ -38,20 +42,20 @@ const Register = () => {
   }, []);
 
   const onFinish = (data: VerifyUserModel) => {
-    setisLoading(true);
+    setLoading(true);
     onVeryEmail({ ...data, email });
   };
 
   const onVeryEmail = async (dataVeryUesr: VerifyUserModel) => {
     try {
-      const response = await apiUserAxios.veryUser(dataVeryUesr);
+      const response = await apiCreateUserAxios.veryUser(dataVeryUesr);
       const data = await response.data;
       openNotification(
         "success",
         "Thành công",
         "Xác nhận tài khoản thành công!"
       );
-      setisLoading(false);
+      setLoading(false);
       router.push({
         pathname: Routes.login,
         query: {
@@ -64,7 +68,7 @@ const Register = () => {
         "Thất bại",
         "Thất bại, vui lòng kiểm tra lại email!"
       );
-      setisLoading(false);
+      setLoading(false);
     }
   };
 
@@ -75,7 +79,7 @@ const Register = () => {
   const onResendVeryCode = async () => {
     if (isResendCode) {
       try {
-        const response = await apiUserAxios.resendVerifyCode(email);
+        const response = await apiCreateUserAxios.resendVerifyCode(email);
         const data = await response.data;
         openNotification(
           "success",
@@ -91,8 +95,8 @@ const Register = () => {
   };
 
   return (
-    <Auth>
-      <Layout isLoading={isLoading}>
+    <NoAuthentication>
+      <Layout>
         <section className="pt-100 login-register">
           <div className="container">
             <div className="row login-register-cover">
@@ -130,7 +134,9 @@ const Register = () => {
                     <div className="box-resendCode">
                       <a
                         className="resendCode"
-                        style={{ cursor: !isResendCode ? "not-allowed" : "" }}
+                        style={{
+                          cursor: !isResendCode ? "not-allowed" : "allowed",
+                        }}
                         onClick={onResendVeryCode}
                       >
                         Gửi lại mã xác nhận
@@ -176,7 +182,7 @@ const Register = () => {
           </div>
         </section>
       </Layout>
-    </Auth>
+    </NoAuthentication>
   );
 };
 

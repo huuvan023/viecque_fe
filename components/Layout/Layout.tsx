@@ -3,16 +3,16 @@ import BackToTop from "../elements/BackToTop";
 import Footer from "./Footer";
 import Header from "./Header";
 import MobileMenu from "./MobileMenu";
-import { useAuth } from "hooks/use-auth";
+import { useAuth } from "@Hooks/use-auth";
 import Loading from "@Component/elements/Loading";
 import GlobalStateContext from "@Store/Context";
+import { useLoading } from "@Hooks/use-loading";
 
 interface Props {
   children: React.ReactNode;
-  isLoading?: boolean;
 }
-const Layout = ({ children, isLoading = true }: Props) => {
-  const [store, dispatch] = useContext(GlobalStateContext);
+const Layout = ({ children }: Props) => {
+  const { isLoading } = useLoading();
   const [openClass, setOpenClass] = useState("");
   const { profile, firstLoading } = useAuth();
   const handleOpen = () => {
@@ -26,12 +26,11 @@ const Layout = ({ children, isLoading = true }: Props) => {
     }
     document.body.classList.remove("mobile-menu-active");
   };
-  if (firstLoading) {
-    return <Loading />;
-  }
+
   return (
     <>
-      {isLoading ? <>{store.isLoading ? <Loading /> : null}</> : null}
+      {isLoading ? <Loading /> : null}
+      {firstLoading ? <Loading /> : null}
       <div className="body-overlay-1" onClick={handleRemove} />
       <Header
         handleOpen={handleOpen}
@@ -39,7 +38,12 @@ const Layout = ({ children, isLoading = true }: Props) => {
         openClass={openClass}
         isAuth={profile?.data ? true : false}
       />
-      <MobileMenu openClass={openClass} isAuth={profile?.data ? true : false} />
+      <MobileMenu
+        handleOpen={handleOpen}
+        handleRemove={handleRemove}
+        openClass={openClass}
+        isAuth={profile?.data ? true : false}
+      />
       <main className="main">{children}</main>
       <Footer />
       <BackToTop />

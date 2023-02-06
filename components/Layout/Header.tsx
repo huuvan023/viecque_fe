@@ -4,10 +4,11 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Logo from "./Logo";
 import { menuRoutes, Routes } from "routes/index";
-import { useAuth } from "hooks/use-auth";
+import { useAuth } from "@Hooks/use-auth";
 import { RoutesConst } from "@Constants/routes-const";
 import GlobalStateContext from "@Store/Context";
 import { SET_LOADING } from "@Store/constants";
+import UserProfileDesktop from "./UserProfileDesktop";
 
 interface Props {
   openClass: string;
@@ -17,7 +18,21 @@ interface Props {
 }
 const Header = ({ handleOpen, handleRemove, openClass, isAuth }: Props) => {
   const router = useRouter();
+  const { logout, profile } = useAuth();
   const [state, dispatch] = useContext(GlobalStateContext);
+  const [scroll, setScroll] = useState(0);
+  const { pathname } = router;
+
+  useEffect(() => {
+    document.addEventListener("scroll", scrollEvent);
+  });
+
+  async function onLogOut() {
+    logout(() => {
+      router.push(Routes.login);
+    });
+  }
+
   const handleLoading = (isLoading: boolean) => {
     dispatch({
       type: SET_LOADING,
@@ -25,23 +40,12 @@ const Header = ({ handleOpen, handleRemove, openClass, isAuth }: Props) => {
     });
   };
 
-  const { pathname } = router;
-  const [scroll, setScroll] = useState(0);
-  const { logout } = useAuth();
   const scrollEvent = () => {
     const scrollCheck = window.scrollY;
     if (scrollCheck !== scroll) {
       setScroll(scrollCheck);
     }
   };
-  async function onLogOut() {
-    logout(() => {
-      router.push(Routes.login);
-    });
-  }
-  useEffect(() => {
-    document.addEventListener("scroll", scrollEvent);
-  });
 
   return (
     <>
@@ -158,27 +162,22 @@ const Header = ({ handleOpen, handleRemove, openClass, isAuth }: Props) => {
                         onClick={() => handleLoading(true)}
                         style={{ cursor: "pointer" }}
                       >
-                        <a className="text-link-bd-btom hover-up">Register</a>
+                        <a className="text-link-bd-btom hover-up">Đăng ký</a>
                       </span>
                     </Link>
 
                     <Link legacyBehavior href={Routes.login}>
                       <span onClick={() => handleLoading(true)}>
                         <a className="btn btn-default btn-shadow ml-40 hover-up">
-                          Sign in
+                          Đăng nhập
                         </a>
                       </span>
                     </Link>
                   </>
                 ) : (
-                  <span onClick={() => handleLoading(true)}>
-                    <a
-                      className="btn btn-default btn-shadow ml-40 hover-up"
-                      onClick={onLogOut}
-                    >
-                      Logout
-                    </a>
-                  </span>
+                  <div className="d-flex justify-content-end">
+                    <UserProfileDesktop />
+                  </div>
                 )}
               </div>
             </div>

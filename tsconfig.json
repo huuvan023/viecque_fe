@@ -24,7 +24,8 @@
       "@Utils/*": ["./utils/*"],
       "@Routes/*": ["./routes/*"],
       "@Env/*": ["./env/*"],
-      "@Store/*": ["./store/*"]
+      "@Store/*": ["./store/*"],
+      "@Hooks/*": ["./hooks/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
