@@ -28,7 +28,6 @@ export default function UserProfileMobile({ isAuth = false }: Props) {
       data: isLoading,
     });
   };
-
   return (
     <>
       {isAuth ? (
@@ -46,22 +45,28 @@ export default function UserProfileMobile({ isAuth = false }: Props) {
         <div className="profile-mobile-menu">
           <div
             className="button-logout d-flex"
-            onClick={() => handleLoading(true)}
+            onClick={() => {
+              if (router.asPath === Routes.login) {
+                return;
+              }
+              handleLoading(true);
+              router.push(Routes.login);
+            }}
           >
-            <Link legacyBehavior href={Routes.login}>
-              <a onClick={onLogOut}>Đăng nhập</a>
-            </Link>
+            <a>Đăng nhập</a>
           </div>
           <div
             style={{ marginTop: "10px" }}
             className="button-menu"
-            onClick={() => handleLoading(true)}
+            onClick={() => {
+              if (router.asPath === Routes.registor) {
+                return;
+              }
+              handleLoading(true);
+              router.push(Routes.registor);
+            }}
           >
-            <Link legacyBehavior href={Routes.registor}>
-              <span onClick={() => handleLoading(true)}>
-                <a>Đăng ký</a>
-              </span>
-            </Link>
+            <a>Đăng ký</a>
           </div>
         </div>
       )}

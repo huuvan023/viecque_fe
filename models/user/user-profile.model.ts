@@ -6,3 +6,12 @@ export interface UserProfileModel {
   fullName: string;
   brands: BrandsModel[];
 }
+
+export interface UpdateUserProfileModel {
+  fullName: string;
+  listPhoneNumbers: string[];
+}
+export interface UpdatePassword {
+  oldPassword: string;
+  newPassword: string;
+}

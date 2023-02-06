@@ -12,4 +12,6 @@ export const ENPOINT = {
 
   // user profile
   user: "/user",
+  // brands
+  brands: "/user/brand",
 };
