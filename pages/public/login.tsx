@@ -33,7 +33,7 @@ const Singin = () => {
 
   async function handleLogin({ username, password }: LoginModel) {
     login({ username, password }, (response: any) => {
-      if (response.data.success) {
+      if (response.data?.success) {
         router.push({
           pathname: Routes.home,
         });
