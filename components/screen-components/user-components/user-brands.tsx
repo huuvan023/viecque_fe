@@ -42,7 +42,7 @@ const UserBrands = () => {
   return (
     <div>
       <List
-        header={<div className="list-number-phone">Danh sách nhãn hiệu</div>}
+        header={<div className="list-number-phone">Danh sách Thương hiệu</div>}
         bordered
         className="demo-loadmore-list mt-4"
         itemLayout="horizontal"
@@ -72,7 +72,7 @@ const UserBrands = () => {
         )}
       />
       <Button className="list-add-btn mt-1" onClick={onAdd}>
-        Thêm nhãn hiệu
+        Thêm Thương hiệu
       </Button>
       <ModifyBrands
         brand={oneBrand}
@@ -154,7 +154,7 @@ const ModifyBrands = ({
           openNotification(
             "success",
             "Thành công",
-            "Thêm nhãn hiệu thành công"
+            "Thêm Thương hiệu thành công"
           );
         }
         onSuccess();
@@ -163,7 +163,7 @@ const ModifyBrands = ({
         openNotification(
           "error",
           "Thất bại",
-          "Thêm nhãn hiệu thất bại, vui lòng kiểm tra lại"
+          "Thêm Thương hiệu thất bại, vui lòng kiểm tra lại"
         );
         resetData();
       }
@@ -202,7 +202,7 @@ const ModifyBrands = ({
 
   return (
     <Modal
-      title={brand ? "Chỉnh sửa nhãn hiệu" : "Thêm nhãn hiệu"}
+      title={brand ? "Chỉnh sửa Thương hiệu" : "Thêm Thương hiệu"}
       open={open}
       onCancel={() => {
         resetData();
@@ -230,21 +230,21 @@ const ModifyBrands = ({
         <AppInput
           required={true}
           name="nameBrands"
-          label="Tên nhãn hiệu"
+          label="Tên Thương hiệu"
           value={name}
-          placeholder="Tên nhãn hiệu"
+          placeholder="Tên Thương hiệu"
           onChange={(event) => {
             setName(event.target.value);
           }}
         />
         <div>
           <label className="form-label" htmlFor="input-1">
-            Thông tin nhãn hiệu <span style={{ color: "red" }}>*</span>
+            Thông tin Thương hiệu <span style={{ color: "red" }}>*</span>
           </label>
           <textarea
             value={description}
             name="description"
-            placeholder="Thông tin nhãn hiệu"
+            placeholder="Thông tin Thương hiệu"
             rows={4}
             cols={50}
             onChange={(event) => {

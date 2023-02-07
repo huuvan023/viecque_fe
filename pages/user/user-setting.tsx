@@ -17,7 +17,7 @@ export default function UserSetting() {
     },
     {
       key: "2",
-      label: `Nhãn hiệu`,
+      label: `Thương hiệu`,
       children: <UserBrands />,
     },
     {

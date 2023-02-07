@@ -9,6 +9,7 @@ import { RoutesConst } from "@Constants/routes-const";
 import GlobalStateContext from "@Store/Context";
 import { SET_LOADING } from "@Store/constants";
 import UserProfileDesktop from "./UserProfileDesktop";
+import { useLoading } from "@Hooks/use-loading";
 
 interface Props {
   openClass: string;
@@ -18,8 +19,8 @@ interface Props {
 }
 const Header = ({ handleOpen, handleRemove, openClass, isAuth }: Props) => {
   const router = useRouter();
-  const { logout, profile } = useAuth();
-  const [state, dispatch] = useContext(GlobalStateContext);
+  const { setLoading } = useLoading();
+  const { logout } = useAuth();
   const [scroll, setScroll] = useState(0);
   const { pathname } = router;
 
@@ -32,13 +33,6 @@ const Header = ({ handleOpen, handleRemove, openClass, isAuth }: Props) => {
       router.push(Routes.login);
     });
   }
-
-  const handleLoading = (isLoading: boolean) => {
-    dispatch({
-      type: SET_LOADING,
-      data: isLoading,
-    });
-  };
 
   const scrollEvent = () => {
     const scrollCheck = window.scrollY;
@@ -81,7 +75,7 @@ const Header = ({ handleOpen, handleRemove, openClass, isAuth }: Props) => {
                             style={{ cursor: "pointer" }}
                             onClick={() => {
                               if (pathname !== item.path) {
-                                handleLoading(true);
+                                setLoading(true);
                               }
                             }}
                           >
@@ -113,7 +107,7 @@ const Header = ({ handleOpen, handleRemove, openClass, isAuth }: Props) => {
                                         style={{ cursor: "pointer" }}
                                         onClick={() => {
                                           if (pathname !== itemChildren.path) {
-                                            handleLoading(true);
+                                            setLoading(true);
                                           }
                                         }}
                                       >
@@ -159,7 +153,7 @@ const Header = ({ handleOpen, handleRemove, openClass, isAuth }: Props) => {
                   <>
                     <Link legacyBehavior href={Routes.registor}>
                       <span
-                        onClick={() => handleLoading(true)}
+                        onClick={() => setLoading(true)}
                         style={{ cursor: "pointer" }}
                       >
                         <a className="text-link-bd-btom hover-up">Đăng ký</a>
@@ -167,7 +161,7 @@ const Header = ({ handleOpen, handleRemove, openClass, isAuth }: Props) => {
                     </Link>
 
                     <Link legacyBehavior href={Routes.login}>
-                      <span onClick={() => handleLoading(true)}>
+                      <span onClick={() => setLoading(true)}>
                         <a className="btn btn-default btn-shadow ml-40 hover-up">
                           Đăng nhập
                         </a>
