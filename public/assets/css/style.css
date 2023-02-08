@@ -2149,6 +2149,68 @@ label {
   color: #A0ABB8;
 }
 
+.card-detail-feed {
+  border-radius: 8px;
+  border: 1px solid #E0E6F7;
+  overflow: hidden;
+  margin-bottom: 24px;
+  position: relative;
+  background: #F8FAFF;
+}
+.card-detail-feed .card-detail-feed-child {
+  padding: 5px 10px;
+  display: flex;
+  position: relative;
+}
+.card-detail-feed .card-detail-feed-child .image-box {
+  min-width: 52px;
+  padding-right: 15px;
+}
+.card-detail-feed .card-detail-feed-child .right-info .name-job {
+  font-size: 18px;
+  line-height: 26px;
+  color: #05264E;
+  font-weight: bold;
+  display: block;
+}
+.card-detail-feed .card-detail-feed-child .right-info .name-job:hover {
+  color: #3C65F5;
+}
+.card-detail-feed .card-detail-feed-child .right-info .location-small {
+  background: url(../imgs/template/icons/location.svg) no-repeat 0px 5px;
+  display: inline-block;
+  padding: 0px 0px 0px 20px;
+  font-size: 12px;
+  color: #A0ABB8;
+}
+.card-detail-feed .card-detail-feed-child .font-bold {
+  font-weight: bold;
+}
+.card-detail-feed .card-detail-feed-child .location-icon {
+  background: url(../imgs/template/icons/location.svg) no-repeat 0px 5px;
+  display: inline-block;
+  padding: 0px 0px 0px 20px;
+  background-size: 15px;
+}
+.card-detail-feed .card-detail-feed-child .email-icon {
+  background: url(../imgs/template/icons/email.svg) no-repeat 0px 5px;
+  background-size: 15px;
+  display: inline-block;
+  padding: 0px 0px 0px 20px;
+}
+.card-detail-feed .card-detail-feed-child .phone-icon {
+  background: url(../imgs/template/icons/phone.svg) no-repeat 0px 5px;
+  background-size: 15px;
+  display: inline-block;
+  padding: 0px 0px 0px 20px;
+}
+.card-detail-feed .card-detail-feed-child .money-icon {
+  background: url(../imgs/template/icons/money-icon.svg) no-repeat 0px 5px;
+  background-size: 15px;
+  display: inline-block;
+  padding: 0px 0px 0px 20px;
+}
+
 .card-bg-white .card-grid-2 {
   background-color: #ffffff;
 }
@@ -2664,7 +2726,7 @@ ul li:last-child .card-list-4 {
   padding: 15px;
   border: 0px;
   min-height: 60px;
-  background-image: url(../imgs/template/email.svg);
+  background-image: url(../imgs/template/icons/email.svg);
   background-repeat: no-repeat;
   background-position: left 17px center;
   padding-left: 60px;
