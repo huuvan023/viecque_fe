@@ -2158,7 +2158,7 @@ label {
   background: #F8FAFF;
 }
 .card-detail-feed .card-detail-feed-child {
-  padding: 5px 10px;
+  padding: 10px 10px 0px 10px;
   display: flex;
   position: relative;
 }
@@ -2209,6 +2209,14 @@ label {
   background-size: 15px;
   display: inline-block;
   padding: 0px 0px 0px 20px;
+}
+.card-detail-feed .name-info {
+  font-size: 18px;
+  line-height: 26px;
+  color: #05264E;
+  font-weight: bold;
+  display: block;
+  padding: 0px 10px;
 }
 
 .card-bg-white .card-grid-2 {
@@ -5677,6 +5685,10 @@ ul li:last-child .card-list-4 {
   color: #4f5e64;
 }
 
+.form-label {
+  font-weight: 700;
+}
+
 .home-screen .size-box-width {
   margin-left: 10px;
   margin-right: 10px;
@@ -5748,6 +5760,44 @@ ul li:last-child .card-list-4 {
 .user-profile-screen .btn-edit-brands:hover {
   color: white;
   background-color: rgb(182, 182, 182);
+}
+.user-profile-screen .box-brand-create-feed {
+  padding: 10px;
+  border: 1px solid #e0e6f7;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.choose-brand {
+  width: 100%;
+  height: 100%;
+  margin-bottom: -6px;
+  padding: 5px 10px;
+}
+
+.is-choose-brand {
+  cursor: pointer;
+}
+.is-choose-brand:hover {
+  background-color: #e7e7e7;
+  border-radius: 10px;
+}
+
+.text-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
+}
+
+.label-brand-create-feed {
+  margin-bottom: 4px;
+  color: rgba(0, 0, 0, 0.88);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.box-size {
+  margin-bottom: 10px;
 }
 
 /*page about*/

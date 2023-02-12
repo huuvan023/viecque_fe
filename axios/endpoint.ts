@@ -14,4 +14,9 @@ export const ENPOINT = {
   user: "/user",
   // brands
   brands: "/user/brand",
+
+  // location
+  provinces: "/public/address/provinces",
+  districts: "/public/address/districts",
+  wards: "/public/address/wards",
 };

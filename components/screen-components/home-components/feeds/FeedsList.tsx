@@ -1,4 +1,5 @@
 import ImageAssets from "@Component/elements/ImageAssets";
+import { Routes } from "@Routes/routes";
 import Link from "next/link";
 
 export default function FeedsList({ data }: { data: any[] }) {
@@ -25,8 +26,10 @@ export default function FeedsList({ data }: { data: any[] }) {
                   <img src="assets/imgs/brands/brand-2.png" alt="jobBox" />
                 </div>
                 <div className="right-info">
-                  <Link legacyBehavior href="/">
-                    <a className="name-job">Nhân viên bán hàng</a>
+                  <Link legacyBehavior href={`${Routes.detail}?id=${index}`}>
+                    <a target="_blank" className="name-job">
+                      Nhân viên bán hàng
+                    </a>
                   </Link>
                   <span className="location-small">Công ty test</span>
                   <span className="size-box-width"></span>

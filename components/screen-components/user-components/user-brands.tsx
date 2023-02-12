@@ -10,7 +10,10 @@ import ImgCrop from "antd-img-crop";
 import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
 import { apiBrandsAxios } from "@Axios/user/api-brands";
 import { apiUserProfileAxios } from "@Axios/user/api-user-profile";
-const UserBrands = () => {
+interface Props {
+  onChooseBrand?: Function;
+}
+const UserBrands = ({ onChooseBrand }: Props) => {
   const [modifyBrands, setModifyBrands] = useState(false);
   const [oneBrand, setOneBrand] = useState<BrandsModel | null>(null);
   const [userProfile, setUserProfile] = useState<UserProfileModel | null>(null);
@@ -44,30 +47,45 @@ const UserBrands = () => {
       <List
         header={<div className="list-number-phone">Danh sách Thương hiệu</div>}
         bordered
-        className="demo-loadmore-list mt-4"
+        className="demo-loadmore-list mt-4 mb-4 pb-3"
         itemLayout="horizontal"
         dataSource={userProfile?.brands ?? []}
         renderItem={(item: BrandsModel) => (
           <List.Item
-            actions={[
-              <button
-                key={Math.floor(Math.random() * 1000000)}
-                className="btn-edit-brands"
-                onClick={() => {
-                  onEdit(item!);
-                }}
-              >
-                Chỉnh sửa
-              </button>,
-            ]}
+            actions={
+              [
+                // <button
+                //   key={Math.floor(Math.random() * 1000000)}
+                //   className="btn-edit-brands"
+                //   onClick={() => {
+                //     onEdit(item!);
+                //   }}
+                // >
+                //   Chỉnh sửa
+                // </button>,
+              ]
+            }
           >
-            <Skeleton avatar title={false} loading={false} active>
+            <Button
+              className={
+                onChooseBrand ? "choose-brand is-choose-brand" : "choose-brand"
+              }
+              onClick={() => {
+                if (onChooseBrand) {
+                  onChooseBrand(item);
+                  return;
+                }
+                onEdit(item);
+              }}
+            >
               <List.Item.Meta
                 avatar={<Avatar src={item.resourceUrl} />}
                 title={<a>{item.name}</a>}
-                description={item.description}
+                description={
+                  <p className="text-overflow">{item.description}</p>
+                }
               />
-            </Skeleton>
+            </Button>
           </List.Item>
         )}
       />
@@ -207,8 +225,8 @@ const ModifyBrands = ({
       onCancel={() => {
         resetData();
       }}
-      onOk={onSave}
-      okText="Lưu"
+      onOk={brand ? undefined : onSave}
+      okText={"Lưu"}
       cancelText="Hủy"
     >
       <ImgCrop rotate>

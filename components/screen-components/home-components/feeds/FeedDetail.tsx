@@ -65,6 +65,10 @@ export default function FeedDetail({ data }: { data: any }) {
                 <span>12.000.000 VNĐ/Tháng</span>
               </div>
             </div>
+            <div className="p-2">
+              <hr />
+            </div>
+            <div className="name-info">Thông tin</div>
           </div>
         </div>
         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
@@ -73,7 +77,7 @@ export default function FeedDetail({ data }: { data: any }) {
               <div className="right-info">
                 <a className="name-job">Mô tả công việc</a>
                 <p>
-                  "Join our team and put your skills to the test as our newest
+                  {`Join our team and put your skills to the test as our newest
                   backend website programmer. We're looking for a backend
                   programming superstar to join our team and bring our website
                   to new heights." Swag Soft is a leading mobile app development
@@ -82,9 +86,9 @@ export default function FeedDetail({ data }: { data: any }) {
                   enterprise app development, game development, virtual reality
                   and augmented reality development and iBeacon technology. Our
                   experienced team of mobile apps developers in Singapore
-                  creates iOS (iPhone operating system) apps using native
+                  creates iOS  apps using native
                   programming languages like Objective-C and C on the Xcode
-                  platform.
+                  platform.`}
                 </p>
               </div>
             </div>
@@ -94,7 +98,7 @@ export default function FeedDetail({ data }: { data: any }) {
               <div className="right-info">
                 <a className="name-job">Yêu cầu công việc</a>
                 <p>
-                  Requirements: Have 2 - 3 years of experience in NodeJS-Express
+                  {`Requirements: Have 2 - 3 years of experience in NodeJS-Express
                   Experience with using Databases such as MySQL, MongoDB
                   Experience with RESTful APIs Experience in Cloud Platform such
                   as AWS Having experience in building a single page application
@@ -104,7 +108,7 @@ export default function FeedDetail({ data }: { data: any }) {
                   Having the spirit to continuously strive for improvement and
                   betterment. Ability to work in groups as well as being
                   independent. Be responsible for work Nice-to-have Skills:
-                  Proactive can-do attitude English communication skill
+                  Proactive can-do attitude English communication skill`}
                 </p>
               </div>
             </div>
