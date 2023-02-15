@@ -18,8 +18,9 @@ interface Option extends BaseOptionType {
 
 interface Props {
   handleLocationData: (locationData: LocationDataModel) => void;
+  changeOnSelect?: boolean;
 }
-const AppLocation = ({ handleLocationData }: Props) => {
+const AppLocation = ({ handleLocationData, changeOnSelect }: Props) => {
   useEffect(() => {
     (async () => {
       try {
@@ -111,7 +112,7 @@ const AppLocation = ({ handleLocationData }: Props) => {
       options={options}
       loadData={loadDatas}
       onChange={onChange}
-      changeOnSelect
+      changeOnSelect={changeOnSelect}
     />
   );
 };

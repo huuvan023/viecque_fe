@@ -8,5 +8,6 @@ export const openNotification = (
   notification[type]({
     message: title,
     description: message,
+    placement: "top",
   });
 };
