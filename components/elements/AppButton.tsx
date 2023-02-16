@@ -2,7 +2,7 @@ import { CSSProperties } from "react";
 
 interface Props {
   textBtn: string;
-  onClick: Function;
+  onClick?: Function;
   className?: string;
   type?: "submit" | "reset" | "button" | undefined;
   style?: CSSProperties | undefined;
@@ -24,7 +24,9 @@ export default function AppButton({
           : ""
       }
       onClick={() => {
-        onClick();
+        if (onClick) {
+          onClick();
+        }
       }}
     >
       {textBtn}

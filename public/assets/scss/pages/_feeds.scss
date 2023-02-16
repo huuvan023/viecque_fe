@@ -1,0 +1,52 @@
+.user-feeds-screen {
+  .size-box-width {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  .size-box-height {
+    height: 10px;
+  }
+  .save-box {
+    position: absolute;
+    right: 17px;
+    padding: 2px 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    border: 1px solid #c1c1c1;
+    cursor: pointer;
+    span {
+      font-weight: 500;
+      color: #6741ff;
+      font-size: 12px;
+    }
+    .save-icon {
+      width: 15px;
+      height: 15px;
+      margin-right: 10px;
+    }
+    &:hover {
+      background-color: #fffaf2;
+    }
+  }
+  .tab-feeds-user {
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid #a3b0bd;
+    margin-bottom: 10px;
+
+    .tab-feed-active {
+      color: white;
+      background-color: #a3b0bd;
+    }
+    div {
+      padding: 10px 40px;
+      cursor: pointer;
+      &:hover {
+        color: white;
+        background-color: #a3b0bd;
+      }
+    }
+  }
+}

@@ -4,6 +4,7 @@ import {
   SettingOutlined,
   MessageOutlined,
   AppstoreAddOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import { useAuth } from "@Hooks/use-auth";
 import { useRouter } from "next/router";
@@ -45,6 +46,14 @@ export default function MenuUserProfile({}: Props) {
     router.push(Routes.createFeed);
     setLoading(true);
   }
+  async function onListFeeds() {
+    if (Routes.userListFeeds === router.pathname) {
+      return;
+    }
+    router.push(Routes.userListFeeds);
+    setLoading(true);
+  }
+
   return (
     <>
       <div className="button-menu" onClick={onSettingUser}>
@@ -54,6 +63,10 @@ export default function MenuUserProfile({}: Props) {
       <div className="button-menu" onClick={onCraetFeed}>
         <AppstoreAddOutlined />
         <a>Tạo tin tuyển dụng</a>
+      </div>
+      <div className="button-menu" onClick={onListFeeds}>
+        <UserOutlined />
+        <a>Tin của bạn</a>
       </div>
       <div className="button-menu" onClick={onContact}>
         <MessageOutlined />

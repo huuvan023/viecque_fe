@@ -2186,30 +2186,6 @@ label {
 .card-detail-feed .card-detail-feed-child .font-bold {
   font-weight: bold;
 }
-.card-detail-feed .card-detail-feed-child .location-icon {
-  background: url(../imgs/template/icons/location.svg) no-repeat 0px 5px;
-  display: inline-block;
-  padding: 0px 0px 0px 20px;
-  background-size: 15px;
-}
-.card-detail-feed .card-detail-feed-child .email-icon {
-  background: url(../imgs/template/icons/email.svg) no-repeat 0px 5px;
-  background-size: 15px;
-  display: inline-block;
-  padding: 0px 0px 0px 20px;
-}
-.card-detail-feed .card-detail-feed-child .phone-icon {
-  background: url(../imgs/template/icons/phone.svg) no-repeat 0px 5px;
-  background-size: 15px;
-  display: inline-block;
-  padding: 0px 0px 0px 20px;
-}
-.card-detail-feed .card-detail-feed-child .money-icon {
-  background: url(../imgs/template/icons/money-icon.svg) no-repeat 0px 5px;
-  background-size: 15px;
-  display: inline-block;
-  padding: 0px 0px 0px 20px;
-}
 .card-detail-feed .name-info {
   font-size: 18px;
   line-height: 26px;
@@ -8746,6 +8722,105 @@ ul li:last-child .card-list-4 {
   margin-top: 20px;
   border-top: 1px solid;
   padding-top: 14px;
+}
+
+.location-icon {
+  background: url(../imgs/template/icons/location.svg) no-repeat 0px 5px;
+  display: inline-block;
+  padding: 0px 0px 0px 20px;
+  background-size: 15px;
+}
+
+.email-icon {
+  background: url(../imgs/template/icons/email.svg) no-repeat 0px 5px;
+  background-size: 15px;
+  display: inline-block;
+  padding: 0px 0px 0px 20px;
+}
+
+.time-icon {
+  background: url(../imgs/template/icons/time-icon.svg) no-repeat 0px 5px;
+  background-size: 15px;
+  display: inline-block;
+  padding: 0px 0px 0px 20px;
+}
+
+.people-icon {
+  background: url(../imgs/template/icons/people-icon.svg) no-repeat 0px 5px;
+  background-size: 15px;
+  display: inline-block;
+  padding: 0px 0px 0px 20px;
+}
+
+.phone-icon {
+  background: url(../imgs/template/icons/phone.svg) no-repeat 0px 5px;
+  background-size: 15px;
+  display: inline-block;
+  padding: 0px 0px 0px 20px;
+}
+
+.money-icon {
+  background: url(../imgs/template/icons/money-icon.svg) no-repeat 0px 5px;
+  background-size: 15px;
+  display: inline-block;
+  padding: 0px 0px 0px 20px;
+}
+
+.experience-icon {
+  background: url(../imgs/template/icons/experience-icon.svg) no-repeat 0px 5px;
+  background-size: 15px;
+  display: inline-block;
+  padding: 0px 0px 0px 20px;
+}
+
+.user-feeds-screen .size-box-width {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.user-feeds-screen .size-box-height {
+  height: 10px;
+}
+.user-feeds-screen .save-box {
+  position: absolute;
+  right: 17px;
+  padding: 2px 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+  border: 1px solid #c1c1c1;
+  cursor: pointer;
+}
+.user-feeds-screen .save-box span {
+  font-weight: 500;
+  color: #6741ff;
+  font-size: 12px;
+}
+.user-feeds-screen .save-box .save-icon {
+  width: 15px;
+  height: 15px;
+  margin-right: 10px;
+}
+.user-feeds-screen .save-box:hover {
+  background-color: #fffaf2;
+}
+.user-feeds-screen .tab-feeds-user {
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid #a3b0bd;
+  margin-bottom: 10px;
+}
+.user-feeds-screen .tab-feeds-user .tab-feed-active {
+  color: white;
+  background-color: #a3b0bd;
+}
+.user-feeds-screen .tab-feeds-user div {
+  padding: 10px 40px;
+  cursor: pointer;
+}
+.user-feeds-screen .tab-feeds-user div:hover {
+  color: white;
+  background-color: #a3b0bd;
 }
 
 /*# sourceMappingURL=style.css.map */

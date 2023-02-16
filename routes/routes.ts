@@ -11,6 +11,8 @@ export class Routes {
   static contact = "/contact";
   static userSetting = "/user/user-setting";
   static createFeed = "/user/create-feed";
+  static userListFeeds = "/user/user-feeds";
+  static createFeediew = "/user/create-feed/create-feed-view";
 
   // detial
   static detail = "/detail";

@@ -12,6 +12,7 @@ export const ENPOINT = {
 
   // user profile
   user: "/user",
+
   // brands
   brands: "/user/brand",
 
@@ -19,4 +20,7 @@ export const ENPOINT = {
   provinces: "/public/address/provinces",
   districts: "/public/address/districts",
   wards: "/public/address/wards",
+
+  // feeds
+  createFeed: "/recruiter/feeds",
 };

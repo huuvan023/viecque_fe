@@ -4,32 +4,53 @@ import Layout from "@Component/Layout/Layout";
 import Authentication from "@Component/auth/Auth";
 import AppButton from "@Component/elements/AppButton";
 import AppInput from "@Component/elements/Input";
+import StepCreateFeed from "@Component/screen-components/create-feeds-components/Steps";
 import UserBrands from "@Component/screen-components/user-components/user-brands";
+import { Jobtype } from "@Constants/jobtype";
+import { useCreateFeed } from "@Hooks/use-create-feed";
 import { useLoading } from "@Hooks/use-loading";
 
 import {
   BrandsModel,
+  CreateFeedModel,
   LocationDataModel,
   UserProfileModel,
 } from "@Models/index";
+import { Routes } from "@Routes/routes";
+import GlobalStateContext from "@Store/Context";
 import { openNotification } from "@Utils/notification";
-import { Button, Col, DatePicker, Form, Image, Modal, Row, Select } from "antd";
+import {
+  Button,
+  Col,
+  DatePicker,
+  Form,
+  Image,
+  InputNumber,
+  Modal,
+  Row,
+  Select,
+} from "antd";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
 const CreateFeed = () => {
   const [isChooseBrands, setIschooseBrands] = useState(false);
   const [userProfile, setUserProfile] = useState<UserProfileModel | null>(null);
   const { setLoading } = useLoading();
+  const { setCreateFeed } = useCreateFeed();
+  const router = useRouter();
 
   const [brand, setBrand] = useState<BrandsModel>();
   const [numberPhone, setNumberPhone] = useState();
   const [locationData, setLocationData] = useState<LocationDataModel>();
-  const [jobType, setJobType] = useState("");
+  const [jobType, setJobType] = useState<number>();
   const [salaryUnit, setSalaryUnit] = useState("");
   const [jobCategoryId, setJobCategoryId] = useState("");
   const [timeToStart, setTimeToStart] = useState("");
   const [description, setDescription] = useState("");
-
+  const [salary, setSalary] = useState(50000);
+  const [experience, setExperience] = useState(0);
+  const [amountPeople, setAmountPeople] = useState(1);
   useEffect(() => {
     (async () => {
       await getDataUser();
@@ -40,7 +61,7 @@ const CreateFeed = () => {
   const getDataUser = async () => {
     try {
       const response = await apiUserProfileAxios.getUserProfile();
-      setUserProfile(response.data.data);
+      setUserProfile(response?.data?.data);
       setLoading(false);
     } catch (error: any) {
       const message = error.response.data.message;
@@ -48,7 +69,11 @@ const CreateFeed = () => {
       setLoading(false);
     }
   };
-  const onCreateFeed = async () => {
+  const onCreateFeed = async (dataJob: {
+    detailsAddress: string;
+    jobTitle: string;
+    position: string;
+  }) => {
     if (!brand) {
       openNotification("error", "Thất bại", "Vui lòng chọn thương hiệu!");
       return;
@@ -86,26 +111,37 @@ const CreateFeed = () => {
       return;
     }
 
-    const data = {
-      brandId: brand?.brandId,
+    const data: CreateFeedModel = {
+      brandId: brand.brandId!,
       phoneNumber: numberPhone,
-      provinceId: locationData.provinceId,
-      districtId: locationData.districtId,
-      wardId: locationData.wardId,
-      jobType: jobType,
+      provinceId: locationData.provinceId!,
+      districtId: locationData.districtId!,
+      wardId: locationData.wardId!,
+      jobType: jobType!,
       salaryUnit: salaryUnit,
       timeToStart: timeToStart,
       jobCategoryId: jobCategoryId,
       description: description,
-
-      // detailsAddress: "abc xyz",
-      // jobTitle: "ví dụ kĩ sư",
-      // amountPeople: "1",
-      // salary: "10000",
-      // position: "Vị trí abc",
-      // experience: "1",
+      salary: salary.toString(),
+      experience: experience.toString(),
+      amountPeople: amountPeople.toString(),
+      ...dataJob,
     };
-    console.log(data);
+    setCreateFeed(data);
+    setLoading(true);
+    router.push({
+      pathname: Routes.createFeediew,
+    });
+  };
+  const onFinish = async (dataJob: {
+    detailsAddress: string;
+    jobTitle: string;
+    position: string;
+  }) => {
+    onCreateFeed(dataJob);
+  };
+  const onFinishFailed = (errorInfo: any) => {
+    openNotification("error", "Thất bại", "Vui lòng điền đủ thông tin");
   };
 
   return (
@@ -116,7 +152,13 @@ const CreateFeed = () => {
             <div className="col-lg-7 col-md-8 col-sm-12 mx-auto">
               <div className="text-center">
                 <h2 className="mt-10 mb-5 text-brand-1">Tạo tin tuyển dụng</h2>
-                <Form className="login-register text-start mt-20" action="#">
+                <StepCreateFeed currentStep={0} />
+                <Form
+                  onFinish={onFinish}
+                  onFinishFailed={onFinishFailed}
+                  className="login-register text-start mt-20"
+                  action="#"
+                >
                   <div className="box-size">
                     <AppInput
                       required={true}
@@ -221,16 +263,7 @@ const CreateFeed = () => {
                       onChange={(value) => {
                         setJobType(value);
                       }}
-                      options={[
-                        {
-                          label: "Toàn thời gian",
-                          value: 1,
-                        },
-                        {
-                          label: "Bán thời gian",
-                          value: 2,
-                        },
-                      ]}
+                      options={Jobtype}
                     />
                   </div>
                   <div className="box-size">
@@ -261,23 +294,33 @@ const CreateFeed = () => {
                     />
                   </div>
                   <div className="box-size">
-                    <AppInput
-                      required={true}
-                      label="Số người cần tuyển"
-                      placeholder="Số người cần tuyển"
-                      name="?"
-                      type="number"
-                      requiredMessage="Vui lòng điền số người cần tuyển"
+                    <label className="form-label" htmlFor="input-1">
+                      Số người cần tuyển
+                      <span style={{ color: "red" }}>*</span>
+                    </label>
+                    <InputNumber
+                      style={{ width: "100%" }}
+                      size="large"
+                      min={1}
+                      max={10000}
+                      defaultValue={amountPeople}
+                      onChange={(value) => setAmountPeople(value!)}
                     />
                   </div>
                   <div className="box-size">
-                    <AppInput
-                      required={true}
-                      label="Mức lương (VNĐ)"
-                      placeholder="Mức lương (VNĐ)"
-                      name="?"
-                      type="number"
-                      requiredMessage="Vui lòng điền mức lương"
+                    <label className="form-label" htmlFor="input-1">
+                      Mức lương (VNĐ)
+                      <span style={{ color: "red" }}>*</span>
+                    </label>
+                    <InputNumber
+                      style={{ width: "100%" }}
+                      size="large"
+                      min={50000}
+                      max={1000000000}
+                      defaultValue={salary}
+                      onChange={(value) => {
+                        setSalary(value!);
+                      }}
                     />
                   </div>
                   <div className="box-size">
@@ -331,13 +374,17 @@ const CreateFeed = () => {
                     />
                   </div>
                   <div className="box-size">
-                    <AppInput
-                      required={true}
-                      label="Số năm kinh nghiệm"
-                      placeholder="Số năm kinh nghiệm"
-                      name="?"
-                      type="number"
-                      requiredMessage="Vui lòng điền số năm kinh nghiệm"
+                    <label className="form-label" htmlFor="input-1">
+                      Số năm kinh nghiệm
+                      <span style={{ color: "red" }}>*</span>
+                    </label>
+                    <InputNumber
+                      style={{ width: "100%" }}
+                      size="large"
+                      min={0}
+                      max={100}
+                      defaultValue={experience}
+                      onChange={(value) => setExperience(value!)}
                     />
                   </div>
                   <div className="box-size">
@@ -345,7 +392,7 @@ const CreateFeed = () => {
                       required={true}
                       label="Vị trí tuyển dụng"
                       placeholder="Vị trí tuyển dụng"
-                      name="?"
+                      name="position"
                       requiredMessage="Vui lòng điền vị trí tuyển dụng"
                     />
                   </div>
@@ -365,11 +412,7 @@ const CreateFeed = () => {
                     />
                   </div>
                   <div className="text-right">
-                    <AppButton
-                      textBtn="Lưu và tiếp tục"
-                      onClick={onCreateFeed}
-                      type="submit"
-                    />
+                    <AppButton textBtn="Tiếp tục" type="submit" />
                   </div>
                 </Form>
               </div>

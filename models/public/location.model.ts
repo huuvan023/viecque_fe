@@ -14,11 +14,8 @@ export interface WardsModel {
   districtCode: number;
 }
 
-
-export interface LocationDataModel{
-  
-    provinceId?: number;
-    districtId?: number;
-    wardId?: number;
-   
+export interface LocationDataModel {
+  provinceId?: number;
+  districtId?: number;
+  wardId?: number;
 }
