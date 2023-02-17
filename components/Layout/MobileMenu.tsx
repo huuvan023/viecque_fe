@@ -9,6 +9,7 @@ import GlobalStateContext from "@Store/Context";
 import { useAuth } from "@Hooks/use-auth";
 import { RoutesConst } from "@Constants/routes-const";
 import UserProfileMobile from "./UserProfileMobbile";
+import { useLoading } from "@Hooks/use-loading";
 
 interface Props {
   openClass: string;
@@ -21,29 +22,15 @@ const MobileMenu = (props: Props) => {
     status: false,
     key: 0,
   });
-  const router = useRouter();
-  const [state, dispatch] = useContext(GlobalStateContext);
-  const handleLoading = (isLoading: boolean) => {
-    dispatch({
-      type: SET_LOADING,
-      data: isLoading,
-    });
-  };
-
-  const { pathname } = router;
+  const { setLoading } = useLoading();
   const [scroll, setScroll] = useState(0);
-  const { logout } = useAuth();
   const scrollEvent = () => {
     const scrollCheck = window.scrollY;
     if (scrollCheck !== scroll) {
       setScroll(scrollCheck);
     }
   };
-  async function onLogOut() {
-    logout(() => {
-      router.push(Routes.login);
-    });
-  }
+
   useEffect(() => {
     document.addEventListener("scroll", scrollEvent);
   });
@@ -85,7 +72,12 @@ const MobileMenu = (props: Props) => {
               <div className="mobile-menu-wrap mobile-header-border">
                 {/* mobile menu start*/}
 
-                <nav>
+                <nav
+                  onClick={() => {
+                    props.handleOpen();
+                    props.handleRemove();
+                  }}
+                >
                   <ul className="mobile-menu font-heading">
                     {menuRoutes.map((item, index) => {
                       if (

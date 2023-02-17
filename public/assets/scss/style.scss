@@ -74,6 +74,7 @@ TABLE CONTENT
 'pages/homepage5',
 'pages/homepage6';
 // Responsive
-@import 'layout/responsive', 'layout/menu'
+@import 'layout/responsive', 'layout/menu';
 
-
+@import 'icons/icons';
+@import 'pages/feeds'

@@ -1,96 +1,51 @@
 import Layout from "@Component/Layout/Layout";
 import { useLoading } from "@Hooks/use-loading";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import ImageAssets from "@Component/elements/ImageAssets";
 import SearchBox from "@Component/Layout/searchBox";
 import { GetServerSidePropsContext } from "next";
+import FeedsList from "@Component/screen-components/home-components/feeds/FeedsList";
+import { Tabs, TabsProps } from "antd";
 interface Props {
   data: any[];
 }
 export default function Home({ data }: Props) {
   const { setLoading } = useLoading();
+  const [dataFeeds, setDataFeeds] = useState<any>([]);
   useEffect(() => {
     setLoading(false);
+    setDataFeeds(data);
   }, []);
+
+  const items: TabsProps["items"] = [
+    {
+      key: "1",
+      label: "Tin mới nhất",
+      children: <FeedsList data={data} onSaveBtn={true} />,
+    },
+    {
+      key: "2",
+      label: "Tin đã lưu",
+      children: <FeedsList data={data} onSaveBtn={true} />,
+    },
+  ];
+  const onChange = (activeKey: string) => {
+    console.log(activeKey);
+  };
   return (
     <>
       <Layout>
         <div className="container home-screen">
           <SearchBox />
           <div style={{ height: "20px" }}></div>
-          <div className="row">
-            {data.map((item, index) => {
-              return (
-                <div
-                  key={index}
-                  className="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12"
-                >
-                  <div className="card-grid-2 hover-up">
-                    <div className="card-grid-2-image-left">
-                      <div className="save-box">
-                        <ImageAssets
-                          className="save-icon"
-                          src="assets/imgs/icon/save.png"
-                          alt="JobBox"
-                        />
-                        <span>Lưu lại</span>
-                      </div>
+          <Tabs
+            defaultActiveKey="1"
+            type="card"
+            size="large"
+            items={items}
+            onChange={onChange}
+          />
 
-                      <div className="image-box">
-                        <img
-                          src="assets/imgs/brands/brand-2.png"
-                          alt="jobBox"
-                        />
-                      </div>
-                      <div className="right-info">
-                        <Link legacyBehavior href="/">
-                          <a className="name-job">Nhân viên bán hàng</a>
-                        </Link>
-                        <span className="location-small">Công ty test</span>
-                        <span className="size-box-width"></span>
-                        <span className="card-time">
-                          5<span> minutes ago</span>
-                        </span>
-                      </div>
-                    </div>
-                    <div className="card-block-info">
-                      <p className="font-sm color-text-paragraph">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit. Recusandae architecto eveniet, dolor quo
-                        repellendus pariatur.
-                      </p>
-
-                      <div className="card-2-bottom mt-10">
-                        <div className="row">
-                          <div className="col-lg-7 col-7">
-                            <div
-                              style={{
-                                display: "flex",
-                                alignItems: "center",
-                              }}
-                            >
-                              <i className="fi-rr-marker mr-5 ml-0" />
-                              <span
-                                style={{ fontWeight: 700, color: "#a0abb8" }}
-                              >
-                                quận 7 Tp.HCM
-                              </span>
-                            </div>
-                          </div>
-                          <div className="col-lg-5 col-5 text-end">
-                            <span style={{ fontWeight: 700, color: "#a0abb8" }}>
-                              $ 100.000 VNĐ
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
           <div className="paginations">
             <ul className="pager">
               <li>
@@ -154,7 +109,7 @@ export async function getServerSideProps(
 
   const newData = await data.then();
   const newList = [];
-  for (let index = 0; index < 100; index++) {
+  for (let index = 0; index < 10; index++) {
     newList.push(index);
     // console.log(newList);
   }

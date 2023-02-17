@@ -1,15 +1,14 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
   LogoutOutlined,
   SettingOutlined,
   MessageOutlined,
+  AppstoreAddOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import { useAuth } from "@Hooks/use-auth";
 import { useRouter } from "next/router";
-import GlobalStateContext from "@Store/Context";
 import { Routes } from "@Routes/routes";
-import { SET_LOADING } from "@Store/constants";
-import Link from "next/link";
 import { useLoading } from "@Hooks/use-loading";
 type Props = {};
 
@@ -37,8 +36,21 @@ export default function MenuUserProfile({}: Props) {
     if (Routes.contact === router.pathname) {
       return;
     }
-
     router.push(Routes.contact);
+    setLoading(true);
+  }
+  async function onCraetFeed() {
+    if (Routes.createFeed === router.pathname) {
+      return;
+    }
+    router.push(Routes.createFeed);
+    setLoading(true);
+  }
+  async function onListFeeds() {
+    if (Routes.userListFeeds === router.pathname) {
+      return;
+    }
+    router.push(Routes.userListFeeds);
     setLoading(true);
   }
 
@@ -47,6 +59,14 @@ export default function MenuUserProfile({}: Props) {
       <div className="button-menu" onClick={onSettingUser}>
         <SettingOutlined />
         <a>Cài đặt tài khoản</a>
+      </div>
+      <div className="button-menu" onClick={onCraetFeed}>
+        <AppstoreAddOutlined />
+        <a>Tạo tin tuyển dụng</a>
+      </div>
+      <div className="button-menu" onClick={onListFeeds}>
+        <UserOutlined />
+        <a>Tin của bạn</a>
       </div>
       <div className="button-menu" onClick={onContact}>
         <MessageOutlined />

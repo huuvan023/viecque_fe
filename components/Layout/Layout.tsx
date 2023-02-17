@@ -28,7 +28,11 @@ const Layout = ({ children }: Props) => {
   };
 
   return (
-    <>
+    <div
+      onClick={() => {
+        handleRemove();
+      }}
+    >
       {isLoading ? <Loading /> : null}
       {firstLoading ? <Loading /> : null}
       <div className="body-overlay-1" onClick={handleRemove} />
@@ -47,7 +51,7 @@ const Layout = ({ children }: Props) => {
       <main className="main">{children}</main>
       <Footer />
       <BackToTop />
-    </>
+    </div>
   );
 };
 

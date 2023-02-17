@@ -278,6 +278,7 @@
       padding-right: 15px;
     }
     .right-info {
+      flex-grow: 1;
       .name-job {
         font-size: $font-lg;
         line-height: 26px;
@@ -296,6 +297,55 @@
         color: $color-text-mutted;
       }
     }
+  }
+}
+.card-detail-feed {
+  border-radius: 8px;
+  border: 1px solid $color-border-2;
+  overflow: hidden;
+  margin-bottom: 24px;
+  position: relative;
+  background: $background-5;
+  .card-detail-feed-child {
+    padding: 10px 10px 0px 10px;
+    display: flex;
+    position: relative;
+
+    .image-box {
+      min-width: 52px;
+      padding-right: 15px;
+    }
+    .right-info {
+      flex-grow: 1;
+      .name-job {
+        font-size: $font-lg;
+        line-height: 26px;
+        color: $color-brand;
+        font-weight: bold;
+        display: block;
+        &:hover {
+          color: $color-brand-2;
+        }
+      }
+      .location-small {
+        background: url(../imgs/template/icons/location.svg) no-repeat 0px 5px;
+        display: inline-block;
+        padding: 0px 0px 0px 20px;
+        font-size: $font-xs;
+        color: $color-text-mutted;
+      }
+    }
+    .font-bold {
+      font-weight: bold;
+    }
+  }
+  .name-info {
+    font-size: $font-lg;
+    line-height: 26px;
+    color: $color-brand;
+    font-weight: bold;
+    display: block;
+    padding: 0px 10px;
   }
 }
 

@@ -33,8 +33,10 @@ const Register = () => {
   };
   async function handleRegister(register: RegisterModel) {
     try {
-      console.log(register);
-      const response = await apiCreateUserAxios.register(register);
+      const response = await apiCreateUserAxios.register({
+        ...register,
+        phoneNumber: [register.phoneNumber],
+      });
       const data = await response.data;
       setMessageErr("");
       router.push({
@@ -92,6 +94,7 @@ const Register = () => {
                   <AppInput
                     label="Số điện thoại"
                     required={true}
+                    type="number"
                     requiredMessage="Vui lòng điền số điện thoại!"
                     placeholder="Số điện thoại"
                     name="phoneNumber"

@@ -8,7 +8,7 @@ interface Props {
   required?: boolean;
   requiredMessage?: string;
   placeholder: string;
-  name: string;
+  name?: string;
   messageErr?: string;
   value?: string | ReadonlyArray<string> | number | undefined;
   type?: LiteralUnion<
@@ -36,6 +36,7 @@ interface Props {
     | "week",
     string
   >;
+  className?: string;
   onChange?: ChangeEventHandler<any> | undefined;
 }
 export default function AppInput(props: Props) {
@@ -49,7 +50,7 @@ export default function AppInput(props: Props) {
         },
       ]}
     >
-      <div>
+      <div className={props.className}>
         <label className="form-label" htmlFor="input-1">
           {props.label}
           {props.required ? <span style={{ color: "red" }}>*</span> : null}
