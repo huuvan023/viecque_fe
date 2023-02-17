@@ -4,4 +4,5 @@ export interface ResponseModel<T> {
   error: string;
   message: string;
   data: T;
+  totalRecord?: number;
 }

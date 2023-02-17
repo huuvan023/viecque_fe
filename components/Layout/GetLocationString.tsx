@@ -1,4 +1,4 @@
-import { apiLocationAxios } from "@Axios/public/api-location";
+import { apiPublicAxios } from "@Axios/public/api-public";
 import { LocationDataModel } from "@Models/index";
 import React, { useEffect, useState } from "react";
 
@@ -16,7 +16,7 @@ const GetLocationString = (data: LocationDataModel) => {
 
   const getProvince = async () => {
     try {
-      const response = await apiLocationAxios.getProvinces();
+      const response = await apiPublicAxios.getProvinces();
       setProvince(
         response.data.data.find((item) => item.code === data.provinceId)
           ?.name ?? "--"
@@ -25,7 +25,7 @@ const GetLocationString = (data: LocationDataModel) => {
   };
   const getDistricts = async () => {
     try {
-      const response = await apiLocationAxios.getDistricts({
+      const response = await apiPublicAxios.getDistricts({
         provinceCode: data.provinceId!,
       });
       setDistricts(
@@ -36,7 +36,7 @@ const GetLocationString = (data: LocationDataModel) => {
   };
   const getWards = async () => {
     try {
-      const response = await apiLocationAxios.getWards({
+      const response = await apiPublicAxios.getWards({
         provinceCode: data.provinceId!,
         districtCode: data.districtId!,
       });

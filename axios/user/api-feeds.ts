@@ -1,5 +1,7 @@
 import {
   CreateFeedModel,
+  GetFeedsModel,
+  PaginationModel,
   RegisterModel,
   ResponseModel,
   VerifyUserModel,
@@ -13,5 +15,13 @@ export const apiFeedsAxios = {
     data: CreateFeedModel
   ): Promise<AxiosResponse<ResponseModel<null>>> {
     return axiosClient.post(ENPOINT.createFeed, data);
+  },
+
+  getRecruiterFeeds(
+    page: PaginationModel
+  ): Promise<AxiosResponse<ResponseModel<GetFeedsModel[]>>> {
+    return axiosClient.get(
+      `${ENPOINT.getRecruiterFeed}?page=${page.page}&pageSize=${page.pageSize}`
+    );
   },
 };

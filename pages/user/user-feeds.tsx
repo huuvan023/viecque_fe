@@ -1,10 +1,11 @@
 import Layout from "@Component/Layout/Layout";
 import Authentication from "@Component/auth/Auth";
 import React, { useEffect, useState } from "react";
-import FeedsList from "@Component/screen-components/home-components/feeds/FeedsList";
-import Link from "next/link";
+
 import { useLoading } from "@Hooks/use-loading";
 import { Tabs, TabsProps } from "antd";
+import MyTabFeeds from "@Component/screen-components/feeds-components/MyTabFeed";
+import TabFeedsNoActive from "@Component/screen-components/feeds-components/TabNoActive";
 
 export default function UserFeeds() {
   const { setLoading } = useLoading();
@@ -13,7 +14,7 @@ export default function UserFeeds() {
     {
       key: "1",
       label: "Tin của bạn",
-      children: <TabFeeds />,
+      children: <MyTabFeeds />,
     },
     {
       key: "2",
@@ -39,116 +40,3 @@ export default function UserFeeds() {
     </Authentication>
   );
 }
-
-const TabFeeds = () => {
-  const [data, setData] = useState([1, 2, 3, 23, 2, 312, 2]);
-  const { setLoading } = useLoading();
-  useEffect(() => {}, []);
-
-  return (
-    <>
-      <FeedsList data={data} />
-      <div className="paginations">
-        <ul className="pager">
-          <li>
-            <a className="pager-prev" href="#" />
-          </li>
-          <li>
-            <Link legacyBehavior href="#">
-              <a className="pager-number">1</a>
-            </Link>
-          </li>
-          <li>
-            <Link legacyBehavior href="#">
-              <a className="pager-number">2</a>
-            </Link>
-          </li>
-          <li>
-            <Link legacyBehavior href="#">
-              <a className="pager-number">3</a>
-            </Link>
-          </li>
-          <li>
-            <Link legacyBehavior href="#">
-              <a className="pager-number">4</a>
-            </Link>
-          </li>
-          <li>
-            <Link legacyBehavior href="#">
-              <a className="pager-number">5</a>
-            </Link>
-          </li>
-          <li>
-            <Link legacyBehavior href="#">
-              <a className="pager-number active">6</a>
-            </Link>
-          </li>
-          <li>
-            <Link legacyBehavior href="#">
-              <a className="pager-number">7</a>
-            </Link>
-          </li>
-          <li>
-            <a className="pager-next" href="#" />
-          </li>
-        </ul>
-      </div>
-    </>
-  );
-};
-
-const TabFeedsNoActive = () => {
-  const [data, setData] = useState([1, 2, 3, 23, 2]);
-  const { setLoading } = useLoading();
-  useEffect(() => {}, []);
-  return (
-    <>
-      <FeedsList data={data} />
-      <div className="paginations">
-        <ul className="pager">
-          <li>
-            <a className="pager-prev" href="#" />
-          </li>
-          <li>
-            <Link legacyBehavior href="#">
-              <a className="pager-number">1</a>
-            </Link>
-          </li>
-          <li>
-            <Link legacyBehavior href="#">
-              <a className="pager-number">2</a>
-            </Link>
-          </li>
-          <li>
-            <Link legacyBehavior href="#">
-              <a className="pager-number">3</a>
-            </Link>
-          </li>
-          <li>
-            <Link legacyBehavior href="#">
-              <a className="pager-number">4</a>
-            </Link>
-          </li>
-          <li>
-            <Link legacyBehavior href="#">
-              <a className="pager-number">5</a>
-            </Link>
-          </li>
-          <li>
-            <Link legacyBehavior href="#">
-              <a className="pager-number active">6</a>
-            </Link>
-          </li>
-          <li>
-            <Link legacyBehavior href="#">
-              <a className="pager-number">7</a>
-            </Link>
-          </li>
-          <li>
-            <a className="pager-next" href="#" />
-          </li>
-        </ul>
-      </div>
-    </>
-  );
-};

@@ -20,7 +20,15 @@ export const ENPOINT = {
   provinces: "/public/address/provinces",
   districts: "/public/address/districts",
   wards: "/public/address/wards",
+  getJobCate: "/public/get-job-cate",
 
   // feeds
   createFeed: "/recruiter/feeds",
+  getRecruiterFeed: "/recruiter/feeds",
+
+  // admin
+  createCate: "admin/create-cate",
+  deleteCate: "admin/delete-cate",
+  allUser: "admin/users",
+  allFeedsAdmin: "admin/filter-feeds",
 };

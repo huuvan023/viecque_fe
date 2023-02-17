@@ -44,6 +44,16 @@
     color: #4f5e64;
   }
 }
-.form-label{
+.form-label {
   font-weight: 700;
+}
+.text-left {
+  text-align: left;
+}
+.text-description-card {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
 }

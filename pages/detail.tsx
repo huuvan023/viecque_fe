@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Layout from "@Component/Layout/Layout";
 import { useLoading } from "@Hooks/use-loading";
-import StepCreateFeed from "@Component/screen-components/create-feeds-components/Steps";
 import { apiBrandsAxios } from "@Axios/user/api-brands";
 import { BrandsModel } from "@Models/index";
 interface Props {}

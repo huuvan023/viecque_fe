@@ -1,3 +1,4 @@
+import { apiPublicAxios } from "@Axios/public/api-public";
 import { apiUserProfileAxios } from "@Axios/user/api-user-profile";
 import AppLocation from "@Component/Layout/AppLocation";
 import Layout from "@Component/Layout/Layout";
@@ -13,11 +14,11 @@ import { useLoading } from "@Hooks/use-loading";
 import {
   BrandsModel,
   CreateFeedModel,
+  JobCategoryModel,
   LocationDataModel,
   UserProfileModel,
 } from "@Models/index";
 import { Routes } from "@Routes/routes";
-import GlobalStateContext from "@Store/Context";
 import { openNotification } from "@Utils/notification";
 import {
   Button,
@@ -45,15 +46,19 @@ const CreateFeed = () => {
   const [locationData, setLocationData] = useState<LocationDataModel>();
   const [jobType, setJobType] = useState<number>();
   const [salaryUnit, setSalaryUnit] = useState("");
-  const [jobCategoryId, setJobCategoryId] = useState("");
-  const [timeToStart, setTimeToStart] = useState("");
+  const [jobCategoryList, setJobCategoryList] = useState<JobCategoryModel[]>(
+    []
+  );
+  const [timeToStart, setTimeToStart] = useState<Date>(new Date());
   const [description, setDescription] = useState("");
+  const [jobCategoryId, setJobCategoryId] = useState("");
   const [salary, setSalary] = useState(50000);
   const [experience, setExperience] = useState(0);
   const [amountPeople, setAmountPeople] = useState(1);
   useEffect(() => {
     (async () => {
-      await getDataUser();
+      getDataUser();
+      getJobCategoryList();
       setLoading(false);
     })();
   }, []);
@@ -69,6 +74,18 @@ const CreateFeed = () => {
       setLoading(false);
     }
   };
+  const getJobCategoryList = async () => {
+    try {
+      const response = await apiPublicAxios.getJobCate();
+      setJobCategoryList(response.data.data);
+      setLoading(false);
+    } catch (error: any) {
+      const message = error.response.data.message;
+      openNotification("error", "Thất bại", message);
+      setLoading(false);
+    }
+  };
+
   const onCreateFeed = async (dataJob: {
     detailsAddress: string;
     jobTitle: string;
@@ -133,6 +150,7 @@ const CreateFeed = () => {
       pathname: Routes.createFeediew,
     });
   };
+
   const onFinish = async (dataJob: {
     detailsAddress: string;
     jobTitle: string;
@@ -140,6 +158,7 @@ const CreateFeed = () => {
   }) => {
     onCreateFeed(dataJob);
   };
+
   const onFinishFailed = (errorInfo: any) => {
     openNotification("error", "Thất bại", "Vui lòng điền đủ thông tin");
   };
@@ -285,12 +304,10 @@ const CreateFeed = () => {
                           .toLowerCase()
                           .includes(input.toLowerCase())
                       }
-                      options={[
-                        {
-                          value: "Nhân viên quán ăn",
-                          label: "Nhân viên quán ăn",
-                        },
-                      ]}
+                      options={jobCategoryList.map((item) => ({
+                        value: item.id,
+                        label: item.name,
+                      }))}
                     />
                   </div>
                   <div className="box-size">
@@ -369,7 +386,7 @@ const CreateFeed = () => {
                       size="large"
                       style={{ width: "100%" }}
                       onChange={(date, dateString) => {
-                        setTimeToStart(dateString);
+                        setTimeToStart(new Date(dateString));
                       }}
                     />
                   </div>

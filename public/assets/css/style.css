@@ -2131,6 +2131,9 @@ label {
   min-width: 52px;
   padding-right: 15px;
 }
+.card-grid-2 .card-grid-2-image-left .right-info {
+  flex-grow: 1;
+}
 .card-grid-2 .card-grid-2-image-left .right-info .name-job {
   font-size: 18px;
   line-height: 26px;
@@ -2165,6 +2168,9 @@ label {
 .card-detail-feed .card-detail-feed-child .image-box {
   min-width: 52px;
   padding-right: 15px;
+}
+.card-detail-feed .card-detail-feed-child .right-info {
+  flex-grow: 1;
 }
 .card-detail-feed .card-detail-feed-child .right-info .name-job {
   font-size: 18px;
@@ -5663,6 +5669,18 @@ ul li:last-child .card-list-4 {
 
 .form-label {
   font-weight: 700;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-description-card {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
 }
 
 .home-screen .size-box-width {

@@ -18,40 +18,21 @@ export default function CreateFeedView() {
   const router = useRouter();
   const { setLoading } = useLoading();
   const { createFeed } = useCreateFeed();
-  const feeds: CreateFeedModel = {
-    brandId: "75a38d67-bbe7-464b-b9a9-8120801048b9",
-    phoneNumber: "088173",
-    provinceId: 8,
-    districtId: 74,
-    wardId: 2386,
-    jobType: 1,
-    salaryUnit: "Trả lương theo ngày",
-    timeToStart: "2023-02-28",
-    jobCategoryId: "Nhân viên quán ăn",
-    description:
-      "Join our team and put your skills to the test as our newest backend website programmer. We're looking for a backend programming superstar to join our team and bring our website to new heights.\" Swag Soft is a leading mobile app development company in Singapore and provides a comprehensive suite of services, including application development services, enterprise app development, game development, virtual reality and augmented reality development and iBeacon technology. Our experienced team of mobile apps developers in Singapore creates iOS apps using native programming languages like Objective-C and C on the Xcode platform.",
-    salary: "500000",
-    experience: "1",
-    amountPeople: "10",
-    jobTitle: "Junior Nodejs ",
-    detailsAddress: "552-11 khu dân cư pl5",
-    position: "Nhân viên",
-  };
 
   const [brandById, setBrandById] = useState<BrandsModel>();
 
   useEffect(() => {
-    // if (!createFeed.brandId) {
-    //   router.push({
-    //     pathname: Routes.createFeed,
-    //   });
-    //   return;
-    // }
-    // console.log(JSON.stringify(createFeed));
+    if (!createFeed.brandId) {
+      router.push({
+        pathname: Routes.createFeed,
+      });
+      return;
+    }
+    console.log(JSON.stringify(createFeed));
     (() => {
-      getBrandById(feeds.brandId);
+      getBrandById(createFeed.brandId);
     })();
-  }, [router]);
+  }, [router, createFeed]);
 
   const getBrandById = async (id: string) => {
     try {
@@ -66,8 +47,11 @@ export default function CreateFeedView() {
   const onSaveFeed = async () => {
     setLoading(true);
     try {
-      const response = await apiFeedsAxios.createFeeds(feeds);
-      setLoading(false);
+      const response = await apiFeedsAxios.createFeeds(createFeed);
+      openNotification("success", "Thành công", "Tạo tin thành công");
+      router.push({
+        pathname: Routes.userListFeeds,
+      });
     } catch (error: any) {
       setLoading(false);
       const message = error.response.data.message;
@@ -81,7 +65,7 @@ export default function CreateFeedView() {
         <div className="container home-screen">
           <StepCreateFeed currentStep={1} />
           <div style={{ height: 20 }}></div>
-          <FeedDetail data={feeds} brand={brandById!} />
+          <FeedDetail data={createFeed} brand={brandById!} />
           <div className="d-flex justify-content-end">
             <AppButton textBtn="Lưu tin và thanh toán" onClick={onSaveFeed} />
           </div>

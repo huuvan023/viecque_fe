@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Cascader } from "antd";
-import { apiLocationAxios } from "@Axios/public/api-location";
+import { apiPublicAxios } from "@Axios/public/api-public";
 import { BaseOptionType } from "antd/es/cascader";
 import { openNotification } from "@Utils/notification";
 import { LocationDataModel } from "@Models/index";
@@ -24,7 +24,7 @@ const AppLocation = ({ handleLocationData, changeOnSelect }: Props) => {
   useEffect(() => {
     (async () => {
       try {
-        const response = await apiLocationAxios.getProvinces();
+        const response = await apiPublicAxios.getProvinces();
         const dataProvinces: Option[] = response.data?.data?.map((item) => ({
           value: item.code,
           code: item.code,
@@ -66,7 +66,7 @@ const AppLocation = ({ handleLocationData, changeOnSelect }: Props) => {
 
     if (selectedOptions.length === 1) {
       const code = targetOption.code;
-      const response = await apiLocationAxios.getDistricts({
+      const response = await apiPublicAxios.getDistricts({
         provinceCode: +code!,
       });
       targetOption.loading = false;
@@ -84,7 +84,7 @@ const AppLocation = ({ handleLocationData, changeOnSelect }: Props) => {
     if (selectedOptions.length === 2) {
       const districtCode = targetOption.districtCode;
       const provinceCode = targetOption.provinceCode;
-      const response = await apiLocationAxios.getWards({
+      const response = await apiPublicAxios.getWards({
         provinceCode: +provinceCode!,
         districtCode: +districtCode!,
       });

@@ -140,7 +140,9 @@ export default function FeedDetail({ data, brand }: Props) {
                 <span className="font-bold">Thời gian bắt đầu</span>
               </div>
               <div className="col-sm-8 col-7">
-                <span>{data.timeToStart}</span>
+                <span>
+                  {`${data.timeToStart?.getDate()} - ${data.timeToStart?.getMonth()} - ${data.timeToStart?.getFullYear()}`}
+                </span>
               </div>
             </div>
             <div style={{ height: 20 }}></div>

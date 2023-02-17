@@ -3,12 +3,13 @@ import {
   ResponseModel,
   DistrictsModel,
   WardsModel,
+  JobCategoryModel,
 } from "@Models/index";
 import axiosClient from "@Axios/axios";
 import { ENPOINT } from "@Axios/endpoint";
 import { AxiosResponse } from "axios";
 
-export const apiLocationAxios = {
+export const apiPublicAxios = {
   getProvinces(): Promise<AxiosResponse<ResponseModel<ProvinceModel[]>>> {
     return axiosClient.get(ENPOINT.provinces);
   },
@@ -31,5 +32,9 @@ export const apiLocationAxios = {
     return axiosClient.get(
       `${ENPOINT.wards}?provinceCode=${provinceCode}&districtCode=${districtCode}`
     );
+  },
+
+  getJobCate(): Promise<AxiosResponse<ResponseModel<JobCategoryModel[]>>> {
+    return axiosClient.get(ENPOINT.getJobCate);
   },
 };

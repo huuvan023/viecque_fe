@@ -278,6 +278,7 @@
       padding-right: 15px;
     }
     .right-info {
+      flex-grow: 1;
       .name-job {
         font-size: $font-lg;
         line-height: 26px;
@@ -315,6 +316,7 @@
       padding-right: 15px;
     }
     .right-info {
+      flex-grow: 1;
       .name-job {
         font-size: $font-lg;
         line-height: 26px;
