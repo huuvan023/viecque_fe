@@ -4,16 +4,19 @@ import {
   SettingOutlined,
   MessageOutlined,
   AppstoreAddOutlined,
+  CodeSandboxOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { useAuth } from "@Hooks/use-auth";
 import { useRouter } from "next/router";
 import { Routes } from "@Routes/routes";
 import { useLoading } from "@Hooks/use-loading";
+import { useRole } from "@Hooks/use-role";
 type Props = {};
 
 export default function MenuUserProfile({}: Props) {
   const { setLoading } = useLoading();
+  const { isRole } = useRole();
   const { logout, profile } = useAuth();
   const router = useRouter();
 
@@ -53,7 +56,13 @@ export default function MenuUserProfile({}: Props) {
     router.push(Routes.userListFeeds);
     setLoading(true);
   }
-
+  async function onAdmin() {
+    if (Routes.admin === router.pathname) {
+      return;
+    }
+    router.push(Routes.admin);
+    setLoading(true);
+  }
   return (
     <>
       <div className="button-menu" onClick={onSettingUser}>
@@ -72,6 +81,12 @@ export default function MenuUserProfile({}: Props) {
         <MessageOutlined />
         <a>Liên hệ với chúng tôi</a>
       </div>
+      {isRole === "ADMIN" ? (
+        <div className="button-menu" onClick={onAdmin}>
+          <CodeSandboxOutlined />
+          <a>Quản trị viên</a>
+        </div>
+      ) : null}
       <div className="button-logout d-flex" onClick={onLogOut}>
         <LogoutOutlined />
         <a>Logout</a>

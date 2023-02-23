@@ -1,9 +1,9 @@
 import {
-  DistrictsModel,
-  JobCategoryModel,
   ProvinceModel,
+  DistrictsModel,
   WardsModel,
-} from "..";
+  JobCategoryModel,
+} from "@Models/index";
 
 export interface CreateFeedModel {
   brandId: string;

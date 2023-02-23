@@ -36,7 +36,7 @@ export default function Home({ data }: Props) {
     <>
       <Layout>
         <div className="container home-screen">
-          <SearchBox />
+          <SearchBox onSearch={(value) => console.log(value)} />
           <div style={{ height: "20px" }}></div>
           <Tabs
             defaultActiveKey="1"
@@ -101,21 +101,10 @@ export async function getServerSideProps(
 ): Promise<{
   props: Props;
 }> {
-  const data = new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(true);
-    }, 100);
-  });
-
-  const newData = await data.then();
-  const newList = [];
-  for (let index = 0; index < 10; index++) {
-    newList.push(index);
-    // console.log(newList);
-  }
+  console.log(context.query);
   return {
     props: {
-      data: newList,
+      data: [],
     },
   };
 }

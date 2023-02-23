@@ -18,7 +18,7 @@ export default function UserFeeds() {
     },
     {
       key: "2",
-      label: "Tin hết hạn",
+      label: "Tin reported",
       children: <TabFeedsNoActive />,
     },
   ];

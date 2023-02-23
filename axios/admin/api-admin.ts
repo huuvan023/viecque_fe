@@ -1,11 +1,4 @@
-import {
-  ProvinceModel,
-  ResponseModel,
-  DistrictsModel,
-  WardsModel,
-  JobCategoryModel,
-  GetFeedsModel,
-} from "@Models/index";
+import { ResponseModel, GetFeedsModel } from "@Models/index";
 import axiosClient from "@Axios/axios";
 import { ENPOINT } from "@Axios/endpoint";
 import { AxiosResponse } from "axios";
@@ -33,7 +26,7 @@ export const apiAdminAxios = {
       headers: {
         "Content-Type": "application/json",
         accept: "application/json",
-        id: "saSAs",
+        id: id,
       },
     };
     return axiosClient(config);
@@ -64,5 +57,9 @@ export const apiAdminAxios = {
     return axiosClient.get(
       `${ENPOINT.allFeedsAdmin}?page=${page}&pageSize=${pageSize}&districtId=${districtId}&wardId=${wardId}&provinceId=${provinceId}&statuses=${statuses}&dateRange=${dateRange}&userIds=${userIds}`
     );
+  },
+
+  declineFeed(id: string) {
+    return axiosClient.get(`${ENPOINT.declineFeed}?feedsId=${id}`);
   },
 };

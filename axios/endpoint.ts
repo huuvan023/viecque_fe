@@ -31,4 +31,5 @@ export const ENPOINT = {
   deleteCate: "admin/delete-cate",
   allUser: "admin/users",
   allFeedsAdmin: "admin/filter-feeds",
+  declineFeed: "/admin/feeds/decline",
 };

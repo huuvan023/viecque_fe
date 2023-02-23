@@ -9,6 +9,7 @@ export class Routes {
 
   // user
   static contact = "/contact";
+  static admin = "/admin";
   static userSetting = "/user/user-setting";
   static createFeed = "/user/create-feed";
   static userListFeeds = "/user/user-feeds";

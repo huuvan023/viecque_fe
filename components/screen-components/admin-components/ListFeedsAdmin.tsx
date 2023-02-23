@@ -3,24 +3,33 @@ import AppPagination from "@Component/elements/AppPagination";
 import { useLoading } from "@Hooks/use-loading";
 import { GetFeedsModel, PaginationModel } from "@Models/index";
 import { openNotification } from "@Utils/notification";
-import { Button, Col, Popover, Row } from "antd";
+import { Button, Col, Drawer, Popover, Row, Space } from "antd";
 import { MenuOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
+import SearchComponent from "@Component/elements/Search";
+import FeedDetailAdminView from "./FeedDetailAdminView";
 
 export default function ListFeedsAdmin() {
+  const { setLoading } = useLoading();
+
   const [data, setdata] = useState<GetFeedsModel[]>([]);
+  const [feed, setFeed] = useState<GetFeedsModel | null>(null);
   const [pagination, setPagination] = useState<PaginationModel>({
     page: 1,
     pageSize: 10,
   });
+  const [openDrawer, setOpenDrawer] = useState(false);
   const [total, setTotal] = useState(0);
-  const { setLoading } = useLoading();
   useEffect(() => {
     (async () => {
       getAdminFeeds();
     })();
   }, [pagination]);
 
+  const onCloseDrawer = () => {
+    setOpenDrawer(false);
+    setFeed(null);
+  };
   const getAdminFeeds = async () => {
     try {
       const response = await apiAdminAxios.getAllFeeds({
@@ -36,25 +45,36 @@ export default function ListFeedsAdmin() {
       setLoading(false);
     }
   };
-  const Menu = (
-    <div>
-      <div className="button-menu">
-        <a>approve</a>
-      </div>
-      <div className="button-menu">
-        <a>decline</a>
-      </div>
-    </div>
-  );
+
+  const onOpenDrawer = (feed: GetFeedsModel) => {
+    setOpenDrawer(true);
+    setFeed(feed);
+  };
+  const onDeclineJob = (id: string) => {
+    console.log(id);
+    try {
+      const response = apiAdminAxios.declineFeed(id);
+      // console.log(response);
+      openNotification("success", "Thành công", "Decline job thành công");
+    } catch (error: any) {
+      const message = error.response?.data.message;
+      openNotification("error", "Thất bại", message);
+    }
+  };
   return (
     <div className="row">
-      {data.map((item, index) => {
+      <SearchComponent onSearch={(value) => console.log(value)} />
+      {data?.map((item, index) => {
         return (
           <div
             key={item.id ?? index}
             className="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12"
+            style={{ position: "relative" }}
           >
-            <div className="card-grid-2 hover-up">
+            <div
+              className="card-grid-2 hover-up"
+              onClick={() => onOpenDrawer(item)}
+            >
               <div className="card-grid-2-image-left">
                 <div className="image-box">
                   <img
@@ -72,21 +92,6 @@ export default function ListFeedsAdmin() {
                   <span className="card-time">
                     5<span> minutes ago</span>
                   </span>
-                </div>
-                <div>
-                  <Popover
-                    placement="bottomRight"
-                    title={<span>Menu</span>}
-                    content={Menu}
-                    trigger="click"
-                  >
-                    <Button
-                      className="d-flex align-items-center justify-content-center"
-                      type="dashed"
-                    >
-                      <MenuOutlined />
-                    </Button>
-                  </Popover>
                 </div>
               </div>
               <div className="card-block-info">
@@ -120,6 +125,39 @@ export default function ListFeedsAdmin() {
                 </div>
               </div>
             </div>
+            <div
+              style={{
+                position: "absolute",
+                top: "10px",
+                right: "20px",
+              }}
+            >
+              <Popover
+                placement="bottomRight"
+                title={<span>Menu</span>}
+                content={
+                  <div>
+                    <div className="button-menu">
+                      <a>approve</a>
+                    </div>
+                    <div
+                      className="button-menu"
+                      onClick={() => onDeclineJob(item.id)}
+                    >
+                      <a>decline</a>
+                    </div>
+                  </div>
+                }
+                trigger="click"
+              >
+                <Button
+                  className="d-flex align-items-center justify-content-center"
+                  type="dashed"
+                >
+                  <MenuOutlined />
+                </Button>
+              </Popover>
+            </div>
           </div>
         );
       })}
@@ -130,6 +168,15 @@ export default function ListFeedsAdmin() {
         pagination={pagination}
         total={total}
       />
+      <Drawer
+        title="Drawer with extra actions"
+        placement="bottom"
+        height="90%"
+        onClose={onCloseDrawer}
+        open={openDrawer}
+      >
+        {feed ? <FeedDetailAdminView data={feed} /> : null}
+      </Drawer>
     </div>
   );
 }

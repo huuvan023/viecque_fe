@@ -5,7 +5,9 @@ import { AxiosResponse } from "axios";
 import FormData from "form-data";
 
 export const apiBrandsAxios = {
-  createBrand(data: FormData): Promise<AxiosResponse<ResponseModel<null>>> {
+  createBrand(
+    data: FormData
+  ): Promise<AxiosResponse<ResponseModel<BrandsModel>>> {
     var config = {
       method: "post",
       url: ENPOINT.brands,

@@ -189,7 +189,7 @@ const CreateFeed = () => {
                   </div>
                   <div className="box-size">
                     <label className="form-label" htmlFor="input-1">
-                      Chọn thương hiệu
+                      Upload thương hiệu
                       <span style={{ color: "red" }}>*</span>
                     </label>
                     {brand ? (
@@ -210,12 +210,12 @@ const CreateFeed = () => {
                       </div>
                     ) : null}
 
-                    <ChooseBrands
-                      isOpenBrands={isChooseBrands}
-                      onCancel={() => setIschooseBrands(false)}
-                      chooseBrand={(brand: BrandsModel) => {
+                    <UserBrands
+                      open={isChooseBrands}
+                      onSuccess={(brand: BrandsModel) => {
                         setBrand(brand);
                       }}
+                      onCancel={(close) => setIschooseBrands(false)}
                     />
                     <Button
                       type="dashed"
@@ -223,7 +223,7 @@ const CreateFeed = () => {
                       style={{ width: "100%" }}
                       onClick={() => setIschooseBrands(true)}
                     >
-                      Chọn Thương hiệu
+                      Upload thương hiệu
                     </Button>
                   </div>
                   <div className="box-size">
@@ -390,29 +390,7 @@ const CreateFeed = () => {
                       }}
                     />
                   </div>
-                  <div className="box-size">
-                    <label className="form-label" htmlFor="input-1">
-                      Số năm kinh nghiệm
-                      <span style={{ color: "red" }}>*</span>
-                    </label>
-                    <InputNumber
-                      style={{ width: "100%" }}
-                      size="large"
-                      min={0}
-                      max={100}
-                      defaultValue={experience}
-                      onChange={(value) => setExperience(value!)}
-                    />
-                  </div>
-                  <div className="box-size">
-                    <AppInput
-                      required={true}
-                      label="Vị trí tuyển dụng"
-                      placeholder="Vị trí tuyển dụng"
-                      name="position"
-                      requiredMessage="Vui lòng điền vị trí tuyển dụng"
-                    />
-                  </div>
+
                   <div className="box-size">
                     <label className="form-label" htmlFor="input-1">
                       Mô tả công việc
@@ -442,34 +420,3 @@ const CreateFeed = () => {
 };
 
 export default CreateFeed;
-
-interface ChooseBrandsModel {
-  isOpenBrands: boolean;
-  onCancel: Function;
-  chooseBrand: (e: BrandsModel) => void;
-}
-const ChooseBrands = ({
-  isOpenBrands,
-  onCancel,
-  chooseBrand,
-}: ChooseBrandsModel) => {
-  const onSave = () => {};
-  return (
-    <>
-      <Modal
-        open={isOpenBrands}
-        onCancel={() => onCancel()}
-        onOk={onSave}
-        okText="Lưu"
-        cancelText="Hủy"
-      >
-        <UserBrands
-          onChooseBrand={(brandId: BrandsModel) => {
-            onCancel();
-            chooseBrand(brandId);
-          }}
-        />
-      </Modal>
-    </>
-  );
-};

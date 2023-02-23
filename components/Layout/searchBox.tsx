@@ -6,11 +6,14 @@ import SelectLocation from "@Component/elements/SelectLocation";
 import SelectComponent from "@Component/elements/Select";
 import SearchComponent from "@Component/elements/Search";
 
-const SearchBox = () => {
+interface Props {
+  onSearch: (value: string) => void;
+}
+const SearchBox = (props: Props) => {
   const { Panel } = Collapse;
   return (
     <>
-      <SearchComponent />
+      <SearchComponent onSearch={props.onSearch} />
       <Collapse accordion>
         <Panel header="Bộ lọc" key="1">
           <SelectLocation />
