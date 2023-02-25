@@ -1,4 +1,4 @@
-export const removeVietnameseTones = (str: string) => {
+export const removeVietnameseTones = (str: string): string => {
   let result = str || "";
   result = result.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
   result = result.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");

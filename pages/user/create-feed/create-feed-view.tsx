@@ -1,4 +1,4 @@
-import FeedDetail from "@Component/screen-components/home-components/feeds/FeedDetail";
+// import FeedDetail from "@Component/screen-components/home-components/feeds/FeedDetail";
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -28,7 +28,6 @@ export default function CreateFeedView() {
       });
       return;
     }
-    console.log(JSON.stringify(createFeed));
     (() => {
       getBrandById(createFeed.brandId);
     })();
@@ -65,7 +64,7 @@ export default function CreateFeedView() {
         <div className="container home-screen">
           <StepCreateFeed currentStep={1} />
           <div style={{ height: 20 }}></div>
-          <FeedDetail data={createFeed} brand={brandById!} />
+          {/* <FeedDetail data={createFeed} brand={brandById!} /> */}
           <div className="d-flex justify-content-end">
             <AppButton textBtn="Lưu tin và thanh toán" onClick={onSaveFeed} />
           </div>

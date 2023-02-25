@@ -59,7 +59,7 @@ export const apiAdminAxios = {
     );
   },
 
-  declineFeed(id: string) {
+  declineFeed(id: string): Promise<AxiosResponse<ResponseModel<any>>> {
     return axiosClient.get(`${ENPOINT.declineFeed}?feedsId=${id}`);
   },
 };

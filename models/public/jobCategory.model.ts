@@ -1,6 +1,6 @@
 export interface JobCategoryModel {
   id: string;
   name: string;
-  createdTime: any;
-  createdBy: any;
+  createdTime: Date;
+  createdBy: string;
 }

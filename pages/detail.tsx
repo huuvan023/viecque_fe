@@ -1,36 +1,198 @@
-import FeedDetail from "@Component/screen-components/home-components/feeds/FeedDetail";
 import { GetServerSidePropsContext } from "next";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Layout from "@Component/Layout/Layout";
 import { useLoading } from "@Hooks/use-loading";
-import { apiBrandsAxios } from "@Axios/user/api-brands";
-import { BrandsModel } from "@Models/index";
-interface Props {}
-export default function Detail({ data }: { data: any }) {
+import { GetFeedsModel, ResponseModel } from "@Models/index";
+import env from "@Env/index";
+import axios, { AxiosResponse } from "axios";
+import { Button } from "antd";
+import { useRouter } from "next/router";
+interface Props {
+  data: GetFeedsModel | null;
+}
+export default function Detail({ data }: Props) {
   const router = useRouter();
   const { setLoading } = useLoading();
   useEffect(() => {
-    setLoading(true);
-    (() => {
-      getBrandById("75a38d67-bbe7-464b-b9a9-8120801048b9");
-    })();
-  }, [router]);
-  const [brandById, setBrandById] = useState<BrandsModel>();
-  const getBrandById = async (id: string) => {
-    try {
-      const response = await apiBrandsAxios.getBrandById(id);
-      setBrandById(response.data.data[0]);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-    }
-  };
+    setLoading(false);
+    console.log(data);
+  }, [data]);
+  // const [brandById, setBrandById] = useState<BrandsModel>();
+  // const getBrandById = async (id: string) => {
+  //   try {
+  //     const response = await apiBrandsAxios.getBrandById(id);
+  //     setBrandById(response.data.data[0]);
+  //     setLoading(false);
+  //   } catch (error) {
+  //     setLoading(false);
+  //   }
+  // };
   return (
     <>
       <Layout>
         <div className="container home-screen">
-          <FeedDetail data={data} brand={brandById!} />
+          {/* <FeedDetail data={data} brand={brandById!} /> */}
+          {data ? (
+            <>
+              <div className="row">
+                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                  <div className="card-detail-feed">
+                    <div className="card-detail-feed-child">
+                      <div className="image-box">
+                        <img
+                          src={data.branding?.resourceUrl}
+                          width={50}
+                          height={50}
+                          alt="jobBox"
+                        />
+                      </div>
+                      <div className="right-info">
+                        <a className="name-job">{data.jobTitle}</a>
+                        <span className="location-small">
+                          {data.branding?.name}
+                        </span>
+                        <span className="size-box-width"></span>
+                        <span className="card-time">
+                          --<span> phút trước </span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="card-detail-feed">
+                    <div className="card-detail-feed-child">
+                      <div className="col-sm-4 col-5">
+                        <span className="location-icon font-bold">
+                          Địa điểm chi tiết
+                        </span>
+                      </div>
+                      <div className="col-sm-8 col-7">
+                        <span>{data.detailsAddress}</span>
+                      </div>
+                    </div>
+
+                    <div className="card-detail-feed-child">
+                      <div className="col-sm-4 col-5">
+                        <span className="phone-icon font-bold">Phone</span>
+                      </div>
+                      <div className="col-sm-8 col-7">
+                        <span>{data.phoneNumber}</span>
+                      </div>
+                    </div>
+                    <div className="card-detail-feed-child">
+                      <div className="col-sm-4 col-5">
+                        <span className="money-icon font-bold">Thù lao</span>
+                      </div>
+                      <div className="col-sm-8 col-7">
+                        <span>
+                          {new Intl.NumberFormat("vi-VN", {
+                            style: "currency",
+                            currency: "VND",
+                          }).format(+data.salary)}{" "}
+                          {`(${data.salaryUnit})`}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="card-detail-feed-child">
+                      <div className="col-sm-4 col-5">
+                        <span className="people-icon font-bold">
+                          Số người tuyển
+                        </span>
+                      </div>
+                      <div className="col-sm-8 col-7">
+                        <span>{data.amount} người</span>
+                      </div>
+                    </div>
+
+                    <div className="p-2">
+                      <hr />
+                    </div>
+                    <div className="name-info">Thông tin chi tiết</div>
+
+                    <div className="card-detail-feed-child">
+                      <div className="col-sm-4 col-5">
+                        <span className="font-bold">Loại việc làm</span>
+                      </div>
+                      <div className="col-sm-8 col-7">
+                        <span>
+                          {data.jobType}
+                          {/* {Jobtype.find((item) => item.value === data.jobType)?.label} */}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="card-detail-feed-child">
+                      <div className="col-sm-4 col-5">
+                        <span className="font-bold">Phân loại việc làm</span>
+                      </div>
+                      <div className="col-sm-8 col-7">
+                        {/* <span>{data.jobCategoryId}</span> */}
+                        {data.jobCate.name}
+                      </div>
+                    </div>
+                    <div className="card-detail-feed-child">
+                      <div className="col-sm-4 col-5">
+                        <span className="font-bold">Vị trí</span>
+                      </div>
+                      <div className="col-sm-8 col-7">
+                        <span>
+                          {/* <GetLocationString
+                        districtId={data.districtId}
+                        provinceId={data.provinceId}
+                        wardId={data.wardId}
+                      /> */}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="card-detail-feed-child">
+                      <div className="col-sm-4 col-5">
+                        <span className="font-bold">Thời gian bắt đầu</span>
+                      </div>
+                      <div className="col-sm-8 col-7">
+                        {/* <span>
+                          {`${data.timeToStart?.getDate()} - ${data.timeToStart?.getMonth()} - ${data.timeToStart?.getFullYear()}`}
+                        </span> */}
+                      </div>
+                    </div>
+                    <div style={{ height: 20 }}></div>
+                  </div>
+                </div>
+                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                  <div className="card-detail-feed">
+                    <div className="card-detail-feed-child">
+                      <div className="right-info p-2">
+                        <a className="name-job">Mô tả công việc</a>
+                        <p>{data.description}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <div
+                style={{
+                  textAlign: "center",
+                  fontSize: "24px",
+                  color: "red",
+                }}
+              >
+                Tin không tồn tại!
+              </div>
+              <div className="text-center mt-30">
+                <Button
+                  block
+                  onClick={() =>
+                    router.push({
+                      pathname: "/",
+                    })
+                  }
+                >
+                  <a className="name-job">Click quay về trang chủ!</a>
+                </Button>
+              </div>
+            </>
+          )}
         </div>
       </Layout>
     </>
@@ -41,11 +203,27 @@ export async function getServerSideProps(
 ): Promise<{
   props: Props;
 }> {
-  const id = context.query.id;
-  console.log(id);
+  const { id = "" } = context.query;
+  let dataResponse = null;
+  var config = {
+    method: "get",
+    maxBodyLength: Infinity,
+    url: `${env}/public/feeds/by-id`,
+    headers: {
+      accept: "application/json",
+      feedsId: id,
+    },
+  };
+  try {
+    const response = await (axios(config) as Promise<
+      AxiosResponse<ResponseModel<GetFeedsModel>>
+    >);
+    dataResponse = response?.data?.data;
+  } catch (error) {}
+
   return {
     props: {
-      data: {},
+      data: dataResponse,
     },
   };
 }

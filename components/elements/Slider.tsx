@@ -1,33 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Slider } from "antd";
 import type { SliderMarks } from "antd/es/slider";
+import { useRouter } from "next/router";
 type Formatter = (value?: number) => React.ReactNode;
 const marks: SliderMarks = {
-  0: "0",
-  10: "10tr",
-  20: "20tr",
-  30: "30tr",
-  40: "40tr",
-  50: {
+  1: "0",
+  1000000: "1tr",
+  10000000: "10tr",
+  20000000: "20tr",
+  50000000: {
     style: {
       color: "#f50",
     },
     label: <strong>50tr</strong>,
   },
 };
-const SliderComponent = () => {
-  const formatter: Formatter = (value?: number) => `${value}tr`;
+interface Props {
+  onChange: (value: [number, number]) => void;
+  defaultValue: [number, number];
+}
+const SliderComponent = (props: Props) => {
+  const router = useRouter();
+  const formatter: Formatter = (value?: number) => {
+    const moneys = new Intl.NumberFormat("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    }).format(value!);
+    return moneys;
+  };
+
   return (
     <>
       <Slider
-        min={0}
-        max={50}
+        min={1}
+        max={50000000}
         tooltip={{ formatter: formatter }}
         included
         range
-        step={5}
+        step={100000}
+        onChange={props.onChange}
         marks={marks}
-        defaultValue={[10, 20]}
+        defaultValue={props.defaultValue}
       />
     </>
   );

@@ -20,9 +20,7 @@ export default async function handler(
       delete dataOnQuery[item];
     }
   });
-  console.log(dataOnQuery);
   var data = JSON.stringify(dataOnQuery);
-  console.log(data);
   var config = {
     method: "get",
     maxBodyLength: Infinity,

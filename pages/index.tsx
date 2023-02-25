@@ -6,105 +6,207 @@ import SearchBox from "@Component/Layout/searchBox";
 import { GetServerSidePropsContext } from "next";
 import FeedsList from "@Component/screen-components/home-components/feeds/FeedsList";
 import { Tabs, TabsProps } from "antd";
+import AxiosClient from "@Axios/axios";
+import axios, { AxiosResponse } from "axios";
+import env from "@Env/index";
+import { ResponseModel } from "@Models/response.model";
+import {
+  GetFeedsModel,
+  JobCategoryModel,
+  PaginationModel,
+} from "@Models/index";
+import { useRouter } from "next/router";
+import AppPagination from "@Component/elements/AppPagination";
+import FeedsListOnLocal from "@Component/screen-components/home-components/feeds/FeedsListOnLocal";
 interface Props {
-  data: any[];
+  data: GetFeedsModel[];
+  total: number;
+  filter: {
+    page: any;
+    pageSize: any;
+    keyword: any;
+    dateRange: any;
+    jobType: any;
+    salaryRange: any;
+    provinceId: any;
+    districtId: any;
+    wardId: any;
+    jobCate: any;
+  };
 }
-export default function Home({ data }: Props) {
+export default function Home({ data, total, filter }: Props) {
   const { setLoading } = useLoading();
-  const [dataFeeds, setDataFeeds] = useState<any>([]);
+  const router = useRouter();
+  const [tabActive, setTabActive] = useState("");
+  const [pagination, setPagination] = useState<PaginationModel>({
+    page: 1,
+    pageSize: 10,
+  });
+  const query = router.query;
   useEffect(() => {
     setLoading(false);
-    setDataFeeds(data);
   }, []);
 
   const items: TabsProps["items"] = [
     {
       key: "1",
       label: "Tin mới nhất",
-      children: <FeedsList data={data} onSaveBtn={true} />,
+      children: <FeedsList data={data} />,
     },
     {
       key: "2",
       label: "Tin đã lưu",
-      children: <FeedsList data={data} onSaveBtn={true} />,
+      children: <FeedsListOnLocal activeTab={tabActive} />,
     },
   ];
-  const onChange = (activeKey: string) => {
-    console.log(activeKey);
+
+  const onSearch = (value: string) => {
+    router.push({
+      pathname: "/",
+      query: {
+        ...query,
+        keyword: value,
+        jobCate: value,
+      },
+    });
+  };
+  const onFilterSalary = (value: [number, number]) => {
+    router.push({
+      pathname: "/",
+      query: {
+        ...query,
+        salaryRangeBefore: value[0],
+        salaryRangeAfter: value[1],
+      },
+    });
+  };
+
+  const onFilterJobCate = (value: string) => {
+    router.push({
+      pathname: "/",
+      query: {
+        ...query,
+        jobCate: value,
+      },
+    });
+  };
+
+  const onPagination = (pagination: PaginationModel) => {
+    setPagination(pagination);
+    router.push({
+      pathname: "/",
+      query: {
+        ...query,
+        page: pagination.page,
+      },
+    });
+  };
+  const onChangeTab = (activeKey: string) => {
+    setTabActive(activeKey);
   };
   return (
     <>
       <Layout>
         <div className="container home-screen">
-          <SearchBox onSearch={(value) => console.log(value)} />
+          <SearchBox
+            onSearch={onSearch}
+            onSalary={onFilterSalary}
+            defaultValueSalary={filter.salaryRange ?? [0, 1000000]}
+            onSelectJobCate={onFilterJobCate}
+            defaultValueJobCate={filter.jobCate}
+          />
           <div style={{ height: "20px" }}></div>
           <Tabs
             defaultActiveKey="1"
             type="card"
             size="large"
             items={items}
-            onChange={onChange}
+            onChange={onChangeTab}
           />
 
-          <div className="paginations">
-            <ul className="pager">
-              <li>
-                <a className="pager-prev" href="#" />
-              </li>
-              <li>
-                <Link legacyBehavior href="#">
-                  <a className="pager-number">1</a>
-                </Link>
-              </li>
-              <li>
-                <Link legacyBehavior href="#">
-                  <a className="pager-number">2</a>
-                </Link>
-              </li>
-              <li>
-                <Link legacyBehavior href="#">
-                  <a className="pager-number">3</a>
-                </Link>
-              </li>
-              <li>
-                <Link legacyBehavior href="#">
-                  <a className="pager-number">4</a>
-                </Link>
-              </li>
-              <li>
-                <Link legacyBehavior href="#">
-                  <a className="pager-number">5</a>
-                </Link>
-              </li>
-              <li>
-                <Link legacyBehavior href="#">
-                  <a className="pager-number active">6</a>
-                </Link>
-              </li>
-              <li>
-                <Link legacyBehavior href="#">
-                  <a className="pager-number">7</a>
-                </Link>
-              </li>
-              <li>
-                <a className="pager-next" href="#" />
-              </li>
-            </ul>
-          </div>
+          <AppPagination
+            handlePagination={onPagination}
+            pagination={pagination}
+            total={total}
+          />
         </div>
       </Layout>
     </>
   );
 }
+
 export async function getServerSideProps(
   context: GetServerSidePropsContext
 ): Promise<{
   props: Props;
 }> {
-  console.log(context.query);
+  const {
+    page = "1",
+    pageSize = "10",
+    keyword = null,
+    dateRange = null,
+    jobType = null,
+    salaryRangeBefore = null,
+    salaryRangeAfter = null,
+    provinceId = null,
+    districtId = null,
+    wardId = null,
+    jobCate = null,
+  } = context.query;
+
+  let salaryRange = null;
+  if (salaryRangeBefore && salaryRangeAfter) {
+    salaryRange = [salaryRangeBefore, salaryRangeAfter];
+  }
+  const data = JSON.stringify({
+    page,
+    pageSize,
+    keyword,
+    dateRange,
+    jobType,
+    salaryRange: salaryRange,
+    provinceId,
+    districtId,
+    wardId,
+    jobCate: jobCate === "" ? null : jobCate,
+  });
+
+  const config = {
+    method: "post",
+    maxBodyLength: Infinity,
+    url: `${env}/public/filter-feeds`,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: data,
+  };
+
+  let dataResponse: GetFeedsModel[] = [];
+  let totalRecord = 0;
+  try {
+    const response = await (axios(config) as Promise<
+      AxiosResponse<ResponseModel<GetFeedsModel[]>>
+    >);
+    dataResponse = response?.data?.data;
+    totalRecord = response.data?.totalRecord!;
+  } catch (error) {}
+
   return {
     props: {
-      data: [],
+      data: dataResponse,
+      total: totalRecord,
+      filter: {
+        page,
+        pageSize,
+        keyword,
+        dateRange,
+        jobType,
+        salaryRange,
+        provinceId,
+        districtId,
+        wardId,
+        jobCate,
+      },
     },
   };
 }

@@ -7,7 +7,7 @@ import { Button, Col, Drawer, Popover, Row, Space } from "antd";
 import { MenuOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import SearchComponent from "@Component/elements/Search";
-import FeedDetailAdminView from "./FeedDetailAdminView";
+import FeedDetailAdminView from "../feed/FeedDetailDrawerView";
 
 export default function ListFeedsAdmin() {
   const { setLoading } = useLoading();
@@ -51,10 +51,8 @@ export default function ListFeedsAdmin() {
     setFeed(feed);
   };
   const onDeclineJob = (id: string) => {
-    console.log(id);
     try {
       const response = apiAdminAxios.declineFeed(id);
-      // console.log(response);
       openNotification("success", "Thành công", "Decline job thành công");
     } catch (error: any) {
       const message = error.response?.data.message;
@@ -69,7 +67,7 @@ export default function ListFeedsAdmin() {
           <div
             key={item.id ?? index}
             className="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12"
-            style={{ position: "relative" }}
+            style={{ position: "relative", cursor: "pointer" }}
           >
             <div
               className="card-grid-2 hover-up"
@@ -169,7 +167,7 @@ export default function ListFeedsAdmin() {
         total={total}
       />
       <Drawer
-        title="Drawer with extra actions"
+        title="Chi tiết tin"
         placement="bottom"
         height="90%"
         onClose={onCloseDrawer}

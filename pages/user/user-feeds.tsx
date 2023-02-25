@@ -4,8 +4,8 @@ import React, { useEffect, useState } from "react";
 
 import { useLoading } from "@Hooks/use-loading";
 import { Tabs, TabsProps } from "antd";
-import MyTabFeeds from "@Component/screen-components/feeds-components/MyTabFeed";
-import TabFeedsNoActive from "@Component/screen-components/feeds-components/TabNoActive";
+import MyTabFeeds from "@Component/screen-components/user-feeds-components/MyTabFeed";
+import TabFeedsNoActive from "@Component/screen-components/user-feeds-components/TabNoActive";
 
 export default function UserFeeds() {
   const { setLoading } = useLoading();

@@ -7,7 +7,7 @@ interface Props {
   data: GetFeedsModel;
   // brand: BrandsModel;
 }
-export default function FeedDetailAdminView({ data }: Props) {
+export default function FeedDetailDrawerView({ data }: Props) {
   return (
     <>
       <div className="row">
@@ -94,7 +94,7 @@ export default function FeedDetailAdminView({ data }: Props) {
                 <span className="font-bold">Phân loại việc làm</span>
               </div>
               <div className="col-sm-8 col-7">
-                <span>{data.jobCate?.name}</span>
+                {/* <span>{data.jobCate?.name}</span> */}
               </div>
             </div>
 
@@ -104,7 +104,7 @@ export default function FeedDetailAdminView({ data }: Props) {
               </div>
               <div className="col-sm-8 col-7">
                 <span>
-                  {data.timeToStart}
+                  {/* {data.timeToStart} */}
                   {/* {`${data.timeToStart?.getDate()} - ${data.timeToStart?.getMonth()} - ${data.timeToStart?.getFullYear()}`} */}
                 </span>
               </div>

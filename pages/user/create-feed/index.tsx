@@ -42,7 +42,6 @@ const CreateFeed = () => {
   const router = useRouter();
 
   const [brand, setBrand] = useState<BrandsModel>();
-  const [numberPhone, setNumberPhone] = useState();
   const [locationData, setLocationData] = useState<LocationDataModel>();
   const [jobType, setJobType] = useState<number>();
   const [salaryUnit, setSalaryUnit] = useState("");
@@ -53,7 +52,6 @@ const CreateFeed = () => {
   const [description, setDescription] = useState("");
   const [jobCategoryId, setJobCategoryId] = useState("");
   const [salary, setSalary] = useState(50000);
-  const [experience, setExperience] = useState(0);
   const [amountPeople, setAmountPeople] = useState(1);
   useEffect(() => {
     (async () => {
@@ -90,15 +88,14 @@ const CreateFeed = () => {
     detailsAddress: string;
     jobTitle: string;
     position: string;
+    workingTime: string;
+    phoneNumber: string;
   }) => {
     if (!brand) {
       openNotification("error", "Thất bại", "Vui lòng chọn thương hiệu!");
       return;
     }
-    if (!numberPhone) {
-      openNotification("error", "Thất bại", "Vui lòng chọn số điện thoại!");
-      return;
-    }
+
     if (!locationData) {
       openNotification("error", "Thất bại", "Vui lòng chọn vị trí!");
       return;
@@ -130,7 +127,6 @@ const CreateFeed = () => {
 
     const data: CreateFeedModel = {
       brandId: brand.brandId!,
-      phoneNumber: numberPhone,
       provinceId: locationData.provinceId!,
       districtId: locationData.districtId!,
       wardId: locationData.wardId!,
@@ -140,7 +136,6 @@ const CreateFeed = () => {
       jobCategoryId: jobCategoryId,
       description: description,
       salary: salary.toString(),
-      experience: experience.toString(),
       amountPeople: amountPeople.toString(),
       ...dataJob,
     };
@@ -155,6 +150,8 @@ const CreateFeed = () => {
     detailsAddress: string;
     jobTitle: string;
     position: string;
+    workingTime: string;
+    phoneNumber: string;
   }) => {
     onCreateFeed(dataJob);
   };
@@ -226,7 +223,7 @@ const CreateFeed = () => {
                       Upload thương hiệu
                     </Button>
                   </div>
-                  <div className="box-size">
+                  {/* <div className="box-size">
                     <label className="form-label" htmlFor="input-1">
                       Chọn số điện thoại <span style={{ color: "red" }}>*</span>
                     </label>
@@ -248,7 +245,7 @@ const CreateFeed = () => {
                         value: item,
                       }))}
                     />
-                  </div>
+                  </div> */}
                   <div className="box-size">
                     <label className="form-label" htmlFor="input-1">
                       Chọn vị trí <span style={{ color: "red" }}>*</span>
@@ -270,6 +267,15 @@ const CreateFeed = () => {
                     />
                   </div>
                   <div className="box-size">
+                    <AppInput
+                      required={true}
+                      label="Số điện thoại"
+                      placeholder="Nhập số điện thoại"
+                      name="phoneNumber"
+                      requiredMessage="Vui lòng nhập số điện thoại"
+                    />
+                  </div>
+                  <div className="box-size">
                     <label className="form-label" htmlFor="input-1">
                       Chọn loại thời gian làm việc
                       <span style={{ color: "red" }}>*</span>
@@ -283,6 +289,15 @@ const CreateFeed = () => {
                         setJobType(value);
                       }}
                       options={Jobtype}
+                    />
+                  </div>
+                  <div className="box-size">
+                    <AppInput
+                      required={true}
+                      label="Thời gian làm việc trong ngày"
+                      placeholder="8h sáng - 8h tối"
+                      name="workingTime"
+                      requiredMessage="Vui lòng điền thời gian làm việc trong ngày"
                     />
                   </div>
                   <div className="box-size">

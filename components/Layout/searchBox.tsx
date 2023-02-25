@@ -1,13 +1,16 @@
-import AppInput from "@Component/elements/Input";
 import { Collapse } from "antd";
 import React from "react";
 import SliderComponent from "@Component/elements/Slider";
 import SelectLocation from "@Component/elements/SelectLocation";
-import SelectComponent from "@Component/elements/Select";
 import SearchComponent from "@Component/elements/Search";
+import ListCategoryJob from "@Component/elements/Select";
 
 interface Props {
   onSearch: (value: string) => void;
+  onSalary: (value: [number, number]) => void;
+  defaultValueSalary: [number, number];
+  onSelectJobCate: (value: string) => void;
+  defaultValueJobCate?: string;
 }
 const SearchBox = (props: Props) => {
   const { Panel } = Collapse;
@@ -18,8 +21,14 @@ const SearchBox = (props: Props) => {
         <Panel header="Bộ lọc" key="1">
           <SelectLocation />
           <label>Mức lương</label>
-          <SliderComponent />
-          <SelectComponent />
+          <SliderComponent
+            onChange={props.onSalary}
+            defaultValue={props.defaultValueSalary}
+          />
+          <ListCategoryJob
+            valueDefault={props.defaultValueJobCate}
+            onSelectJobCate={props.onSelectJobCate}
+          />
         </Panel>
       </Collapse>
     </>

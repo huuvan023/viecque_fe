@@ -3,6 +3,7 @@ import {
   DistrictsModel,
   WardsModel,
   JobCategoryModel,
+  BrandsModel,
 } from "@Models/index";
 
 export interface CreateFeedModel {
@@ -20,28 +21,26 @@ export interface CreateFeedModel {
   salary: string;
   salaryUnit: string;
   timeToStart: Date;
-  position: string;
-  experience: string;
+  workingTime: string;
 }
 export interface GetFeedsModel {
   id: string;
-  userId: string;
-  timeCreated: string;
-  brandId: string;
-  phoneNumber: string;
+  createdBy: string;
+  timeCreated: "2023-02-25 17:31";
+  branding: BrandsModel;
+  phoneNumber: "0372746758";
   provinceId: ProvinceModel;
   districtId: DistrictsModel;
   wardId: WardsModel;
   detailsAddress: string;
   jobTitle: string;
   jobType: string;
-  feedsStatus: string;
+  feedsStatus: "ACTIVE";
   description: string;
-  amount: number;
-  salary: number;
+  amount: 1;
+  salary: 100000;
   salaryUnit: string;
-  timeToStart: string;
+  timeToStart: Date;
   jobCate: JobCategoryModel;
-  position: string;
-  experience: string;
+  workingTime: string;
 }

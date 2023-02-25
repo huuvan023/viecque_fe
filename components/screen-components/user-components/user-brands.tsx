@@ -148,7 +148,6 @@ const ModifyBrands = ({
       }
       onSuccess(response.data?.data);
     } catch (error) {
-      console.log(error);
       openNotification(
         "error",
         "Thất bại",

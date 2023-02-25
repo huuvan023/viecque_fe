@@ -4,23 +4,28 @@ import { useLoading } from "@Hooks/use-loading";
 import { GetFeedsModel } from "@Models/index";
 import { Routes } from "@Routes/routes";
 import { Col, Row } from "antd";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface Props {
-  data: GetFeedsModel[];
+  activeTab: string;
 }
-export default function FeedsList({ data }: Props) {
-  useEffect(() => {}, [data]);
+export default function FeedsListOnLocal({ activeTab }: Props) {
+  const [data, setData] = useState<GetFeedsModel[]>([]);
+  useEffect(() => {
+    const data: GetFeedsModel[] = localStorage.getItem("feeds")
+      ? JSON.parse(localStorage.getItem("feeds")!)
+      : [];
+    setData(data);
+  }, [activeTab]);
   // const router = useRouter();
-  const saveFeedOnLocal = (feed: GetFeedsModel) => {
+  const removeFeedOnLocal = (feed: GetFeedsModel) => {
     const data: GetFeedsModel[] = localStorage.getItem("feeds")
       ? JSON.parse(localStorage.getItem("feeds")!)
       : [];
 
-    if (data.find((item) => item.id === feed.id)) {
-      return;
-    }
-    localStorage.setItem("feeds", JSON.stringify([...data, feed]));
+    const newData = data.filter((item) => item.id !== feed.id);
+    localStorage.setItem("feeds", JSON.stringify(newData));
+    setData(newData);
   };
   const onDetailFeed = (id: string) => {
     window.open(`${Routes.detail}?id=${id}`);
@@ -92,13 +97,16 @@ export default function FeedsList({ data }: Props) {
               </div>
             </div>
 
-            <div className="boxSaveBtn" onClick={() => saveFeedOnLocal(item)}>
+            <div
+              className="boxSaveBtn boxSaveBtnActive"
+              onClick={() => removeFeedOnLocal(item)}
+            >
               <ImageAssets
                 className="save-feed-btn"
                 src="assets/imgs/icon/save.png"
                 alt="JobBox"
               />
-              <span>Lưu lại</span>
+              <span>Bỏ lưu</span>
             </div>
           </div>
         );
