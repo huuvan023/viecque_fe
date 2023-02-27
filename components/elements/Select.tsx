@@ -18,7 +18,7 @@ const ListCategoryJob = ({ onSelectJobCate, valueDefault }: Props) => {
     try {
       const response = await apiPublicAxios.getJobCate();
       setJobCategoryList(response?.data?.data);
-    } catch (error: any) {
+     } catch (error: any) {
       const message = error.response.data.message;
       openNotification("error", "Thất bại", message);
     }

@@ -5,17 +5,17 @@ import { PaginationModel } from "@Models/pagination.model";
 import { GetFeedsModel } from "@Models/index";
 import AppPagination from "@Component/elements/AppPagination";
 import { openNotification } from "@Utils/notification";
-import { Button, Col, Drawer, Popover, Row } from "antd";
+import { Button, Col, Drawer, Popconfirm, Popover, Row } from "antd";
 import { MenuOutlined } from "@ant-design/icons";
-import { Routes } from "react-router-dom";
 import FeedDetailDrawerView from "../feed/FeedDetailDrawerView";
+import EditFeed from "./EditFeed";
 
-const MyTabFeeds = () => {
+const TabFeeds = () => {
   const [data, setData] = useState<GetFeedsModel[]>([]);
   const { setLoading } = useLoading();
   const [feed, setFeed] = useState<GetFeedsModel | null>(null);
   const [openDrawer, setOpenDrawer] = useState(false);
-
+  const [feedEdit, setFeedEdit] = useState<GetFeedsModel | null>(null);
   const [pagination, setPagination] = useState<PaginationModel>({
     page: 1,
     pageSize: 10,
@@ -47,23 +47,14 @@ const MyTabFeeds = () => {
       setLoading(false);
     }
   };
-  const Menu = (
-    <div>
-      <div className="button-menu">
-        <a>Thanh toán</a>
-      </div>
-      <div className="button-menu">
-        <a>Chỉnh sửa tin</a>
-      </div>
-    </div>
-  );
+
   return (
     <>
       <div className="row">
         {data.map((item, index) => {
           return (
             <div
-              key={item.id ?? index}
+              key={item.id + index}
               className="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12"
               style={{ position: "relative", cursor: "pointer" }}
             >
@@ -134,7 +125,19 @@ const MyTabFeeds = () => {
                 <Popover
                   placement="bottomRight"
                   title={<span>Menu</span>}
-                  content={Menu}
+                  content={
+                    <div>
+                      <div className="button-menu">
+                        <a>Thanh toán</a>
+                      </div>
+                      <div
+                        className="button-menu"
+                        onClick={() => setFeedEdit(item)}
+                      >
+                        <a>Chỉnh sửa tin</a>
+                      </div>
+                    </div>
+                  }
                   trigger="click"
                 >
                   <Button
@@ -166,7 +169,12 @@ const MyTabFeeds = () => {
       >
         {feed ? <FeedDetailDrawerView data={feed} /> : null}
       </Drawer>
+      {/* <EditFeed
+        feed={feedEdit!}
+        openEditFeed={!!feedEdit}
+        onCloseEditFeed={() => setFeedEdit(null)}
+      /> */}
     </>
   );
 };
-export default MyTabFeeds;
+export default TabFeeds;

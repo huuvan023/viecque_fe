@@ -23,22 +23,25 @@ export interface CreateFeedModel {
   timeToStart: Date;
   workingTime: string;
 }
+export interface UpdateFeedModel extends CreateFeedModel {
+  id: string;
+}
 export interface GetFeedsModel {
   id: string;
   createdBy: string;
-  timeCreated: "2023-02-25 17:31";
+  timeCreated: Date;
   branding: BrandsModel;
-  phoneNumber: "0372746758";
+  phoneNumber: string;
   provinceId: ProvinceModel;
   districtId: DistrictsModel;
   wardId: WardsModel;
   detailsAddress: string;
   jobTitle: string;
   jobType: string;
-  feedsStatus: "ACTIVE";
+  feedsStatus: string;
   description: string;
-  amount: 1;
-  salary: 100000;
+  amount: number;
+  salary: number;
   salaryUnit: string;
   timeToStart: Date;
   jobCate: JobCategoryModel;

@@ -38,7 +38,7 @@ const SliderComponent = (props: Props) => {
         included
         range
         step={100000}
-        onChange={props.onChange}
+        onAfterChange={props.onChange}
         marks={marks}
         defaultValue={props.defaultValue}
       />

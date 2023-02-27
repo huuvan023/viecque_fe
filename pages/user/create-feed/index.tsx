@@ -36,7 +36,6 @@ import React, { useEffect, useState } from "react";
 
 const CreateFeed = () => {
   const [isChooseBrands, setIschooseBrands] = useState(false);
-  const [userProfile, setUserProfile] = useState<UserProfileModel | null>(null);
   const { setLoading } = useLoading();
   const { setCreateFeed } = useCreateFeed();
   const router = useRouter();
@@ -55,23 +54,11 @@ const CreateFeed = () => {
   const [amountPeople, setAmountPeople] = useState(1);
   useEffect(() => {
     (async () => {
-      getDataUser();
       getJobCategoryList();
       setLoading(false);
     })();
   }, []);
 
-  const getDataUser = async () => {
-    try {
-      const response = await apiUserProfileAxios.getUserProfile();
-      setUserProfile(response?.data?.data);
-      setLoading(false);
-    } catch (error: any) {
-      const message = error.response.data.message;
-      openNotification("error", "Thất bại", message);
-      setLoading(false);
-    }
-  };
   const getJobCategoryList = async () => {
     try {
       const response = await apiPublicAxios.getJobCate();
@@ -142,7 +129,7 @@ const CreateFeed = () => {
     setCreateFeed(data);
     setLoading(true);
     router.push({
-      pathname: Routes.createFeediew,
+      pathname: Routes.createFeedView,
     });
   };
 
@@ -223,29 +210,6 @@ const CreateFeed = () => {
                       Upload thương hiệu
                     </Button>
                   </div>
-                  {/* <div className="box-size">
-                    <label className="form-label" htmlFor="input-1">
-                      Chọn số điện thoại <span style={{ color: "red" }}>*</span>
-                    </label>
-                    <Select
-                      showSearch
-                      filterOption={(input, option) =>
-                        (option?.label ?? "")
-                          .toLowerCase()
-                          .includes(input.toLowerCase())
-                      }
-                      placeholder="Vui lòng chọn số điện thoại"
-                      size="large"
-                      style={{ width: "100%" }}
-                      onChange={(value) => {
-                        setNumberPhone(value);
-                      }}
-                      options={userProfile?.phoneNumber.map((item) => ({
-                        label: item,
-                        value: item,
-                      }))}
-                    />
-                  </div> */}
                   <div className="box-size">
                     <label className="form-label" htmlFor="input-1">
                       Chọn vị trí <span style={{ color: "red" }}>*</span>

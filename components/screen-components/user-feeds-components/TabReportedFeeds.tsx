@@ -10,7 +10,7 @@ import { MenuOutlined } from "@ant-design/icons";
 import { Routes } from "react-router-dom";
 import FeedDetailDrawerView from "../feed/FeedDetailDrawerView";
 
-const TabFeedsNoActive = () => {
+const TabReportedFeeds = () => {
   const [data, setData] = useState<GetFeedsModel[]>([]);
   const { setLoading } = useLoading();
   const [feed, setFeed] = useState<GetFeedsModel | null>(null);
@@ -36,7 +36,9 @@ const TabFeedsNoActive = () => {
   };
   const getRecruiterFeeds = async () => {
     try {
-      const response = await apiFeedsAxios.getRecruiterFeeds(pagination);
+      const response = await apiFeedsAxios.getRecruiterReportedFeeds(
+        pagination
+      );
       setData(response.data.data);
       const total = response.data.totalRecord;
       setTotal(total!);
@@ -63,7 +65,7 @@ const TabFeedsNoActive = () => {
         {data.map((item, index) => {
           return (
             <div
-              key={item.id ?? index}
+              key={item.id + index}
               className="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12"
               style={{ position: "relative", cursor: "pointer" }}
             >
@@ -169,4 +171,4 @@ const TabFeedsNoActive = () => {
     </>
   );
 };
-export default TabFeedsNoActive;
+export default TabReportedFeeds;

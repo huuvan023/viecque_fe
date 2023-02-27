@@ -4,6 +4,7 @@ import SliderComponent from "@Component/elements/Slider";
 import SelectLocation from "@Component/elements/SelectLocation";
 import SearchComponent from "@Component/elements/Search";
 import ListCategoryJob from "@Component/elements/Select";
+import AppLocation from "./AppLocation";
 
 interface Props {
   onSearch: (value: string) => void;
@@ -19,7 +20,11 @@ const SearchBox = (props: Props) => {
       <SearchComponent onSearch={props.onSearch} />
       <Collapse accordion>
         <Panel header="Bộ lọc" key="1">
-          <SelectLocation />
+          {/* <SelectLocation /> */}
+          <AppLocation
+            changeOnSelect={false}
+            handleLocationData={(locationData) => console.log(locationData)}
+          />
           <label>Mức lương</label>
           <SliderComponent
             onChange={props.onSalary}
