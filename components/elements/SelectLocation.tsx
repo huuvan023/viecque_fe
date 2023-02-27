@@ -1,5 +1,5 @@
 import { TreeSelect, RadioChangeEvent } from "antd";
-
+import { useEffect } from "react";
 const SelectLocation: React.FC = () => {
   const treeData = [
     {
@@ -51,6 +51,8 @@ const SelectLocation: React.FC = () => {
       ],
     },
   ];
+  useEffect(() => {}, []);
+
   return (
     <>
       <TreeSelect

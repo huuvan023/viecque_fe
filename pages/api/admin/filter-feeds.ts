@@ -10,7 +10,7 @@ export default async function handler(
 ) {
   const cookies = new Cookies(req, res);
 
-  const dataOnQuery = req.query;
+  const dataOnQuery = req.body;
   Object.keys(dataOnQuery).forEach((item) => {
     if (
       dataOnQuery[item] === "undefined" ||
@@ -20,9 +20,8 @@ export default async function handler(
       delete dataOnQuery[item];
     }
   });
-  console.log(dataOnQuery);
+
   var data = JSON.stringify(dataOnQuery);
-  console.log(data);
   var config = {
     method: "get",
     maxBodyLength: Infinity,
@@ -35,6 +34,7 @@ export default async function handler(
     data: data,
   };
 
+  console.log(data);
   axios(config)
     .then(function (response) {
       return (res as NextApiResponse).json(response.data);

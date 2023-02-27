@@ -1,34 +1,27 @@
+/* eslint-disable @next/next/no-img-element */
 import ImageAssets from "@Component/elements/ImageAssets";
 import { Jobtype } from "@Constants/jobtype";
-import { GetFeedsModel } from "@Models/index";
+import { BrandsModel, GetFeedsModel } from "@Models/index";
 import GetLocationString from "@Component/Layout/GetLocationString";
 interface Props {
   data: GetFeedsModel;
+  // brand: BrandsModel;
 }
-export default function FeedDetailPublicScreen({ data }: Props) {
+export default function FeedDetailDrawerView({ data }: Props) {
   return (
     <>
       <div className="row">
         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
           <div className="card-detail-feed">
             <div className="card-detail-feed-child">
-              <div className="save-box">
-                <ImageAssets
-                  className="save-icon"
-                  src="assets/imgs/icon/save.png"
-                  alt="JobBox"
-                />
-                <span>Lưu lại</span>
-              </div>
-
-              <div className="image-box">
-                {/* <img
+              {/* <div className="image-box">
+                <img
                   src={brand?.resourceUrl}
                   width={50}
                   height={50}
                   alt="jobBox"
-                /> */}
-              </div>
+                />
+              </div> */}
               <div className="right-info">
                 <a className="name-job">{data.jobTitle}</a>
                 {/* <span className="location-small">{brand?.name}</span> */}
@@ -68,7 +61,7 @@ export default function FeedDetailPublicScreen({ data }: Props) {
                   {new Intl.NumberFormat("vi-VN", {
                     style: "currency",
                     currency: "VND",
-                  }).format(+data.salary)}
+                  }).format(+data.salary)}{" "}
                   {`(${data.salaryUnit})`}
                 </span>
               </div>
@@ -78,7 +71,7 @@ export default function FeedDetailPublicScreen({ data }: Props) {
                 <span className="people-icon font-bold">Số người tuyển</span>
               </div>
               <div className="col-sm-8 col-7">
-                {/* <span>{data.amountPeople} người</span> */}
+                <span>{data.amount} người</span>
               </div>
             </div>
 
@@ -86,22 +79,13 @@ export default function FeedDetailPublicScreen({ data }: Props) {
               <hr />
             </div>
             <div className="name-info">Thông tin chi tiết</div>
-            <div className="card-detail-feed-child">
-              <div className="col-sm-4 col-5">
-                <span className="font-bold">Kinh nghiệm</span>
-              </div>
-              <div className="col-sm-8 col-7">
-                {/* <span>{data.experience} năm</span> */}
-              </div>
-            </div>
+
             <div className="card-detail-feed-child">
               <div className="col-sm-4 col-5">
                 <span className="font-bold">Loại việc làm</span>
               </div>
               <div className="col-sm-8 col-7">
-                <span>
-                  {/* {Jobtype.find((item) => item.value === data.jobType)?.label} */}
-                </span>
+                <span>{data.jobType}</span>
               </div>
             </div>
 
@@ -110,30 +94,18 @@ export default function FeedDetailPublicScreen({ data }: Props) {
                 <span className="font-bold">Phân loại việc làm</span>
               </div>
               <div className="col-sm-8 col-7">
-                {/* <span>{data.jobCategoryId}</span> */}
+                {/* <span>{data.jobCate?.name}</span> */}
               </div>
             </div>
-            <div className="card-detail-feed-child">
-              <div className="col-sm-4 col-5">
-                <span className="font-bold">Vị trí</span>
-              </div>
-              <div className="col-sm-8 col-7">
-                <span>
-                  {/* <GetLocationString
-                    districtId={data.districtId}
-                    provinceId={data.provinceId}
-                    wardId={data.wardId}
-                  /> */}
-                </span>
-              </div>
-            </div>
+
             <div className="card-detail-feed-child">
               <div className="col-sm-4 col-5">
                 <span className="font-bold">Thời gian bắt đầu</span>
               </div>
               <div className="col-sm-8 col-7">
                 <span>
-                  {`${data.timeToStart?.getDate()} - ${data.timeToStart?.getMonth()} - ${data.timeToStart?.getFullYear()}`}
+                  {/* {data.timeToStart} */}
+                  {/* {`${data.timeToStart?.getDate()} - ${data.timeToStart?.getMonth()} - ${data.timeToStart?.getFullYear()}`} */}
                 </span>
               </div>
             </div>

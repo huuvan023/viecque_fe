@@ -3,7 +3,7 @@ export const convertDateTimeToString = (val: any) => {
   let date = new Date(val);
   date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
   if (date.toString() === "Invalid Date") return "NULL";
-  return `'${date.toISOString()}'`;
+  return `${date.toISOString()}`;
 };
 
 export const convertDateTimeToDateString = (val: any) => {
@@ -11,5 +11,5 @@ export const convertDateTimeToDateString = (val: any) => {
   let date = new Date(val);
   date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
   if (date.toString() === "Invalid Date") return "NULL";
-  return `'${date.toISOString().substring(0, 10)}'`;
+  return `${date.toISOString().substring(0, 10)}`;
 };

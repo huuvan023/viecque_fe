@@ -15,13 +15,9 @@ export default function UserSetting() {
       label: `Thông tin`,
       children: <UserInfo />,
     },
+
     {
       key: "2",
-      label: `Thương hiệu`,
-      children: <UserBrands />,
-    },
-    {
-      key: "3",
       label: `Mật khẩu`,
       children: <UserPassword />,
     },

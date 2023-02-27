@@ -93,7 +93,6 @@ const UserBrands = ({ onChooseBrand }: Props) => {
         Thêm Thương hiệu
       </Button>
       <ModifyBrands
-        brand={oneBrand}
         open={modifyBrands}
         onCancel={(event: boolean) => {
           setModifyBrands(event);
@@ -108,47 +107,19 @@ const UserBrands = ({ onChooseBrand }: Props) => {
 };
 
 const ModifyBrands = ({
-  brand,
   open,
   onCancel,
   onSuccess,
 }: {
-  brand: BrandsModel | null;
   open: boolean;
-  onCancel: Function;
-  onSuccess: Function;
+  onCancel: (close: boolean) => void;
+  onSuccess: (brand: BrandsModel) => void;
 }) => {
   const [file, setFile] = useState<any>();
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const { setLoading } = useLoading();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-
-  useEffect(() => {
-    if (brand) {
-      setName(brand.name);
-      setDescription(brand.description);
-      setFileList([
-        {
-          uid: "dasdas",
-          url: brand.resourceUrl,
-          name: "dasdasd",
-        },
-      ]);
-      fetch(brand.resourceUrl!)
-        .then((data) => data.blob())
-        .then((blob) => {
-          const file = new File([blob], "image", { type: blob.type });
-          const fileRead = new FileReader();
-          fileRead.readAsBinaryString(file);
-          fileRead.addEventListener("load", () => {
-            const res = fileRead.result;
-
-            setFile(res);
-          });
-        });
-    }
-  }, [brand]);
 
   const onSave = async () => {
     if (!name || !description || fileList?.length < 1) {
@@ -161,32 +132,28 @@ const ModifyBrands = ({
       "data",
       JSON.stringify({ name: name, description: description })
     );
-    if (!brand) {
-      setLoading(true);
-      onCancel(false);
 
-      try {
-        const response = await apiBrandsAxios.createBrand(data);
-        resetData();
-        if (response) {
-          openNotification(
-            "success",
-            "Thành công",
-            "Thêm Thương hiệu thành công"
-          );
-        }
-        onSuccess();
-      } catch (error) {
-        console.log(error);
+    setLoading(true);
+    onCancel(false);
+
+    try {
+      const response = await apiBrandsAxios.createBrand(data);
+      resetData();
+      if (response) {
         openNotification(
-          "error",
-          "Thất bại",
-          "Thêm Thương hiệu thất bại, vui lòng kiểm tra lại"
+          "success",
+          "Thành công",
+          "Thêm Thương hiệu thành công"
         );
-        resetData();
       }
-    } else {
-      // const response = await apiBrandsAxios.updateBrand(data);
+      onSuccess(response.data?.data);
+    } catch (error) {
+      openNotification(
+        "error",
+        "Thất bại",
+        "Thêm Thương hiệu thất bại, vui lòng kiểm tra lại"
+      );
+      resetData();
     }
   };
 
@@ -220,12 +187,12 @@ const ModifyBrands = ({
 
   return (
     <Modal
-      title={brand ? "Chỉnh sửa Thương hiệu" : "Thêm Thương hiệu"}
+      title="Thêm Thương hiệu"
       open={open}
       onCancel={() => {
         resetData();
       }}
-      onOk={brand ? undefined : onSave}
+      onOk={onSave}
       okText={"Lưu"}
       cancelText="Hủy"
     >
@@ -275,4 +242,4 @@ const ModifyBrands = ({
   );
 };
 
-export default UserBrands;
+export default ModifyBrands;

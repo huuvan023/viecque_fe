@@ -25,10 +25,14 @@ export const ENPOINT = {
   // feeds
   createFeed: "/recruiter/feeds",
   getRecruiterFeed: "/recruiter/feeds",
+  getRecruiterNotPaidFeeds: "/recruiter/not-paid-feeds",
+  getRecruiterReportedFeeds: "/recruiter/reported-feeds",
 
   // admin
   createCate: "admin/create-cate",
   deleteCate: "admin/delete-cate",
   allUser: "admin/users",
   allFeedsAdmin: "admin/filter-feeds",
+  declineFeed: "/admin/feeds/decline",
+  approveFeed: "/admin/feeds/approve",
 };

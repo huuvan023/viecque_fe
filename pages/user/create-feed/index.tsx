@@ -36,13 +36,11 @@ import React, { useEffect, useState } from "react";
 
 const CreateFeed = () => {
   const [isChooseBrands, setIschooseBrands] = useState(false);
-  const [userProfile, setUserProfile] = useState<UserProfileModel | null>(null);
   const { setLoading } = useLoading();
   const { setCreateFeed } = useCreateFeed();
   const router = useRouter();
 
   const [brand, setBrand] = useState<BrandsModel>();
-  const [numberPhone, setNumberPhone] = useState();
   const [locationData, setLocationData] = useState<LocationDataModel>();
   const [jobType, setJobType] = useState<number>();
   const [salaryUnit, setSalaryUnit] = useState("");
@@ -53,27 +51,14 @@ const CreateFeed = () => {
   const [description, setDescription] = useState("");
   const [jobCategoryId, setJobCategoryId] = useState("");
   const [salary, setSalary] = useState(50000);
-  const [experience, setExperience] = useState(0);
   const [amountPeople, setAmountPeople] = useState(1);
   useEffect(() => {
     (async () => {
-      getDataUser();
       getJobCategoryList();
       setLoading(false);
     })();
   }, []);
 
-  const getDataUser = async () => {
-    try {
-      const response = await apiUserProfileAxios.getUserProfile();
-      setUserProfile(response?.data?.data);
-      setLoading(false);
-    } catch (error: any) {
-      const message = error.response.data.message;
-      openNotification("error", "Thất bại", message);
-      setLoading(false);
-    }
-  };
   const getJobCategoryList = async () => {
     try {
       const response = await apiPublicAxios.getJobCate();
@@ -90,15 +75,14 @@ const CreateFeed = () => {
     detailsAddress: string;
     jobTitle: string;
     position: string;
+    workingTime: string;
+    phoneNumber: string;
   }) => {
     if (!brand) {
       openNotification("error", "Thất bại", "Vui lòng chọn thương hiệu!");
       return;
     }
-    if (!numberPhone) {
-      openNotification("error", "Thất bại", "Vui lòng chọn số điện thoại!");
-      return;
-    }
+
     if (!locationData) {
       openNotification("error", "Thất bại", "Vui lòng chọn vị trí!");
       return;
@@ -130,7 +114,6 @@ const CreateFeed = () => {
 
     const data: CreateFeedModel = {
       brandId: brand.brandId!,
-      phoneNumber: numberPhone,
       provinceId: locationData.provinceId!,
       districtId: locationData.districtId!,
       wardId: locationData.wardId!,
@@ -140,14 +123,13 @@ const CreateFeed = () => {
       jobCategoryId: jobCategoryId,
       description: description,
       salary: salary.toString(),
-      experience: experience.toString(),
       amountPeople: amountPeople.toString(),
       ...dataJob,
     };
     setCreateFeed(data);
     setLoading(true);
     router.push({
-      pathname: Routes.createFeediew,
+      pathname: Routes.createFeedView,
     });
   };
 
@@ -155,6 +137,8 @@ const CreateFeed = () => {
     detailsAddress: string;
     jobTitle: string;
     position: string;
+    workingTime: string;
+    phoneNumber: string;
   }) => {
     onCreateFeed(dataJob);
   };
@@ -189,7 +173,7 @@ const CreateFeed = () => {
                   </div>
                   <div className="box-size">
                     <label className="form-label" htmlFor="input-1">
-                      Chọn thương hiệu
+                      Upload thương hiệu
                       <span style={{ color: "red" }}>*</span>
                     </label>
                     {brand ? (
@@ -210,12 +194,12 @@ const CreateFeed = () => {
                       </div>
                     ) : null}
 
-                    <ChooseBrands
-                      isOpenBrands={isChooseBrands}
-                      onCancel={() => setIschooseBrands(false)}
-                      chooseBrand={(brand: BrandsModel) => {
+                    <UserBrands
+                      open={isChooseBrands}
+                      onSuccess={(brand: BrandsModel) => {
                         setBrand(brand);
                       }}
+                      onCancel={(close) => setIschooseBrands(false)}
                     />
                     <Button
                       type="dashed"
@@ -223,31 +207,8 @@ const CreateFeed = () => {
                       style={{ width: "100%" }}
                       onClick={() => setIschooseBrands(true)}
                     >
-                      Chọn Thương hiệu
+                      Upload thương hiệu
                     </Button>
-                  </div>
-                  <div className="box-size">
-                    <label className="form-label" htmlFor="input-1">
-                      Chọn số điện thoại <span style={{ color: "red" }}>*</span>
-                    </label>
-                    <Select
-                      showSearch
-                      filterOption={(input, option) =>
-                        (option?.label ?? "")
-                          .toLowerCase()
-                          .includes(input.toLowerCase())
-                      }
-                      placeholder="Vui lòng chọn số điện thoại"
-                      size="large"
-                      style={{ width: "100%" }}
-                      onChange={(value) => {
-                        setNumberPhone(value);
-                      }}
-                      options={userProfile?.phoneNumber.map((item) => ({
-                        label: item,
-                        value: item,
-                      }))}
-                    />
                   </div>
                   <div className="box-size">
                     <label className="form-label" htmlFor="input-1">
@@ -270,6 +231,15 @@ const CreateFeed = () => {
                     />
                   </div>
                   <div className="box-size">
+                    <AppInput
+                      required={true}
+                      label="Số điện thoại"
+                      placeholder="Nhập số điện thoại"
+                      name="phoneNumber"
+                      requiredMessage="Vui lòng nhập số điện thoại"
+                    />
+                  </div>
+                  <div className="box-size">
                     <label className="form-label" htmlFor="input-1">
                       Chọn loại thời gian làm việc
                       <span style={{ color: "red" }}>*</span>
@@ -283,6 +253,15 @@ const CreateFeed = () => {
                         setJobType(value);
                       }}
                       options={Jobtype}
+                    />
+                  </div>
+                  <div className="box-size">
+                    <AppInput
+                      required={true}
+                      label="Thời gian làm việc trong ngày"
+                      placeholder="8h sáng - 8h tối"
+                      name="workingTime"
+                      requiredMessage="Vui lòng điền thời gian làm việc trong ngày"
                     />
                   </div>
                   <div className="box-size">
@@ -390,29 +369,7 @@ const CreateFeed = () => {
                       }}
                     />
                   </div>
-                  <div className="box-size">
-                    <label className="form-label" htmlFor="input-1">
-                      Số năm kinh nghiệm
-                      <span style={{ color: "red" }}>*</span>
-                    </label>
-                    <InputNumber
-                      style={{ width: "100%" }}
-                      size="large"
-                      min={0}
-                      max={100}
-                      defaultValue={experience}
-                      onChange={(value) => setExperience(value!)}
-                    />
-                  </div>
-                  <div className="box-size">
-                    <AppInput
-                      required={true}
-                      label="Vị trí tuyển dụng"
-                      placeholder="Vị trí tuyển dụng"
-                      name="position"
-                      requiredMessage="Vui lòng điền vị trí tuyển dụng"
-                    />
-                  </div>
+
                   <div className="box-size">
                     <label className="form-label" htmlFor="input-1">
                       Mô tả công việc
@@ -442,34 +399,3 @@ const CreateFeed = () => {
 };
 
 export default CreateFeed;
-
-interface ChooseBrandsModel {
-  isOpenBrands: boolean;
-  onCancel: Function;
-  chooseBrand: (e: BrandsModel) => void;
-}
-const ChooseBrands = ({
-  isOpenBrands,
-  onCancel,
-  chooseBrand,
-}: ChooseBrandsModel) => {
-  const onSave = () => {};
-  return (
-    <>
-      <Modal
-        open={isOpenBrands}
-        onCancel={() => onCancel()}
-        onOk={onSave}
-        okText="Lưu"
-        cancelText="Hủy"
-      >
-        <UserBrands
-          onChooseBrand={(brandId: BrandsModel) => {
-            onCancel();
-            chooseBrand(brandId);
-          }}
-        />
-      </Modal>
-    </>
-  );
-};

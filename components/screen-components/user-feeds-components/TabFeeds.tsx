@@ -5,13 +5,17 @@ import { PaginationModel } from "@Models/pagination.model";
 import { GetFeedsModel } from "@Models/index";
 import AppPagination from "@Component/elements/AppPagination";
 import { openNotification } from "@Utils/notification";
-import { Button, Col, Popover, Row } from "antd";
+import { Button, Col, Drawer, Image, Popconfirm, Popover, Row } from "antd";
 import { MenuOutlined } from "@ant-design/icons";
-import { Routes } from "react-router-dom";
+import FeedDetailDrawerView from "../feed/FeedDetailDrawerView";
+import EditFeed from "./EditFeed";
 
-const MyTabFeeds = () => {
+const TabFeeds = () => {
   const [data, setData] = useState<GetFeedsModel[]>([]);
   const { setLoading } = useLoading();
+  const [feed, setFeed] = useState<GetFeedsModel | null>(null);
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const [feedEdit, setFeedEdit] = useState<GetFeedsModel | null>(null);
   const [pagination, setPagination] = useState<PaginationModel>({
     page: 1,
     pageSize: 10,
@@ -22,6 +26,14 @@ const MyTabFeeds = () => {
     setLoading(true);
   }, [pagination]);
 
+  const onCloseDrawer = () => {
+    setOpenDrawer(false);
+    setFeed(null);
+  };
+  const onOpenDrawer = (feed: GetFeedsModel) => {
+    setOpenDrawer(true);
+    setFeed(feed);
+  };
   const getRecruiterFeeds = async () => {
     try {
       const response = await apiFeedsAxios.getRecruiterFeeds(pagination);
@@ -35,32 +47,32 @@ const MyTabFeeds = () => {
       setLoading(false);
     }
   };
-  const Menu = (
-    <div>
-      <div className="button-menu">
-        <a>Thanh toán</a>
-      </div>
-      <div className="button-menu">
-        <a>Chỉnh sửa tin</a>
-      </div>
-    </div>
-  );
+
   return (
     <>
       <div className="row">
         {data.map((item, index) => {
           return (
             <div
-              key={item.id ?? index}
+              key={item.id + index}
               className="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12"
+              style={{ position: "relative", cursor: "pointer" }}
             >
-              <div className="card-grid-2 hover-up">
+              <div
+                className="card-grid-2 hover-up"
+                onClick={() => onOpenDrawer(item)}
+              >
                 <div className="card-grid-2-image-left">
                   <div className="image-box">
-                    <img
+                    <Image
+                      width={50}
+                      height={50}
+                      src={item.branding.resourceUrl}
+                    />
+                    {/* <img
                       src="https://res.cloudinary.com/huuvan/image/upload/v1676592997/viecque/brands/9562396b-b9ef-4f7a-8d66-c2d7f35159ce/eRSJvOyUd.png"
                       alt="jobBox"
-                    />
+                    /> */}
                   </div>
                   <div className="right-info">
                     <a target="_blank" className="name-job">
@@ -72,21 +84,6 @@ const MyTabFeeds = () => {
                     <span className="card-time">
                       5<span> minutes ago</span>
                     </span>
-                  </div>
-                  <div>
-                    <Popover
-                      placement="bottomRight"
-                      title={<span>Menu</span>}
-                      content={Menu}
-                      trigger="click"
-                    >
-                      <Button
-                        className="d-flex align-items-center justify-content-center"
-                        type="dashed"
-                      >
-                        <MenuOutlined />
-                      </Button>
-                    </Popover>
                   </div>
                 </div>
                 <div className="card-block-info">
@@ -123,6 +120,39 @@ const MyTabFeeds = () => {
                   </div>
                 </div>
               </div>
+              <div
+                style={{
+                  position: "absolute",
+                  top: "10px",
+                  right: "20px",
+                }}
+              >
+                <Popover
+                  placement="bottomRight"
+                  title={<span>Menu</span>}
+                  content={
+                    <div>
+                      <div className="button-menu">
+                        <a>Thanh toán</a>
+                      </div>
+                      <div
+                        className="button-menu"
+                        onClick={() => setFeedEdit(item)}
+                      >
+                        <a>Chỉnh sửa tin</a>
+                      </div>
+                    </div>
+                  }
+                  trigger="click"
+                >
+                  <Button
+                    className="d-flex align-items-center justify-content-center"
+                    type="dashed"
+                  >
+                    <MenuOutlined />
+                  </Button>
+                </Popover>
+              </div>
             </div>
           );
         })}
@@ -135,7 +165,21 @@ const MyTabFeeds = () => {
         pagination={pagination}
         total={total}
       />
+      <Drawer
+        title="Chi tiết tin"
+        placement="bottom"
+        height="90%"
+        onClose={onCloseDrawer}
+        open={openDrawer}
+      >
+        {feed ? <FeedDetailDrawerView data={feed} /> : null}
+      </Drawer>
+      <EditFeed
+        feed={feedEdit!}
+        openEditFeed={!!feedEdit}
+        onCloseEditFeed={() => setFeedEdit(null)}
+      />
     </>
   );
 };
-export default MyTabFeeds;
+export default TabFeeds;

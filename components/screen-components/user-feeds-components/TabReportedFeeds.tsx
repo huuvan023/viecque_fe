@@ -5,13 +5,17 @@ import { PaginationModel } from "@Models/pagination.model";
 import { GetFeedsModel } from "@Models/index";
 import AppPagination from "@Component/elements/AppPagination";
 import { openNotification } from "@Utils/notification";
-import { Button, Col, Popover, Row } from "antd";
+import { Button, Col, Drawer, Popover, Row } from "antd";
 import { MenuOutlined } from "@ant-design/icons";
 import { Routes } from "react-router-dom";
+import FeedDetailDrawerView from "../feed/FeedDetailDrawerView";
 
-const TabFeedsNoActive = () => {
+const TabReportedFeeds = () => {
   const [data, setData] = useState<GetFeedsModel[]>([]);
   const { setLoading } = useLoading();
+  const [feed, setFeed] = useState<GetFeedsModel | null>(null);
+  const [openDrawer, setOpenDrawer] = useState(false);
+
   const [pagination, setPagination] = useState<PaginationModel>({
     page: 1,
     pageSize: 10,
@@ -22,9 +26,19 @@ const TabFeedsNoActive = () => {
     setLoading(true);
   }, [pagination]);
 
+  const onCloseDrawer = () => {
+    setOpenDrawer(false);
+    setFeed(null);
+  };
+  const onOpenDrawer = (feed: GetFeedsModel) => {
+    setOpenDrawer(true);
+    setFeed(feed);
+  };
   const getRecruiterFeeds = async () => {
     try {
-      const response = await apiFeedsAxios.getRecruiterFeeds(pagination);
+      const response = await apiFeedsAxios.getRecruiterReportedFeeds(
+        pagination
+      );
       setData(response.data.data);
       const total = response.data.totalRecord;
       setTotal(total!);
@@ -38,7 +52,7 @@ const TabFeedsNoActive = () => {
   const Menu = (
     <div>
       <div className="button-menu">
-        <a>Gia hạn tin</a>
+        <a>Thanh toán</a>
       </div>
       <div className="button-menu">
         <a>Chỉnh sửa tin</a>
@@ -51,10 +65,14 @@ const TabFeedsNoActive = () => {
         {data.map((item, index) => {
           return (
             <div
-              key={item.id ?? index}
+              key={item.id + index}
               className="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12"
+              style={{ position: "relative", cursor: "pointer" }}
             >
-              <div className="card-grid-2 hover-up">
+              <div
+                className="card-grid-2 hover-up"
+                onClick={() => onOpenDrawer(item)}
+              >
                 <div className="card-grid-2-image-left">
                   <div className="image-box">
                     <img
@@ -72,21 +90,6 @@ const TabFeedsNoActive = () => {
                     <span className="card-time">
                       5<span> minutes ago</span>
                     </span>
-                  </div>
-                  <div>
-                    <Popover
-                      placement="bottomRight"
-                      title={<span>Menu</span>}
-                      content={Menu}
-                      trigger="click"
-                    >
-                      <Button
-                        className="d-flex align-items-center justify-content-center"
-                        type="dashed"
-                      >
-                        <MenuOutlined />
-                      </Button>
-                    </Popover>
                   </div>
                 </div>
                 <div className="card-block-info">
@@ -123,6 +126,27 @@ const TabFeedsNoActive = () => {
                   </div>
                 </div>
               </div>
+              <div
+                style={{
+                  position: "absolute",
+                  top: "10px",
+                  right: "20px",
+                }}
+              >
+                <Popover
+                  placement="bottomRight"
+                  title={<span>Menu</span>}
+                  content={Menu}
+                  trigger="click"
+                >
+                  <Button
+                    className="d-flex align-items-center justify-content-center"
+                    type="dashed"
+                  >
+                    <MenuOutlined />
+                  </Button>
+                </Popover>
+              </div>
             </div>
           );
         })}
@@ -135,7 +159,16 @@ const TabFeedsNoActive = () => {
         pagination={pagination}
         total={total}
       />
+      <Drawer
+        title="Chi tiết tin"
+        placement="bottom"
+        height="90%"
+        onClose={onCloseDrawer}
+        open={openDrawer}
+      >
+        {feed ? <FeedDetailDrawerView data={feed} /> : null}
+      </Drawer>
     </>
   );
 };
-export default TabFeedsNoActive;
+export default TabReportedFeeds;

@@ -3,28 +3,65 @@ import AppPagination from "@Component/elements/AppPagination";
 import { useLoading } from "@Hooks/use-loading";
 import { GetFeedsModel, PaginationModel } from "@Models/index";
 import { openNotification } from "@Utils/notification";
-import { Button, Col, Popover, Row } from "antd";
+import {
+  Button,
+  Col,
+  DatePicker,
+  Drawer,
+  Popover,
+  Row,
+  Select,
+  Space,
+} from "antd";
 import { MenuOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
+import SearchComponent from "@Component/elements/Search";
+import FeedDetailAdminView from "../feed/FeedDetailDrawerView";
+import { FilterStatus } from "@Constants/filter-status";
 
+const { RangePicker } = DatePicker;
 export default function ListFeedsAdmin() {
+  const { setLoading } = useLoading();
+
   const [data, setdata] = useState<GetFeedsModel[]>([]);
+  const [feed, setFeed] = useState<GetFeedsModel | null>(null);
   const [pagination, setPagination] = useState<PaginationModel>({
     page: 1,
     pageSize: 10,
   });
+  const [filterStatus, setFilterStatus] = useState([]);
+  const [filterUserId, setFilterUserId] = useState([]);
+  const [openDrawer, setOpenDrawer] = useState(false);
   const [total, setTotal] = useState(0);
-  const { setLoading } = useLoading();
+  const [userList, setuserList] = useState<any[]>([]);
+
+  const getAllUser = async () => {
+    try {
+      const response = await apiAdminAxios.getAllUser();
+      setuserList(response.data.data);
+    } catch (error: any) {
+      const message = error.response.data.message;
+      openNotification("error", "Thất bại", message);
+    }
+  };
+
   useEffect(() => {
     (async () => {
       getAdminFeeds();
+      getAllUser();
     })();
-  }, [pagination]);
+  }, [pagination, filterStatus, filterUserId]);
 
+  const onCloseDrawer = () => {
+    setOpenDrawer(false);
+    setFeed(null);
+  };
   const getAdminFeeds = async () => {
     try {
       const response = await apiAdminAxios.getAllFeeds({
         ...pagination,
+        statuses: filterStatus,
+        userIds: filterUserId,
       });
       setdata(response.data.data);
       const total = response.data.totalRecord;
@@ -36,25 +73,73 @@ export default function ListFeedsAdmin() {
       setLoading(false);
     }
   };
-  const Menu = (
-    <div>
-      <div className="button-menu">
-        <a>approve</a>
-      </div>
-      <div className="button-menu">
-        <a>decline</a>
-      </div>
-    </div>
-  );
+
+  const onOpenDrawer = (feed: GetFeedsModel) => {
+    setOpenDrawer(true);
+    setFeed(feed);
+  };
+  const onDeclineJob = async (id: string) => {
+    try {
+      const response = await apiAdminAxios.declineFeed(id);
+      openNotification("success", "Thành công", "Decline job thành công");
+    } catch (error: any) {
+      const message = error.response?.data.message;
+      openNotification("error", "Thất bại", message);
+    }
+  };
+  const onApproveFeed = async (id: string) => {
+    try {
+      const response = await apiAdminAxios.approveFeed(id);
+
+      openNotification("success", "Thành công", "Approve job thành công");
+    } catch (error: any) {
+      const message = error.response?.data.message;
+      openNotification("error", "Thất bại", message);
+    }
+  };
+  const onFilterStatus = (value: any) => {
+    setFilterStatus(value);
+  };
+  const onFilterUserid = (value: any) => {
+    setFilterUserId(value);
+  };
+
   return (
     <div className="row">
-      {data.map((item, index) => {
+      {/* <SearchComponent onSearch={(value) => console.log(value)} /> */}
+      <Select
+        mode="tags"
+        size="large"
+        placeholder="Status"
+        onChange={onFilterStatus}
+        style={{ width: "100%", marginBottom: "10px" }}
+        options={FilterStatus}
+      />
+      <Select
+        mode="tags"
+        size="large"
+        placeholder="userid"
+        onChange={onFilterUserid}
+        style={{ width: "100%", marginBottom: "10px" }}
+        options={userList.map((item) => ({
+          value: item.userId,
+          label: item.username,
+        }))}
+      />
+      <div style={{ width: "100%", marginBottom: "10px" }}>
+        <RangePicker style={{ width: "100%" }} size="large" />
+      </div>
+      {data?.map((item, index) => {
         return (
           <div
             key={item.id ?? index}
             className="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12"
+            style={{ position: "relative", cursor: "pointer" }}
           >
-            <div className="card-grid-2 hover-up">
+            <div
+              className="card-grid-2 hover-up"
+              onClick={() => onOpenDrawer(item)}
+            >
               <div className="card-grid-2-image-left">
                 <div className="image-box">
                   <img
@@ -72,21 +157,6 @@ export default function ListFeedsAdmin() {
                   <span className="card-time">
                     5<span> minutes ago</span>
                   </span>
-                </div>
-                <div>
-                  <Popover
-                    placement="bottomRight"
-                    title={<span>Menu</span>}
-                    content={Menu}
-                    trigger="click"
-                  >
-                    <Button
-                      className="d-flex align-items-center justify-content-center"
-                      type="dashed"
-                    >
-                      <MenuOutlined />
-                    </Button>
-                  </Popover>
                 </div>
               </div>
               <div className="card-block-info">
@@ -120,6 +190,42 @@ export default function ListFeedsAdmin() {
                 </div>
               </div>
             </div>
+            <div
+              style={{
+                position: "absolute",
+                top: "10px",
+                right: "20px",
+              }}
+            >
+              <Popover
+                placement="bottomRight"
+                title={<span>Menu</span>}
+                content={
+                  <div>
+                    <div
+                      className="button-menu"
+                      onClick={() => onApproveFeed(item.id)}
+                    >
+                      <a>approve</a>
+                    </div>
+                    <div
+                      className="button-menu"
+                      onClick={() => onDeclineJob(item.id)}
+                    >
+                      <a>decline</a>
+                    </div>
+                  </div>
+                }
+                trigger="click"
+              >
+                <Button
+                  className="d-flex align-items-center justify-content-center"
+                  type="dashed"
+                >
+                  <MenuOutlined />
+                </Button>
+              </Popover>
+            </div>
           </div>
         );
       })}
@@ -130,6 +236,15 @@ export default function ListFeedsAdmin() {
         pagination={pagination}
         total={total}
       />
+      <Drawer
+        title="Chi tiết tin"
+        placement="bottom"
+        height="90%"
+        onClose={onCloseDrawer}
+        open={openDrawer}
+      >
+        {feed ? <FeedDetailAdminView data={feed} /> : null}
+      </Drawer>
     </div>
   );
 }

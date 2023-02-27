@@ -33,7 +33,7 @@ export default async function handler(
       if (result.error === AuthError.OK) {
         return (res as NextApiResponse)
           .status(result.status)
-          .json({ success: true });
+          .json({ success: true, data: result?.data });
       } else {
         return (res as NextApiResponse).status(result.status).json(result);
       }

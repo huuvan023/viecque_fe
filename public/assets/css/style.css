@@ -5706,19 +5706,36 @@ ul li:last-child .card-list-4 {
   color: #6741ff;
   font-size: 12px;
 }
-.home-screen .save-box .save-icon {
-  width: 15px;
-  height: 15px;
-  margin-right: 10px;
-}
-.home-screen .save-box:hover {
-  background-color: #fffaf2;
-}
 .home-screen .search-input {
   border-radius: 10px 0px 0px 10px;
 }
 .home-screen .search-button {
   border-radius: 0px 10px 10px 0px;
+}
+
+.boxSaveBtn {
+  position: absolute;
+  top: 10px;
+  border: 1px solid #d9d9d9;
+  right: 20px;
+  border-radius: 7px;
+  padding: 2px 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.boxSaveBtn:hover {
+  background-color: #ffcb78;
+}
+
+.boxSaveBtnActive {
+  background-color: #ffcb78;
+}
+
+.save-feed-btn {
+  width: 15px;
+  height: 15px;
+  margin-right: 10px;
 }
 
 .user-profile-screen .list-number-phone {

@@ -2,9 +2,8 @@ import {
   CreateFeedModel,
   GetFeedsModel,
   PaginationModel,
-  RegisterModel,
   ResponseModel,
-  VerifyUserModel,
+  UpdateFeedModel,
 } from "@Models/index";
 import axiosClient from "@Axios/axios";
 import { ENPOINT } from "@Axios/endpoint";
@@ -16,12 +15,33 @@ export const apiFeedsAxios = {
   ): Promise<AxiosResponse<ResponseModel<null>>> {
     return axiosClient.post(ENPOINT.createFeed, data);
   },
+  updateFeeds(
+    data: UpdateFeedModel
+  ): Promise<AxiosResponse<ResponseModel<null>>> {
+    return axiosClient.put(ENPOINT.createFeed, data);
+  },
 
   getRecruiterFeeds(
     page: PaginationModel
   ): Promise<AxiosResponse<ResponseModel<GetFeedsModel[]>>> {
     return axiosClient.get(
       `${ENPOINT.getRecruiterFeed}?page=${page.page}&pageSize=${page.pageSize}`
+    );
+  },
+
+  getRecruiterNotPaidFeeds(
+    page: PaginationModel
+  ): Promise<AxiosResponse<ResponseModel<GetFeedsModel[]>>> {
+    return axiosClient.get(
+      `${ENPOINT.getRecruiterNotPaidFeeds}?page=${page.page}&pageSize=${page.pageSize}`
+    );
+  },
+
+  getRecruiterReportedFeeds(
+    page: PaginationModel
+  ): Promise<AxiosResponse<ResponseModel<GetFeedsModel[]>>> {
+    return axiosClient.get(
+      `${ENPOINT.getRecruiterReportedFeeds}?page=${page.page}&pageSize=${page.pageSize}`
     );
   },
 };
