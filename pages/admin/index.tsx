@@ -1,6 +1,5 @@
 import Layout from "@Component/Layout/Layout";
-import { useLoading } from "@Hooks/use-loading";
-import React, { useEffect } from "react";
+ import React, { useEffect } from "react";
 import { Tabs, TabsProps } from "antd";
 import JobCategoryComponent from "@Component/screen-components/admin-components/Jobcategory";
 import ListUserComponent from "@Component/screen-components/admin-components/ListUser";
@@ -9,7 +8,6 @@ import { useRole } from "@Hooks/use-role";
 import { openNotification } from "@Utils/notification";
 import { useRouter } from "next/router";
 import { Routes } from "@Routes/routes";
-import { useAuth } from "@Hooks/use-auth";
 import Authentication from "@Component/auth/Auth";
 export default function Home() {
   const { isRole } = useRole();

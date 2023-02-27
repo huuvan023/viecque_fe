@@ -7,6 +7,8 @@ import env from "@Env/index";
 import axios, { AxiosResponse } from "axios";
 import { Button } from "antd";
 import { useRouter } from "next/router";
+import { convertDateTimeToDateString } from "@Utils/format-time-string";
+import GetLocationString from "@Component/Layout/GetLocationString";
 interface Props {
   data: GetFeedsModel | null;
 }
@@ -131,16 +133,10 @@ export default function Detail({ data }: Props) {
                     </div>
                     <div className="card-detail-feed-child">
                       <div className="col-sm-4 col-5">
-                        <span className="font-bold">Vị trí</span>
+                        <span className="font-bold">Thời gian làm việc</span>
                       </div>
                       <div className="col-sm-8 col-7">
-                        <span>
-                          {/* <GetLocationString
-                        districtId={data.districtId}
-                        provinceId={data.provinceId}
-                        wardId={data.wardId}
-                      /> */}
-                        </span>
+                        <span>{data.workingTime}</span>
                       </div>
                     </div>
                     <div className="card-detail-feed-child">
@@ -148,9 +144,23 @@ export default function Detail({ data }: Props) {
                         <span className="font-bold">Thời gian bắt đầu</span>
                       </div>
                       <div className="col-sm-8 col-7">
-                        {/* <span>
-                          {`${data.timeToStart?.getDate()} - ${data.timeToStart?.getMonth()} - ${data.timeToStart?.getFullYear()}`}
-                        </span> */}
+                        <span>
+                          {convertDateTimeToDateString(data.timeToStart)}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="card-detail-feed-child">
+                      <div className="col-sm-4 col-5">
+                        <span className="font-bold">Địa điểm</span>
+                      </div>
+                      <div className="col-sm-8 col-7">
+                        <span>
+                          {data.provinceId.name +
+                            " - " +
+                            data.districtId.name +
+                            " - " +
+                            data.wardId.name}
+                        </span>
                       </div>
                     </div>
                     <div style={{ height: 20 }}></div>

@@ -66,7 +66,7 @@ export default function Home({ data, total, filter }: Props) {
       query: {
         ...query,
         keyword: value,
-        jobCate: value,
+        // jobCate: value,
       },
     });
   };

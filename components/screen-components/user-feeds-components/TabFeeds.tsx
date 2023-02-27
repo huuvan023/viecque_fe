@@ -5,7 +5,7 @@ import { PaginationModel } from "@Models/pagination.model";
 import { GetFeedsModel } from "@Models/index";
 import AppPagination from "@Component/elements/AppPagination";
 import { openNotification } from "@Utils/notification";
-import { Button, Col, Drawer, Popconfirm, Popover, Row } from "antd";
+import { Button, Col, Drawer, Image, Popconfirm, Popover, Row } from "antd";
 import { MenuOutlined } from "@ant-design/icons";
 import FeedDetailDrawerView from "../feed/FeedDetailDrawerView";
 import EditFeed from "./EditFeed";
@@ -64,10 +64,15 @@ const TabFeeds = () => {
               >
                 <div className="card-grid-2-image-left">
                   <div className="image-box">
-                    <img
+                    <Image
+                      width={50}
+                      height={50}
+                      src={item.branding.resourceUrl}
+                    />
+                    {/* <img
                       src="https://res.cloudinary.com/huuvan/image/upload/v1676592997/viecque/brands/9562396b-b9ef-4f7a-8d66-c2d7f35159ce/eRSJvOyUd.png"
                       alt="jobBox"
-                    />
+                    /> */}
                   </div>
                   <div className="right-info">
                     <a target="_blank" className="name-job">
@@ -169,11 +174,11 @@ const TabFeeds = () => {
       >
         {feed ? <FeedDetailDrawerView data={feed} /> : null}
       </Drawer>
-      {/* <EditFeed
+      <EditFeed
         feed={feedEdit!}
         openEditFeed={!!feedEdit}
         onCloseEditFeed={() => setFeedEdit(null)}
-      /> */}
+      />
     </>
   );
 };

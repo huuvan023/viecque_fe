@@ -3,12 +3,23 @@ import AppPagination from "@Component/elements/AppPagination";
 import { useLoading } from "@Hooks/use-loading";
 import { GetFeedsModel, PaginationModel } from "@Models/index";
 import { openNotification } from "@Utils/notification";
-import { Button, Col, Drawer, Popover, Row, Space } from "antd";
+import {
+  Button,
+  Col,
+  DatePicker,
+  Drawer,
+  Popover,
+  Row,
+  Select,
+  Space,
+} from "antd";
 import { MenuOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import SearchComponent from "@Component/elements/Search";
 import FeedDetailAdminView from "../feed/FeedDetailDrawerView";
+import { FilterStatus } from "@Constants/filter-status";
 
+const { RangePicker } = DatePicker;
 export default function ListFeedsAdmin() {
   const { setLoading } = useLoading();
 
@@ -18,13 +29,28 @@ export default function ListFeedsAdmin() {
     page: 1,
     pageSize: 10,
   });
+  const [filterStatus, setFilterStatus] = useState([]);
+  const [filterUserId, setFilterUserId] = useState([]);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [total, setTotal] = useState(0);
+  const [userList, setuserList] = useState<any[]>([]);
+
+  const getAllUser = async () => {
+    try {
+      const response = await apiAdminAxios.getAllUser();
+      setuserList(response.data.data);
+    } catch (error: any) {
+      const message = error.response.data.message;
+      openNotification("error", "Thất bại", message);
+    }
+  };
+
   useEffect(() => {
     (async () => {
       getAdminFeeds();
+      getAllUser();
     })();
-  }, [pagination]);
+  }, [pagination, filterStatus, filterUserId]);
 
   const onCloseDrawer = () => {
     setOpenDrawer(false);
@@ -34,6 +60,8 @@ export default function ListFeedsAdmin() {
     try {
       const response = await apiAdminAxios.getAllFeeds({
         ...pagination,
+        statuses: filterStatus,
+        userIds: filterUserId,
       });
       setdata(response.data.data);
       const total = response.data.totalRecord;
@@ -50,18 +78,57 @@ export default function ListFeedsAdmin() {
     setOpenDrawer(true);
     setFeed(feed);
   };
-  const onDeclineJob = (id: string) => {
+  const onDeclineJob = async (id: string) => {
     try {
-      const response = apiAdminAxios.declineFeed(id);
+      const response = await apiAdminAxios.declineFeed(id);
       openNotification("success", "Thành công", "Decline job thành công");
     } catch (error: any) {
       const message = error.response?.data.message;
       openNotification("error", "Thất bại", message);
     }
   };
+  const onApproveFeed = async (id: string) => {
+    try {
+      const response = await apiAdminAxios.approveFeed(id);
+
+      openNotification("success", "Thành công", "Approve job thành công");
+    } catch (error: any) {
+      const message = error.response?.data.message;
+      openNotification("error", "Thất bại", message);
+    }
+  };
+  const onFilterStatus = (value: any) => {
+    setFilterStatus(value);
+  };
+  const onFilterUserid = (value: any) => {
+    setFilterUserId(value);
+  };
+
   return (
     <div className="row">
-      <SearchComponent onSearch={(value) => console.log(value)} />
+      {/* <SearchComponent onSearch={(value) => console.log(value)} /> */}
+      <Select
+        mode="tags"
+        size="large"
+        placeholder="Status"
+        onChange={onFilterStatus}
+        style={{ width: "100%", marginBottom: "10px" }}
+        options={FilterStatus}
+      />
+      <Select
+        mode="tags"
+        size="large"
+        placeholder="userid"
+        onChange={onFilterUserid}
+        style={{ width: "100%", marginBottom: "10px" }}
+        options={userList.map((item) => ({
+          value: item.userId,
+          label: item.username,
+        }))}
+      />
+      <div style={{ width: "100%", marginBottom: "10px" }}>
+        <RangePicker style={{ width: "100%" }} size="large" />
+      </div>
       {data?.map((item, index) => {
         return (
           <div
@@ -135,7 +202,10 @@ export default function ListFeedsAdmin() {
                 title={<span>Menu</span>}
                 content={
                   <div>
-                    <div className="button-menu">
+                    <div
+                      className="button-menu"
+                      onClick={() => onApproveFeed(item.id)}
+                    >
                       <a>approve</a>
                     </div>
                     <div

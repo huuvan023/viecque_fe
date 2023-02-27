@@ -34,4 +34,5 @@ export const ENPOINT = {
   allUser: "admin/users",
   allFeedsAdmin: "admin/filter-feeds",
   declineFeed: "/admin/feeds/decline",
+  approveFeed: "/admin/feeds/approve",
 };

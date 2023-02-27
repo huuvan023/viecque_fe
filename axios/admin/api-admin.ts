@@ -54,12 +54,22 @@ export const apiAdminAxios = {
     page: number;
     pageSize: number;
   }): Promise<AxiosResponse<ResponseModel<GetFeedsModel[]>>> {
-    return axiosClient.get(
-      `${ENPOINT.allFeedsAdmin}?page=${page}&pageSize=${pageSize}&districtId=${districtId}&wardId=${wardId}&provinceId=${provinceId}&statuses=${statuses}&dateRange=${dateRange}&userIds=${userIds}`
-    );
+    return axiosClient.post(`${ENPOINT.allFeedsAdmin}`, {
+      userIds,
+      dateRange,
+      statuses,
+      provinceId,
+      districtId,
+      wardId,
+      page,
+      pageSize,
+    });
   },
 
   declineFeed(id: string): Promise<AxiosResponse<ResponseModel<any>>> {
     return axiosClient.get(`${ENPOINT.declineFeed}?feedsId=${id}`);
+  },
+  approveFeed(id: string): Promise<AxiosResponse<ResponseModel<any>>> {
+    return axiosClient.get(`${ENPOINT.approveFeed}?feedsId=${id}`);
   },
 };
