@@ -47,19 +47,6 @@ export default function Home({ data, total, filter }: Props) {
     setLoading(false);
   }, []);
 
-  const items: TabsProps["items"] = [
-    {
-      key: "1",
-      label: "Tin mới nhất",
-      children: <FeedsList data={data} />,
-    },
-    {
-      key: "2",
-      label: "Tin đã lưu",
-      children: <FeedsListOnLocal activeTab={tabActive} />,
-    },
-  ];
-
   const onSearch = (value: string) => {
     router.push({
       pathname: "/",
@@ -116,14 +103,7 @@ export default function Home({ data, total, filter }: Props) {
             defaultValueJobCate={filter.jobCate}
           />
           <div style={{ height: "20px" }}></div>
-          <Tabs
-            defaultActiveKey="1"
-            type="card"
-            size="large"
-            items={items}
-            onChange={onChangeTab}
-          />
-
+          <FeedsList data={data} />
           <AppPagination
             handlePagination={onPagination}
             pagination={pagination}
@@ -187,6 +167,7 @@ export async function getServerSideProps(
     const response = await (axios(config) as Promise<
       AxiosResponse<ResponseModel<GetFeedsModel[]>>
     >);
+    console.log(response);
     dataResponse = response?.data?.data;
     totalRecord = response.data?.totalRecord!;
   } catch (error) {}

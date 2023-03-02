@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import { useLoading } from "@Hooks/use-loading";
 import React, { useEffect, useState } from "react";
 import { apiFeedsAxios } from "@Axios/user/api-feeds";
@@ -47,7 +48,31 @@ const TabFeeds = () => {
       setLoading(false);
     }
   };
+  const onHideFeed = async (id: string) => {
+    setLoading(true);
+    try {
+      const response = await apiFeedsAxios.putHideFeeds(id);
+      openNotification("success", "Thành công", "Ẩn tin thành công");
 
+      getRecruiterFeeds();
+    } catch (error: any) {
+      const message = error.response.data.message;
+      openNotification("error", "Thất bại", message);
+      setLoading(false);
+    }
+  };
+  const onDeleteFeed = async (id: string) => {
+    setLoading(true);
+    try {
+      const response = await apiFeedsAxios.deleteFeeds(id);
+      openNotification("success", "Thành công", "Xóa tin thành công");
+      getRecruiterFeeds();
+    } catch (error: any) {
+      const message = error.response.data.message;
+      openNotification("error", "Thất bại", message);
+      setLoading(false);
+    }
+  };
   return (
     <>
       <div className="row">
@@ -69,10 +94,6 @@ const TabFeeds = () => {
                       height={50}
                       src={item.branding.resourceUrl}
                     />
-                    {/* <img
-                      src="https://res.cloudinary.com/huuvan/image/upload/v1676592997/viecque/brands/9562396b-b9ef-4f7a-8d66-c2d7f35159ce/eRSJvOyUd.png"
-                      alt="jobBox"
-                    /> */}
                   </div>
                   <div className="right-info">
                     <a target="_blank" className="name-job">
@@ -89,6 +110,12 @@ const TabFeeds = () => {
                 <div className="card-block-info">
                   <p className="font-sm color-text-paragraph text-left text-description-card">
                     {item.description}
+                  </p>
+                  <p
+                    className="font-sm color-text-paragraph text-left text-description-card"
+                    style={{ color: "red" }}
+                  >
+                    Trạng thái tin: {item.feedsStatus}
                   </p>
                   <div className="card-2-bottom mt-10">
                     <Row>
@@ -140,6 +167,18 @@ const TabFeeds = () => {
                         onClick={() => setFeedEdit(item)}
                       >
                         <a>Chỉnh sửa tin</a>
+                      </div>
+                      <div
+                        className="button-menu"
+                        onClick={() => onHideFeed(item.id)}
+                      >
+                        <a>Ẩn tin</a>
+                      </div>
+                      <div
+                        className="button-menu"
+                        onClick={() => onDeleteFeed(item.id)}
+                      >
+                        <a>Xóa tin</a>
                       </div>
                     </div>
                   }

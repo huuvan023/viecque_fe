@@ -16,4 +16,9 @@ export const menuRoutes: MenuRoutes[] = [
     path: Routes.home,
     routesType: RoutesConst.public,
   },
+  {
+    label: "Tin đã lưu",
+    path: Routes.feedSave,
+    routesType: RoutesConst.public,
+  },
 ];

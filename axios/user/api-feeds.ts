@@ -44,4 +44,10 @@ export const apiFeedsAxios = {
       `${ENPOINT.getRecruiterReportedFeeds}?page=${page.page}&pageSize=${page.pageSize}`
     );
   },
+  putHideFeeds(id: string): Promise<AxiosResponse<ResponseModel<null>>> {
+    return axiosClient.put(`${ENPOINT.recruiterHideFeeds}?id=${id}`);
+  },
+  deleteFeeds(id: string): Promise<AxiosResponse<ResponseModel<null>>> {
+    return axiosClient.delete(`${ENPOINT.recruiterDeleteFeeds}?id=${id}`);
+  },
 };
