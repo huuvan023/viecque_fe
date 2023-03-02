@@ -11,7 +11,7 @@ interface Props {
 }
 export default function FeedsList({ data }: Props) {
   useEffect(() => {}, [data]);
-  // const router = useRouter();
+
   const saveFeedOnLocal = (feed: GetFeedsModel) => {
     const data: GetFeedsModel[] = localStorage.getItem("feeds")
       ? JSON.parse(localStorage.getItem("feeds")!)

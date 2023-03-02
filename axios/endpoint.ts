@@ -27,6 +27,8 @@ export const ENPOINT = {
   getRecruiterFeed: "/recruiter/feeds",
   getRecruiterNotPaidFeeds: "/recruiter/not-paid-feeds",
   getRecruiterReportedFeeds: "/recruiter/reported-feeds",
+  recruiterHideFeeds: "/recruiter/hide-feeds",
+  recruiterDeleteFeeds: "/recruiter/delete-feeds",
 
   // admin
   createCate: "admin/create-cate",

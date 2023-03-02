@@ -50,6 +50,7 @@ const CreateFeed = () => {
   const [timeToStart, setTimeToStart] = useState<Date>(new Date());
   const [description, setDescription] = useState("");
   const [jobCategoryId, setJobCategoryId] = useState("");
+  const [workingTime, setWorkingTime] = useState("");
   const [salary, setSalary] = useState(50000);
   const [amountPeople, setAmountPeople] = useState(1);
   useEffect(() => {
@@ -75,7 +76,7 @@ const CreateFeed = () => {
     detailsAddress: string;
     jobTitle: string;
     position: string;
-    workingTime: string;
+
     phoneNumber: string;
   }) => {
     if (!brand) {
@@ -111,6 +112,10 @@ const CreateFeed = () => {
       openNotification("error", "Thất bại", "Vui lòng điền mô tả công việc!");
       return;
     }
+    if (!workingTime) {
+      openNotification("error", "Thất bại", "Vui lòng điền thời gian làm việc trong ngày!");
+      return;
+    }
 
     const data: CreateFeedModel = {
       brandId: brand.brandId!,
@@ -124,6 +129,7 @@ const CreateFeed = () => {
       description: description,
       salary: salary.toString(),
       amountPeople: amountPeople.toString(),
+      workingTime: workingTime,
       ...dataJob,
     };
     setCreateFeed(data);
@@ -137,7 +143,7 @@ const CreateFeed = () => {
     detailsAddress: string;
     jobTitle: string;
     position: string;
-    workingTime: string;
+
     phoneNumber: string;
   }) => {
     onCreateFeed(dataJob);
@@ -255,13 +261,28 @@ const CreateFeed = () => {
                       options={Jobtype}
                     />
                   </div>
-                  <div className="box-size">
+                  {/* <div className="box-size">
                     <AppInput
                       required={true}
                       label="Thời gian làm việc trong ngày"
                       placeholder="8h sáng - 8h tối"
                       name="workingTime"
                       requiredMessage="Vui lòng điền thời gian làm việc trong ngày"
+                    />
+                  </div> */}
+                  <div className="box-size">
+                    <label className="form-label" htmlFor="input-1">
+                      Thời gian làm việc trong ngày
+                      <span style={{ color: "red" }}>*</span>
+                    </label>
+                    <textarea
+                      placeholder="Thời gian làm việc trong ngày"
+                      rows={4}
+                      cols={50}
+                      value={workingTime}
+                      onChange={(event) => {
+                        setWorkingTime(event.target.value);
+                      }}
                     />
                   </div>
                   <div className="box-size">

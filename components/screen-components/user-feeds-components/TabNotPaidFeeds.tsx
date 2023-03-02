@@ -5,7 +5,7 @@ import { PaginationModel } from "@Models/pagination.model";
 import { GetFeedsModel } from "@Models/index";
 import AppPagination from "@Component/elements/AppPagination";
 import { openNotification } from "@Utils/notification";
-import { Button, Col, Drawer, Popover, Row } from "antd";
+import { Button, Col, Drawer, Image, Popover, Row } from "antd";
 import { MenuOutlined } from "@ant-design/icons";
 import { Routes } from "react-router-dom";
 import FeedDetailDrawerView from "../feed/FeedDetailDrawerView";
@@ -49,7 +49,31 @@ const TabNotPaidFeeds = () => {
       setLoading(false);
     }
   };
+  const onHideFeed = async (id: string) => {
+    setLoading(true);
+    try {
+      const response = await apiFeedsAxios.putHideFeeds(id);
+      openNotification("success", "Thành công", "Ẩn tin thành công");
 
+      getRecruiterFeeds();
+    } catch (error: any) {
+      const message = error.response.data.message;
+      openNotification("error", "Thất bại", message);
+      setLoading(false);
+    }
+  };
+  const onDeleteFeed = async (id: string) => {
+    setLoading(true);
+    try {
+      const response = await apiFeedsAxios.deleteFeeds(id);
+      openNotification("success", "Thành công", "Xóa tin thành công");
+      getRecruiterFeeds();
+    } catch (error: any) {
+      const message = error.response.data.message;
+      openNotification("error", "Thất bại", message);
+      setLoading(false);
+    }
+  };
   return (
     <>
       <div className="row">
@@ -66,9 +90,10 @@ const TabNotPaidFeeds = () => {
               >
                 <div className="card-grid-2-image-left">
                   <div className="image-box">
-                    <img
-                      src="https://res.cloudinary.com/huuvan/image/upload/v1676592997/viecque/brands/9562396b-b9ef-4f7a-8d66-c2d7f35159ce/eRSJvOyUd.png"
-                      alt="jobBox"
+                    <Image
+                      width={50}
+                      height={50}
+                      src={item.branding.resourceUrl}
                     />
                   </div>
                   <div className="right-info">
@@ -86,6 +111,12 @@ const TabNotPaidFeeds = () => {
                 <div className="card-block-info">
                   <p className="font-sm color-text-paragraph text-left text-description-card">
                     {item.description}
+                  </p>
+                  <p
+                    className="font-sm color-text-paragraph text-left text-description-card"
+                    style={{ color: "red" }}
+                  >
+                    Trạng thái tin: {item.feedsStatus}
                   </p>
                   <div className="card-2-bottom mt-10">
                     <Row>
@@ -137,6 +168,18 @@ const TabNotPaidFeeds = () => {
                         onClick={() => setFeedEdit(item)}
                       >
                         <a>Chỉnh sửa tin</a>
+                      </div>
+                      <div
+                        className="button-menu"
+                        onClick={() => onHideFeed(item.id)}
+                      >
+                        <a>Ẩn tin</a>
+                      </div>
+                      <div
+                        className="button-menu"
+                        onClick={() => onDeleteFeed(item.id)}
+                      >
+                        <a>Xóa tin</a>
                       </div>
                     </div>
                   }

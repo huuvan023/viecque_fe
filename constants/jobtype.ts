@@ -1,10 +1,10 @@
 export const Jobtype = [
   {
-    label: "Toàn thời gian",
+    label: "Bao ăn",
     value: 1,
   },
   {
-    label: "Bán thời gian",
+    label: "Bao ở",
     value: 2,
   },
 ];

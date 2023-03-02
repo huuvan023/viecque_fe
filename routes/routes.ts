@@ -1,5 +1,6 @@
 export class Routes {
   static home = "/";
+  static feedSave = "/feed-save";
 
   // auth
   static resetPassword = "/public/reset-password";
