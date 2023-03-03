@@ -225,7 +225,11 @@ export default function EditFeed(props: Props) {
                           <p className="text-overflow">{brand?.description}</p>
                         </Col>
                         <Col span={6} pull={18}>
-                          <Image width={50} src={brand?.resourceUrl} />
+                          <Image
+                            width={50}
+                            height={50}
+                            src={brand?.resourceUrl}
+                          />
                         </Col>
                       </Row>
                     </div>

@@ -5,7 +5,7 @@ import { useLoading } from "@Hooks/use-loading";
 import { GetFeedsModel, ResponseModel } from "@Models/index";
 import env from "@Env/index";
 import axios, { AxiosResponse } from "axios";
-import { Button } from "antd";
+import { Button, Image } from "antd";
 import { useRouter } from "next/router";
 import { convertDateTimeToDateString } from "@Utils/format-time-string";
 import GetLocationString from "@Component/Layout/GetLocationString";
@@ -41,8 +41,11 @@ export default function Detail({ data }: Props) {
                   <div className="card-detail-feed">
                     <div className="card-detail-feed-child">
                       <div className="image-box">
-                        <img
-                          src={data.branding?.resourceUrl}
+                        <Image
+                          src={
+                            data.branding?.resourceUrl ??
+                            "/assets/imgs/icon/block-user.png"
+                          }
                           width={50}
                           height={50}
                           alt="jobBox"

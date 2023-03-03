@@ -80,11 +80,11 @@ const TabFeeds = () => {
           return (
             <div
               key={item.id + index}
-              className="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12"
+              className="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 mt-2"
               style={{ position: "relative", cursor: "pointer" }}
             >
               <div
-                className="card-grid-2 hover-up"
+                className="card-grid-2 hover-up h-100"
                 onClick={() => onOpenDrawer(item)}
               >
                 <div className="card-grid-2-image-left">
@@ -92,7 +92,7 @@ const TabFeeds = () => {
                     <Image
                       width={50}
                       height={50}
-                      src={item.branding.resourceUrl}
+                      src={item.branding?.resourceUrl ?? "/assets/imgs/icon/block-user.png"}
                     />
                   </div>
                   <div className="right-info">

@@ -1,7 +1,6 @@
 import { Button, Collapse, DatePicker, Select, Popover } from "antd";
 import React from "react";
 import SliderComponent from "@Component/elements/Slider";
-import SelectLocation from "@Component/elements/SelectLocation";
 import SearchComponent from "@Component/elements/Search";
 import ListCategoryJob from "@Component/elements/Select";
 import AppLocation from "./AppLocation";

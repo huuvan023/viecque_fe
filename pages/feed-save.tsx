@@ -40,19 +40,22 @@ export default function FeedsSave() {
               return (
                 <div
                   key={item.id ?? index}
-                  className="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12"
+                  className="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 mt-2"
                   style={{ position: "relative", cursor: "pointer" }}
                 >
                   <div
-                    className="card-grid-2 hover-up"
+                    className="card-grid-2 hover-up h-100"
                     onClick={() => onDetailFeed(item.id)}
                   >
                     <div className="card-grid-2-image-left">
                       <div className="image-box">
                         <img
-                          src={item.branding.resourceUrl}
-                          width={100}
-                          height={100}
+                          src={
+                            item.branding?.resourceUrl ??
+                            "/assets/imgs/icon/block-user.png"
+                          }
+                          width={50}
+                          height={50}
                           alt="jobBox"
                         />
                       </div>

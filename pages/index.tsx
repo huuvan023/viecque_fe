@@ -167,8 +167,8 @@ export async function getServerSideProps(
     const response = await (axios(config) as Promise<
       AxiosResponse<ResponseModel<GetFeedsModel[]>>
     >);
-    console.log(response);
-    dataResponse = response?.data?.data;
+
+    dataResponse = response.data?.data;
     totalRecord = response.data?.totalRecord!;
   } catch (error) {}
 

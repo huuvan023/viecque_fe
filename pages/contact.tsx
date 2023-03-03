@@ -16,8 +16,8 @@ export default function Home() {
           {/* <SearchHomeScreen /> */}
           <div style={{ height: "20px" }}></div>
           <div className="row">
-            <div className="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
-              <div className="card-grid-2 hover-up">
+            <div className="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 mt-2">
+              <div className="card-grid-2 hover-up h-100">
                 <div className="card-grid-2-image-left">
                   <div className="save-box">
                     <ImageAssets
@@ -74,8 +74,8 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div className="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
-              <div className="card-grid-2 hover-up">
+            <div className="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 mt-2">
+              <div className="card-grid-2 hover-up h-100">
                 <div className="card-grid-2-image-left">
                   <div className="save-box">
                     <ImageAssets
@@ -132,8 +132,8 @@ export default function Home() {
                 </div>
               </div>
             </div>{" "}
-            <div className="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
-              <div className="card-grid-2 hover-up">
+            <div className="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 mt-2">
+              <div className="card-grid-2 hover-up h-100">
                 <div className="card-grid-2-image-left">
                   <div className="save-box">
                     <ImageAssets
@@ -190,8 +190,8 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div className="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
-              <div className="card-grid-2 hover-up">
+            <div className="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 mt-2">
+              <div className="card-grid-2 hover-up h-100">
                 <div className="card-grid-2-image-left">
                   <div className="save-box">
                     <ImageAssets
