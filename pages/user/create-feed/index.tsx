@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import { apiPublicAxios } from "@Axios/public/api-public";
 import { apiUserProfileAxios } from "@Axios/user/api-user-profile";
 import AppLocation from "@Component/Layout/AppLocation";
@@ -33,6 +34,7 @@ import {
 } from "antd";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import SelectLocation from "@Component/Layout/SelectLocation";
 
 const CreateFeed = () => {
   const [isChooseBrands, setIschooseBrands] = useState(false);
@@ -113,7 +115,11 @@ const CreateFeed = () => {
       return;
     }
     if (!workingTime) {
-      openNotification("error", "Thất bại", "Vui lòng điền thời gian làm việc trong ngày!");
+      openNotification(
+        "error",
+        "Thất bại",
+        "Vui lòng điền thời gian làm việc trong ngày!"
+      );
       return;
     }
 
@@ -194,7 +200,11 @@ const CreateFeed = () => {
                             </p>
                           </Col>
                           <Col span={6} pull={18}>
-                            <Image width={50} src={brand?.resourceUrl} />
+                            <Image
+                              width={50}
+                              height={50}
+                              src={brand?.resourceUrl}
+                            />
                           </Col>
                         </Row>
                       </div>
@@ -220,12 +230,13 @@ const CreateFeed = () => {
                     <label className="form-label" htmlFor="input-1">
                       Chọn vị trí <span style={{ color: "red" }}>*</span>
                     </label>
-                    <AppLocation
+                    {/* <AppLocation
                       changeOnSelect={false}
                       handleLocationData={(locationData) =>
                         setLocationData(locationData)
                       }
-                    />
+                    /> */}
+                    <SelectLocation />
                   </div>
                   <div className="box-size">
                     <AppInput
