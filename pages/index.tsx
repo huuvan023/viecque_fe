@@ -13,11 +13,15 @@ import { ResponseModel } from "@Models/response.model";
 import {
   GetFeedsModel,
   JobCategoryModel,
+  LocationDataModel,
   PaginationModel,
 } from "@Models/index";
 import { useRouter } from "next/router";
 import AppPagination from "@Component/elements/AppPagination";
-import FeedsListOnLocal from "@Component/screen-components/home-components/feeds/FeedsListOnLocal";
+import {
+  convertDateTimeToDateString,
+  decreasedDate,
+} from "@Utils/format-time-string";
 interface Props {
   data: GetFeedsModel[];
   total: number;
@@ -25,7 +29,7 @@ interface Props {
     page: any;
     pageSize: any;
     keyword: any;
-    dateRange: any;
+    dateType: any;
     jobType: any;
     salaryRange: any;
     provinceId: any;
@@ -35,19 +39,34 @@ interface Props {
   };
 }
 export default function Home({ data, total, filter }: Props) {
-  const { setLoading } = useLoading();
   const router = useRouter();
-  const [tabActive, setTabActive] = useState("");
+  const query = router.query;
+  const { setLoading } = useLoading();
   const [pagination, setPagination] = useState<PaginationModel>({
     page: 1,
     pageSize: 10,
   });
-  const query = router.query;
+  const [defaultLocation, setDefaultLocation] = useState<
+    LocationDataModel | undefined
+  >();
   useEffect(() => {
     setLoading(false);
-  }, []);
+    setDefaultLocation(
+      JSON.parse(localStorage.getItem("filterLocation")!) || undefined
+    );
+  }, [data, total, filter]);
+
+  const onClearFilter = () => {
+    setLoading(true);
+    router.push({
+      pathname: "/",
+      query: {},
+    });
+  };
 
   const onSearch = (value: string) => {
+    setLoading(true);
+
     router.push({
       pathname: "/",
       query: {
@@ -57,7 +76,10 @@ export default function Home({ data, total, filter }: Props) {
       },
     });
   };
+
   const onFilterSalary = (value: [number, number]) => {
+    setLoading(true);
+
     router.push({
       pathname: "/",
       query: {
@@ -69,11 +91,34 @@ export default function Home({ data, total, filter }: Props) {
   };
 
   const onFilterJobCate = (value: string) => {
+    setLoading(true);
+
     router.push({
       pathname: "/",
       query: {
         ...query,
         jobCate: value,
+      },
+    });
+  };
+
+  const onFilterJobType = (value: string) => {
+    setLoading(true);
+    router.push({
+      pathname: "/",
+      query: {
+        ...query,
+        jobType: value,
+      },
+    });
+  };
+  const onFilterDateType = (value: string) => {
+    setLoading(true);
+    router.push({
+      pathname: "/",
+      query: {
+        ...query,
+        dateType: value,
       },
     });
   };
@@ -88,19 +133,58 @@ export default function Home({ data, total, filter }: Props) {
       },
     });
   };
-  const onChangeTab = (activeKey: string) => {
-    setTabActive(activeKey);
+
+  const onFilterLocation = (value: LocationDataModel) => {
+    localStorage.setItem("filterLocation", JSON.stringify(value));
+    const newQuery = {
+      ...query,
+      provinceId: value.provinceId?.code,
+      districtId: value.districtId?.code,
+      wardId: value.wardId?.code,
+    };
+    console.log(value);
+    // if (!value.provinceId) {
+    //   delete newQuery.provinceId;
+    // }
+    // if (!value.districtId) {
+    //   delete newQuery.districtId;
+    // }
+    // if (!value.wardId) {
+    //   delete newQuery.wardId;
+    // }
+    router.push({
+      pathname: "/",
+      query: newQuery,
+    });
   };
+
   return (
     <>
       <Layout>
         <div className="container home-screen">
           <SearchBox
+            // clear filter
+            onClearFilter={onClearFilter}
+            // search
             onSearch={onSearch}
+            // salary
             onSalary={onFilterSalary}
-            defaultValueSalary={filter.salaryRange ?? [0, 1000000]}
+            defaultValueSalary={filter.salaryRange ?? [0, 10000000]}
+            // cate job
             onSelectJobCate={onFilterJobCate}
             defaultValueJobCate={filter.jobCate}
+            // job type
+            onSelectJobType={(value) => onFilterJobType(value)}
+            defaultValueJobType={filter.jobType}
+            // range Date
+            onSelectDateType={(value) => onFilterDateType(value)}
+            defaultValueDateType={filter.dateType}
+            // location
+            handleLocationData={(value) => onFilterLocation(value)}
+            // defaultLocation={
+            //   JSON.parse(localStorage.getItem("filterLocation")!) || undefined
+            // }
+            defaultLocation={defaultLocation}
           />
           <div style={{ height: "20px" }}></div>
           <FeedsList data={data} />
@@ -124,7 +208,7 @@ export async function getServerSideProps(
     page = "1",
     pageSize = "10",
     keyword = null,
-    dateRange = null,
+    dateType = null,
     jobType = null,
     salaryRangeBefore = null,
     salaryRangeAfter = null,
@@ -137,6 +221,18 @@ export async function getServerSideProps(
   let salaryRange = null;
   if (salaryRangeBefore && salaryRangeAfter) {
     salaryRange = [salaryRangeBefore, salaryRangeAfter];
+  }
+  let dateRange = null;
+  if (dateType) {
+    const rangeFromDate = convertDateTimeToDateString(new Date());
+    const rangeToDate = convertDateTimeToDateString(
+      decreasedDate(new Date(), +dateType! as number)
+    ); // giảm ngày cho date hiện tại
+
+    dateRange = [
+      new Date(rangeToDate).getTime(),
+      new Date(rangeFromDate).getTime(),
+    ];
   }
   const data = JSON.stringify({
     page,
@@ -163,6 +259,7 @@ export async function getServerSideProps(
 
   let dataResponse: GetFeedsModel[] = [];
   let totalRecord = 0;
+
   try {
     const response = await (axios(config) as Promise<
       AxiosResponse<ResponseModel<GetFeedsModel[]>>
@@ -180,7 +277,7 @@ export async function getServerSideProps(
         page,
         pageSize,
         keyword,
-        dateRange,
+        dateType,
         jobType,
         salaryRange,
         provinceId,

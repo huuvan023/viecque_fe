@@ -13,3 +13,14 @@ export const convertDateTimeToDateString = (val: any) => {
   if (date.toString() === "Invalid Date") return "NULL";
   return `${date.toISOString().substring(0, 10)}`;
 };
+
+export const adddate = (val: Date, add: number) => {
+  const newVal = new Date(val);
+  newVal.setDate(newVal.getDate() + add);
+  return newVal;
+};
+export const decreasedDate = (val: Date, add: number) => {
+  const newVal = new Date(val);
+  newVal.setDate(newVal.getDate() - add);
+  return newVal;
+};

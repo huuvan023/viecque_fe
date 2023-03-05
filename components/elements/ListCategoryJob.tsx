@@ -8,26 +8,46 @@ import { removeVietnameseTones } from "@Utils/remove-vietnamese-tones";
 interface Props {
   onSelectJobCate: (value: string) => void;
   valueDefault?: string;
+  className?: string;
 }
-const ListCategoryJob = ({ onSelectJobCate, valueDefault }: Props) => {
+const ListCategoryJob = ({
+  onSelectJobCate,
+  valueDefault,
+  className,
+}: Props) => {
+  const [jobCategoryList, setJobCategoryList] = useState<JobCategoryModel[]>(
+    []
+  );
+  const [defaultCateJob, setDefaultCateJob] = useState({
+    value: "",
+    label: "",
+  });
   useEffect(() => {
     getJobCategoryList();
   }, []);
+  useEffect(() => {
+    const newDefaultCateJob = jobCategoryList.find(
+      (item) => item.id === valueDefault
+    );
+    setDefaultCateJob({
+      value: newDefaultCateJob?.id ?? "",
+      label: newDefaultCateJob?.name ?? "",
+    });
+  }, [valueDefault, jobCategoryList]);
 
   const getJobCategoryList = async () => {
     try {
       const response = await apiPublicAxios.getJobCate();
       setJobCategoryList(response?.data?.data);
-     } catch (error: any) {
+    } catch (error: any) {
       const message = error.response.data.message;
       openNotification("error", "Thất bại", message);
     }
   };
-  const [jobCategoryList, setJobCategoryList] = useState<JobCategoryModel[]>(
-    []
-  );
+
   return (
     <Select
+      className={className}
       showSearch
       style={{ width: "100%" }}
       size="large"
@@ -35,7 +55,7 @@ const ListCategoryJob = ({ onSelectJobCate, valueDefault }: Props) => {
       optionFilterProp="children"
       onChange={onSelectJobCate}
       removeIcon
-      value={valueDefault}
+      value={defaultCateJob.value || undefined}
       filterOption={(input, option) =>
         removeVietnameseTones(option?.label ?? "")
           .toLowerCase()

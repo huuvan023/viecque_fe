@@ -4,6 +4,7 @@ import {
   DistrictsModel,
   WardsModel,
   JobCategoryModel,
+  GetFeedsModel,
 } from "@Models/index";
 import axiosClient from "@Axios/axios";
 import { ENPOINT } from "@Axios/endpoint";
@@ -38,29 +39,18 @@ export const apiPublicAxios = {
     return axiosClient.get(ENPOINT.getJobCate);
   },
 
-  // getFeeds() {
-  //   var data = JSON.stringify({
-  //     page: 1,
-  //     pageSize: 2,
-  //     keyword: "",
-  //     dateRange: ["1676598060000", "1676598190000"],
-  //     jobType: 1,
-  //     salaryRange: [10, 100000],
-  //     provinceId: 10,
-  //     districtId: 84,
-  //     wardId: null,
-  //     jobCate: "",
-  //   });
-
-  //   var config = {
-  //     method: "post",
-  //     maxBodyLength: Infinity,
-  //     url: "http://localhost:3000/api/public/filter-feeds",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     data: data,
-  //   };
-  //   return axiosClient(config);
-  // },
+  getFeedsById(
+    id: string
+  ): Promise<AxiosResponse<ResponseModel<GetFeedsModel>>> {
+    var config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: ENPOINT.getFeedById,
+      headers: {
+        accept: "application/json",
+        feedsId: id,
+      },
+    };
+    return axiosClient(config);
+  },
 };

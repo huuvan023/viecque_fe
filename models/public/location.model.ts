@@ -15,6 +15,12 @@ export interface WardsModel {
 }
 
 export interface LocationDataModel {
+  provinceId?: ProvinceModel;
+  districtId?: DistrictsModel;
+  wardId?: WardsModel;
+}
+
+export interface LocationDataNumberModel {
   provinceId?: number;
   districtId?: number;
   wardId?: number;

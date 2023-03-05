@@ -1,7 +1,6 @@
 import { apiPublicAxios } from "@Axios/public/api-public";
 import AppButton from "@Component/elements/AppButton";
 import AppInput from "@Component/elements/Input";
-import AppLocation from "@Component/Layout/AppLocation";
 import { Jobtype } from "@Constants/jobtype";
 import { useLoading } from "@Hooks/use-loading";
 import UserBrands from "@Component/screen-components/user-components/user-brands";
@@ -27,6 +26,7 @@ import {
 } from "antd";
 import { useEffect, useState } from "react";
 import { apiFeedsAxios } from "@Axios/user/api-feeds";
+import SelectLocation from "@Component/Layout/SelectLocation";
 
 interface Props {
   feed: GetFeedsModel;
@@ -57,6 +57,11 @@ export default function EditFeed(props: Props) {
     setTimeToStart(new Date(feed.timeToStart));
     setSalaryUnit(feed.salaryUnit);
     setJobCategoryId(feed.jobCate.id);
+    setLocationData({
+      provinceId: feed.provinceId,
+      districtId: feed.districtId,
+      wardId: feed.wardId,
+    });
   }, [props.feed]);
 
   const [isChooseBrands, setIschooseBrands] = useState(false);
@@ -64,7 +69,7 @@ export default function EditFeed(props: Props) {
 
   const [brand, setBrand] = useState<BrandsModel>();
   const [locationData, setLocationData] = useState<LocationDataModel>();
-  const [jobType, setJobType] = useState<number>();
+  const [jobType, setJobType] = useState<string>();
   const [phoneNumber, setPhoneNumber] = useState("");
   const [salaryUnit, setSalaryUnit] = useState("");
   const [jobTitle, setJobTitle] = useState("");
@@ -95,8 +100,16 @@ export default function EditFeed(props: Props) {
       openNotification("error", "Thất bại", "Vui lòng chọn thương hiệu!");
       return;
     }
-    if (!locationData) {
-      openNotification("error", "Thất bại", "Vui lòng chọn vị trí!");
+    if (!locationData?.provinceId) {
+      openNotification("error", "Thất bại", "Vui lòng chọn tỉnh!");
+      return;
+    }
+    if (!locationData?.districtId) {
+      openNotification("error", "Thất bại", "Vui lòng chọn huyện!");
+      return;
+    }
+    if (!locationData?.wardId) {
+      openNotification("error", "Thất bại", "Vui lòng chọn xã!");
       return;
     }
     if (!jobType) {
@@ -133,11 +146,11 @@ export default function EditFeed(props: Props) {
     }
 
     const data: UpdateFeedModel = {
-      id: props.feed.id,
+      feedsId: props.feed.id,
       brandId: brand.brandId!,
-      provinceId: locationData.provinceId!,
-      districtId: locationData.districtId!,
-      wardId: locationData.wardId!,
+      provinceId: locationData.provinceId.code!,
+      districtId: locationData.districtId.code!,
+      wardId: locationData.wardId.code!,
       jobType: jobType!,
       salaryUnit: salaryUnit,
       timeToStart: timeToStart,
@@ -255,8 +268,9 @@ export default function EditFeed(props: Props) {
                   <label className="form-label" htmlFor="input-1">
                     Chọn vị trí <span style={{ color: "red" }}>*</span>
                   </label>
-                  <AppLocation
-                    changeOnSelect={false}
+
+                  <SelectLocation
+                    defaultLocation={locationData}
                     handleLocationData={(locationData) =>
                       setLocationData(locationData)
                     }
