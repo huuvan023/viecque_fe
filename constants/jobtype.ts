@@ -1,10 +1,10 @@
 export const Jobtype = [
   {
     label: "Bao ăn",
-    value: 1,
+    value: '1',
   },
   {
     label: "Bao ở",
-    value: 2,
+    value: '2',
   },
 ];

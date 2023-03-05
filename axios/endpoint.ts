@@ -12,6 +12,8 @@ export const ENPOINT = {
 
   // user profile
   user: "/user",
+  // payment
+  paymentMomo: "user/momo/create",
 
   // brands
   brands: "/user/brand",
@@ -29,6 +31,7 @@ export const ENPOINT = {
   getRecruiterReportedFeeds: "/recruiter/reported-feeds",
   recruiterHideFeeds: "/recruiter/hide-feeds",
   recruiterDeleteFeeds: "/recruiter/delete-feeds",
+  getFeedById: "/public/feeds/by-id",
 
   // admin
   createCate: "admin/create-cate",

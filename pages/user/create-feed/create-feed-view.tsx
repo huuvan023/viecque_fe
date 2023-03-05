@@ -14,8 +14,9 @@ import { apiFeedsAxios } from "@Axios/user/api-feeds";
 import { openNotification } from "@Utils/notification";
 import GetLocationString from "@Component/Layout/GetLocationString";
 import { Jobtype } from "@Constants/jobtype";
-import { Image } from "antd";
+import { Button, Image } from "antd";
 import { convertDateTimeToDateString } from "@Utils/format-time-string";
+import { apiPaymentAxios } from "@Axios/payment/api-payment";
 export default function CreateFeedView() {
   const router = useRouter();
   const { setLoading } = useLoading();
@@ -24,15 +25,17 @@ export default function CreateFeedView() {
   const [brandById, setBrandById] = useState<BrandsModel>();
 
   useEffect(() => {
-    if (!createFeed) {
+    if (!createFeed.jobTitle) {
       router.push({
         pathname: Routes.createFeed,
       });
       return;
     }
-    (() => {
-      getBrandById(createFeed.brandId);
-    })();
+    if (createFeed.brandId) {
+      (() => {
+        getBrandById(createFeed.brandId);
+      })();
+    }
   }, [router, createFeed]);
 
   const getBrandById = async (id: string) => {
@@ -45,21 +48,48 @@ export default function CreateFeedView() {
     }
   };
 
-  const onSaveFeed = async () => {
+  const onSaveFeed = async (isPayment: boolean) => {
     setLoading(true);
     try {
       const response = await apiFeedsAxios.createFeeds(createFeed!);
       openNotification("success", "Thành công", "Tạo tin thành công");
-      router.push({
-        pathname: Routes.userListFeeds,
-      });
+
+      console.log(response);
+      // if (isPayment) {
+      // } else {
+      //   router.push({
+      //     pathname: Routes.userListFeeds,
+      //   });
+      // }
     } catch (error: any) {
       setLoading(false);
       const message = error.response.data.message;
       openNotification("error", "Thất bại", message);
     }
   };
-
+  // const onPayment = async ({
+  //   feedsId,
+  //   description,
+  // }: {
+  //   feedsId: string;
+  //   description: string;
+  // }) => {
+  //   setLoading(true);
+  //   try {
+  //     const response = await apiPaymentAxios.momo({
+  //       feedsId: feed.id,
+  //       description: `Thanh toán đơn hàng ${feed.jobTitle}`,
+  //     });
+  //     if (response.data?.message) {
+  //       window.location.href = response.data?.message;
+  //     }
+  //     setLoading(false);
+  //   } catch (error: any) {
+  //     const message = error.response.data.message;
+  //     openNotification("error", "Thất bại", message);
+  //     setLoading(false);
+  //   }
+  // };
   return (
     <Authentication>
       <Layout>
@@ -202,8 +232,26 @@ export default function CreateFeedView() {
               </div>
             </>
           ) : null}
-          <div className="d-flex justify-content-end">
-            <AppButton textBtn="Lưu tin và thanh toán" onClick={onSaveFeed} />
+          <div className="d-flex justify-content-end align-items-center">
+            <AppButton
+              textBtn="Hủy tin"
+              onClick={() => {
+                router.push({
+                  pathname: Routes.home,
+                });
+              }}
+              style={{
+                backgroundColor: "white",
+                color: "red",
+                border: "1px solid",
+              }}
+            />
+
+            <AppButton textBtn="Lưu tin nháp" onClick={onSaveFeed} />
+            <AppButton
+              textBtn="Lưu tin và thanh toán"
+              onClick={() => onSaveFeed(true)}
+            />
           </div>
         </div>
       </Layout>

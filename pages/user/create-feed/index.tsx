@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 import { apiPublicAxios } from "@Axios/public/api-public";
 import { apiUserProfileAxios } from "@Axios/user/api-user-profile";
-import AppLocation from "@Component/Layout/AppLocation";
 import Layout from "@Component/Layout/Layout";
 import Authentication from "@Component/auth/Auth";
 import AppButton from "@Component/elements/AppButton";
@@ -44,7 +43,7 @@ const CreateFeed = () => {
 
   const [brand, setBrand] = useState<BrandsModel>();
   const [locationData, setLocationData] = useState<LocationDataModel>();
-  const [jobType, setJobType] = useState<number>();
+  const [jobType, setJobType] = useState<string>();
   const [salaryUnit, setSalaryUnit] = useState("");
   const [jobCategoryList, setJobCategoryList] = useState<JobCategoryModel[]>(
     []
@@ -86,8 +85,16 @@ const CreateFeed = () => {
       return;
     }
 
-    if (!locationData) {
-      openNotification("error", "Thất bại", "Vui lòng chọn vị trí!");
+    if (!locationData?.provinceId) {
+      openNotification("error", "Thất bại", "Vui lòng chọn tỉnh!");
+      return;
+    }
+    if (!locationData?.districtId) {
+      openNotification("error", "Thất bại", "Vui lòng chọn huyện!");
+      return;
+    }
+    if (!locationData?.wardId) {
+      openNotification("error", "Thất bại", "Vui lòng chọn xã!");
       return;
     }
     if (!jobType) {
@@ -125,9 +132,9 @@ const CreateFeed = () => {
 
     const data: CreateFeedModel = {
       brandId: brand.brandId!,
-      provinceId: locationData.provinceId!,
-      districtId: locationData.districtId!,
-      wardId: locationData.wardId!,
+      provinceId: locationData.provinceId.code!,
+      districtId: locationData.districtId.code!,
+      wardId: locationData.wardId.code!,
       jobType: jobType!,
       salaryUnit: salaryUnit,
       timeToStart: timeToStart,
@@ -230,13 +237,12 @@ const CreateFeed = () => {
                     <label className="form-label" htmlFor="input-1">
                       Chọn vị trí <span style={{ color: "red" }}>*</span>
                     </label>
-                    {/* <AppLocation
-                      changeOnSelect={false}
+
+                    <SelectLocation
                       handleLocationData={(locationData) =>
                         setLocationData(locationData)
                       }
-                    /> */}
-                    <SelectLocation />
+                    />
                   </div>
                   <div className="box-size">
                     <AppInput

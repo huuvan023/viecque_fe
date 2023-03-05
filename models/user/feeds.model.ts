@@ -14,7 +14,7 @@ export interface CreateFeedModel {
   wardId: number;
   detailsAddress: string;
   jobTitle: string;
-  jobType: number;
+  jobType: string;
   jobCategoryId: string;
   description: string;
   amountPeople: string;
@@ -24,7 +24,7 @@ export interface CreateFeedModel {
   workingTime: string;
 }
 export interface UpdateFeedModel extends CreateFeedModel {
-  id: string;
+  feedsId: string;
 }
 export interface GetFeedsModel {
   id: string;

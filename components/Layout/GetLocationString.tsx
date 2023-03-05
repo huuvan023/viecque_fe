@@ -1,8 +1,8 @@
 import { apiPublicAxios } from "@Axios/public/api-public";
-import { LocationDataModel } from "@Models/index";
+import { LocationDataNumberModel } from "@Models/index";
 import React, { useEffect, useState } from "react";
 
-const GetLocationString = (data: LocationDataModel) => {
+const GetLocationString = (data: LocationDataNumberModel) => {
   const [province, setProvince] = useState("");
   const [districts, setDistricts] = useState("");
   const [wards, setWards] = useState("");
