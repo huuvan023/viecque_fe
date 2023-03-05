@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import { apiAdminAxios } from "@Axios/admin/api-admin";
 import AppPagination from "@Component/elements/AppPagination";
 import { useLoading } from "@Hooks/use-loading";
@@ -8,6 +9,7 @@ import {
   Col,
   DatePicker,
   Drawer,
+  Image,
   Popover,
   Row,
   Select,
@@ -18,6 +20,7 @@ import { useEffect, useState } from "react";
 import SearchComponent from "@Component/elements/Search";
 import FeedDetailAdminView from "../feed/FeedDetailDrawerView";
 import { FilterStatus } from "@Constants/filter-status";
+import { FeedStatus } from "@Constants/feed-status";
 
 const { RangePicker } = DatePicker;
 export default function ListFeedsAdmin() {
@@ -31,6 +34,7 @@ export default function ListFeedsAdmin() {
   });
   const [filterStatus, setFilterStatus] = useState([]);
   const [filterUserId, setFilterUserId] = useState([]);
+  const [filterDate, setFilterDate] = useState<string[]>([]);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [total, setTotal] = useState(0);
   const [userList, setuserList] = useState<any[]>([]);
@@ -50,7 +54,7 @@ export default function ListFeedsAdmin() {
       getAdminFeeds();
       getAllUser();
     })();
-  }, [pagination, filterStatus, filterUserId]);
+  }, [pagination, filterStatus, filterUserId, filterDate]);
 
   const onCloseDrawer = () => {
     setOpenDrawer(false);
@@ -62,6 +66,7 @@ export default function ListFeedsAdmin() {
         ...pagination,
         statuses: filterStatus,
         userIds: filterUserId,
+        dateRange: filterDate,
       });
       setdata(response.data.data);
       const total = response.data.totalRecord;
@@ -103,6 +108,15 @@ export default function ListFeedsAdmin() {
   const onFilterUserid = (value: any) => {
     setFilterUserId(value);
   };
+  const onFilterDate = (value: [string, string]) => {
+    if (!value[0]) {
+      setFilterDate([]);
+      return;
+    }
+    setFilterDate([
+      `${new Date(value[0]).getTime()} , ${new Date(value[1]).getTime()}`,
+    ]);
+  };
 
   return (
     <div className="row">
@@ -127,7 +141,11 @@ export default function ListFeedsAdmin() {
         }))}
       />
       <div style={{ width: "100%", marginBottom: "10px" }}>
-        <RangePicker style={{ width: "100%" }} size="large" />
+        <RangePicker
+          style={{ width: "100%" }}
+          size="large"
+          onChange={(value, formatDate) => onFilterDate(formatDate)}
+        />
       </div>
       {data?.map((item, index) => {
         return (
@@ -142,9 +160,13 @@ export default function ListFeedsAdmin() {
             >
               <div className="card-grid-2-image-left">
                 <div className="image-box">
-                  <img
-                    src="https://res.cloudinary.com/huuvan/image/upload/v1676592997/viecque/brands/9562396b-b9ef-4f7a-8d66-c2d7f35159ce/eRSJvOyUd.png"
-                    alt="jobBox"
+                  <Image
+                    width={50}
+                    height={50}
+                    src={
+                      item.branding?.resourceUrl ??
+                      "/assets/imgs/icon/block-user.png"
+                    }
                   />
                 </div>
                 <div className="right-info">
@@ -162,6 +184,13 @@ export default function ListFeedsAdmin() {
               <div className="card-block-info">
                 <p className="font-sm color-text-paragraph text-left text-description-card">
                   {item.description}
+                </p>
+                <p
+                  className="font-sm color-text-paragraph text-left text-description-card"
+                  style={{ color: "red" }}
+                >
+                  Trạng thái tin:{" "}
+                  {FeedStatus.find((a) => a.value === item.feedsStatus)?.label}
                 </p>
                 <div className="card-2-bottom mt-10">
                   <Row>

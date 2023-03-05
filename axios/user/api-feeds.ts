@@ -12,7 +12,7 @@ import { AxiosResponse } from "axios";
 export const apiFeedsAxios = {
   createFeeds(
     data: CreateFeedModel
-  ): Promise<AxiosResponse<ResponseModel<null>>> {
+  ): Promise<AxiosResponse<ResponseModel<GetFeedsModel>>> {
     return axiosClient.post(ENPOINT.createFeed, data);
   },
   updateFeeds(

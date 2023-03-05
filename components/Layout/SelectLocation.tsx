@@ -150,6 +150,8 @@ const SelectLocation = ({ handleLocationData, defaultLocation }: Props) => {
         value={provinceCurrent ?? provinceCurrentDefault}
         onChange={(value, option: any) => {
           setDistrictsCurrent(null);
+          setDistrictsCurrentDefault(null);
+          setWardsCurrentDefault(null);
           setWardsCurrent(null);
           setProvinceCurrent(option);
           getDistricts(option.data);
@@ -178,6 +180,7 @@ const SelectLocation = ({ handleLocationData, defaultLocation }: Props) => {
           onChange={(value, option: any) => {
             setDistrictsCurrent(option);
             setWardsCurrent(null);
+            setWardsCurrentDefault(null);
             getWards(option.data);
           }}
           value={districtsCurrent ?? districtsCurrentDefault}

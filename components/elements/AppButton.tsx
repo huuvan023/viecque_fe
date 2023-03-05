@@ -19,9 +19,7 @@ export default function AppButton({
       style={style}
       type={type}
       className={
-        !style
-          ? className ?? "btn btn-default btn-shadow ml-40 hover-up mb-3 mt-3"
-          : ""
+        className ?? "btn btn-default btn-shadow ml-40 hover-up mb-3 mt-3"
       }
       onClick={() => {
         if (onClick) {

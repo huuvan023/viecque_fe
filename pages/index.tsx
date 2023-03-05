@@ -184,7 +184,6 @@ export default function Home({ data, total, filter }: Props) {
             // defaultLocation={
             //   JSON.parse(localStorage.getItem("filterLocation")!) || undefined
             // }
-            defaultLocation={defaultLocation}
           />
           <div style={{ height: "20px" }}></div>
           <FeedsList data={data} />
