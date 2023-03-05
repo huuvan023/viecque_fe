@@ -54,42 +54,44 @@ export default function CreateFeedView() {
       const response = await apiFeedsAxios.createFeeds(createFeed!);
       openNotification("success", "Thành công", "Tạo tin thành công");
 
-      console.log(response);
-      // if (isPayment) {
-      // } else {
-      //   router.push({
-      //     pathname: Routes.userListFeeds,
-      //   });
-      // }
+      if (isPayment) {
+        console.log(response.data?.data);
+        const feed = response.data?.data;
+        onPayment({ feedsId: feed.id, description: feed.jobTitle });
+      } else {
+        router.push({
+          pathname: Routes.userListFeeds,
+        });
+      }
     } catch (error: any) {
       setLoading(false);
       const message = error.response.data.message;
       openNotification("error", "Thất bại", message);
     }
   };
-  // const onPayment = async ({
-  //   feedsId,
-  //   description,
-  // }: {
-  //   feedsId: string;
-  //   description: string;
-  // }) => {
-  //   setLoading(true);
-  //   try {
-  //     const response = await apiPaymentAxios.momo({
-  //       feedsId: feed.id,
-  //       description: `Thanh toán đơn hàng ${feed.jobTitle}`,
-  //     });
-  //     if (response.data?.message) {
-  //       window.location.href = response.data?.message;
-  //     }
-  //     setLoading(false);
-  //   } catch (error: any) {
-  //     const message = error.response.data.message;
-  //     openNotification("error", "Thất bại", message);
-  //     setLoading(false);
-  //   }
-  // };
+  const onPayment = async ({
+    feedsId,
+    description,
+  }: {
+    feedsId: string;
+    description: string;
+  }) => {
+    setLoading(true);
+    try {
+      const response = await apiPaymentAxios.momo({
+        feedsId: feedsId,
+        description: `Thanh toán đơn hàng ${description}`,
+      });
+      if (response.data?.message) {
+        window.location.href = response.data?.message;
+      }
+      setLoading(false);
+    } catch (error: any) {
+      const message = error.response.data.message;
+      openNotification("error", "Thất bại", message);
+      setLoading(false);
+    }
+  };
   return (
     <Authentication>
       <Layout>

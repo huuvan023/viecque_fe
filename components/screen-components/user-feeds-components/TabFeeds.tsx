@@ -101,16 +101,17 @@ const TabFeeds = () => {
 
   return (
     <>
+      <hr />
+      <Select
+        placeholder="Tất cả tin"
+        // className="w-100"
+        size="large"
+        onChange={(value: string) => setFilterStatus(value)}
+        style={{ width: "100%" }}
+        value={filterStatus}
+        options={FeedStatus}
+      />
       <div className="row">
-        <Select
-          placeholder="Tất cả tin"
-          className="w-100"
-          size="large"
-          onChange={(value: string) => setFilterStatus(value)}
-          style={{ width: "100%" }}
-          value={filterStatus}
-          options={FeedStatus}
-        />
         {data
           .filter((item) => {
             if (filterStatus !== "ALL") {
@@ -252,13 +253,6 @@ const TabFeeds = () => {
           })}
       </div>
 
-      {/* <AppPagination
-        handlePagination={(pagination) => {
-          setPagination(pagination);
-        }}
-        pagination={pagination}
-        total={total}
-      /> */}
       <Drawer
         title="Chi tiết tin"
         placement="bottom"
@@ -272,6 +266,7 @@ const TabFeeds = () => {
         feed={feedEdit!}
         openEditFeed={!!feedEdit}
         onCloseEditFeed={() => setFeedEdit(null)}
+        onEditSuccess={() => getRecruiterFeeds()}
       />
     </>
   );

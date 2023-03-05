@@ -32,6 +32,7 @@ interface Props {
   feed: GetFeedsModel;
   onCloseEditFeed: (isClose: boolean) => void;
   openEditFeed: boolean;
+  onEditSuccess?: () => void;
 }
 export default function EditFeed(props: Props) {
   useEffect(() => {
@@ -172,6 +173,10 @@ export default function EditFeed(props: Props) {
       const response = await apiFeedsAxios.updateFeeds(updateFeed);
       openNotification("success", "Thành công", "Cập nhật tin thành công");
       props.onCloseEditFeed(false);
+      if (props.onEditSuccess) {
+        props.onEditSuccess();
+      }
+
       setLoading(false);
     } catch (error: any) {
       setLoading(false);

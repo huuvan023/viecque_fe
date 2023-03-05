@@ -19,16 +19,7 @@ export default function Detail({ data }: Props) {
     setLoading(false);
     console.log(data);
   }, [data]);
-  // const [brandById, setBrandById] = useState<BrandsModel>();
-  // const getBrandById = async (id: string) => {
-  //   try {
-  //     const response = await apiBrandsAxios.getBrandById(id);
-  //     setBrandById(response.data.data[0]);
-  //     setLoading(false);
-  //   } catch (error) {
-  //     setLoading(false);
-  //   }
-  // };
+
   return (
     <>
       <Layout>
