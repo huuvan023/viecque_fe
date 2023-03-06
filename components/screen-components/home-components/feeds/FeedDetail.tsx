@@ -2,6 +2,7 @@ import ImageAssets from "@Component/elements/ImageAssets";
 import { Jobtype } from "@Constants/jobtype";
 import { GetFeedsModel } from "@Models/index";
 import GetLocationString from "@Component/Layout/GetLocationString";
+import { Typography } from "antd";
 interface Props {
   data: GetFeedsModel;
 }
@@ -145,7 +146,9 @@ export default function FeedDetailPublicScreen({ data }: Props) {
             <div className="card-detail-feed-child">
               <div className="right-info p-2">
                 <a className="name-job">Mô tả công việc</a>
-                <p>{data.description}</p>
+                <Typography
+                  dangerouslySetInnerHTML={{ __html: data.description }}
+                />
               </div>
             </div>
           </div>

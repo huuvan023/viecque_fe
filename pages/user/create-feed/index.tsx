@@ -10,7 +10,7 @@ import UserBrands from "@Component/screen-components/user-components/user-brands
 import { Jobtype } from "@Constants/jobtype";
 import { useCreateFeed } from "@Hooks/use-create-feed";
 import { useLoading } from "@Hooks/use-loading";
-
+import "react-quill/dist/quill.snow.css";
 import {
   BrandsModel,
   CreateFeedModel,
@@ -34,6 +34,7 @@ import {
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import SelectLocation from "@Component/Layout/SelectLocation";
+import EditTextWord from "@Component/elements/EditTextWord";
 
 const CreateFeed = () => {
   const [isChooseBrands, setIschooseBrands] = useState(false);
@@ -413,14 +414,10 @@ const CreateFeed = () => {
                       Mô tả công việc
                       <span style={{ color: "red" }}>*</span>
                     </label>
-                    <textarea
-                      name="description"
-                      placeholder="Mô tả công việc"
-                      rows={4}
-                      cols={50}
-                      onChange={(event) => {
-                        setDescription(event.target.value);
-                      }}
+
+                    <EditTextWord
+                      onChange={(value) => setDescription(value)}
+                      value={description}
                     />
                   </div>
                   <div className="text-right">

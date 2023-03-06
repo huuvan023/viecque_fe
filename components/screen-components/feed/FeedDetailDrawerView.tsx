@@ -3,7 +3,7 @@ import ImageAssets from "@Component/elements/ImageAssets";
 import { Jobtype } from "@Constants/jobtype";
 import { BrandsModel, GetFeedsModel } from "@Models/index";
 import GetLocationString from "@Component/Layout/GetLocationString";
-import { Button, Image } from "antd";
+import { Button, Image, Typography } from "antd";
 import { convertDateTimeToDateString } from "@Utils/format-time-string";
 interface Props {
   data: GetFeedsModel;
@@ -154,7 +154,10 @@ export default function FeedDetailDrawerView({ data }: Props) {
                   <div className="card-detail-feed-child">
                     <div className="right-info p-2">
                       <a className="name-job">Mô tả công việc</a>
-                      <p>{data.description}</p>
+
+                      <Typography
+                        dangerouslySetInnerHTML={{ __html: data.description }}
+                      />
                     </div>
                   </div>
                 </div>

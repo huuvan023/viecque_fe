@@ -27,6 +27,7 @@ import {
 import { useEffect, useState } from "react";
 import { apiFeedsAxios } from "@Axios/user/api-feeds";
 import SelectLocation from "@Component/Layout/SelectLocation";
+import EditTextWord from "@Component/elements/EditTextWord";
 
 interface Props {
   feed: GetFeedsModel;
@@ -461,15 +462,10 @@ export default function EditFeed(props: Props) {
                     Mô tả công việc
                     <span style={{ color: "red" }}>*</span>
                   </label>
-                  <textarea
-                    name="description"
-                    placeholder="Mô tả công việc"
-                    rows={4}
-                    cols={50}
+
+                  <EditTextWord
+                    onChange={(value) => setDescription(value)}
                     value={description}
-                    onChange={(event) => {
-                      setDescription(event.target.value);
-                    }}
                   />
                 </div>
                 <div className="text-right">
