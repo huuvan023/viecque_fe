@@ -227,9 +227,15 @@ const ModifyBrands = ({
           <label className="form-label" htmlFor="input-1">
             Thông tin Thương hiệu <span style={{ color: "red" }}>*</span>
           </label>
-          <EditTextWord
-            onChange={(value) => setDescription(value)}
+          <textarea
             value={description}
+            name="description"
+            placeholder="Thông tin Thương hiệu"
+            rows={4}
+            cols={50}
+            onChange={(event) => {
+              setDescription(event.target.value);
+            }}
           />
         </div>
       </Form>
