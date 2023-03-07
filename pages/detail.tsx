@@ -23,7 +23,6 @@ export default function Detail({ data }: Props) {
     <>
       <Layout>
         <div className="container home-screen">
-          {/* <FeedDetail data={data} brand={brandById!} /> */}
           {data ? (
             <>
               <div className="row">
@@ -129,7 +128,9 @@ export default function Detail({ data }: Props) {
                         <span className="font-bold">Thời gian làm việc</span>
                       </div>
                       <div className="col-sm-8 col-7">
-                        <span>{data.workingTime}</span>
+                        <Typography
+                          dangerouslySetInnerHTML={{ __html: data.workingTime }}
+                        />
                       </div>
                     </div>
                     <div className="card-detail-feed-child">

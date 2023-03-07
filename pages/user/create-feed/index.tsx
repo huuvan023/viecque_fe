@@ -279,28 +279,14 @@ const CreateFeed = () => {
                       options={Jobtype}
                     />
                   </div>
-                  {/* <div className="box-size">
-                    <AppInput
-                      required={true}
-                      label="Thời gian làm việc trong ngày"
-                      placeholder="8h sáng - 8h tối"
-                      name="workingTime"
-                      requiredMessage="Vui lòng điền thời gian làm việc trong ngày"
-                    />
-                  </div> */}
                   <div className="box-size">
                     <label className="form-label" htmlFor="input-1">
                       Thời gian làm việc trong ngày
                       <span style={{ color: "red" }}>*</span>
                     </label>
-                    <textarea
-                      placeholder="Thời gian làm việc trong ngày"
-                      rows={4}
-                      cols={50}
+                    <EditTextWord
+                      onChange={(value) => setWorkingTime(value)}
                       value={workingTime}
-                      onChange={(event) => {
-                        setWorkingTime(event.target.value);
-                      }}
                     />
                   </div>
                   <div className="box-size">

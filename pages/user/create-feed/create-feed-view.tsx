@@ -190,7 +190,11 @@ export default function CreateFeedView() {
                         <span className="font-bold">Thời gian làm việc</span>
                       </div>
                       <div className="col-sm-8 col-7">
-                        <span>{createFeed.workingTime}</span>
+                        <Typography
+                          dangerouslySetInnerHTML={{
+                            __html: createFeed.workingTime,
+                          }}
+                        />
                       </div>
                     </div>
                     <div className="card-detail-feed-child">
