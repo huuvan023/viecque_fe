@@ -3,7 +3,7 @@ import ImageAssets from "@Component/elements/ImageAssets";
 import { useLoading } from "@Hooks/use-loading";
 import { GetFeedsModel } from "@Models/index";
 import { Routes } from "@Routes/routes";
-import { Col, Image, Row } from "antd";
+import { Col, Image, Row, Typography } from "antd";
 import { useEffect, useState } from "react";
 
 interface Props {
@@ -46,7 +46,10 @@ export default function FeedsListOnLocal({ activeTab }: Props) {
               <div className="card-grid-2-image-left">
                 <div className="image-box">
                   <Image
-                    src={item.branding?.resourceUrl ?? "/assets/imgs/icon/block-user.png"}
+                    src={
+                      item.branding?.resourceUrl ??
+                      "/assets/imgs/icon/block-user.png"
+                    }
                     width={50}
                     height={50}
                     alt="jobBox"
@@ -66,9 +69,10 @@ export default function FeedsListOnLocal({ activeTab }: Props) {
                 </div>
               </div>
               <div className="card-block-info">
-                <p className="font-sm color-text-paragraph text-left text-description-card">
-                  {item.description}
-                </p>
+                <Typography
+                  className="font-sm color-text-paragraph text-left text-description-card"
+                  dangerouslySetInnerHTML={{ __html: item.description }}
+                />
                 <div className="card-2-bottom mt-10">
                   <Row>
                     <Col flex="auto" className="text-left main-text-color-grey">

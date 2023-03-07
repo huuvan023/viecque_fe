@@ -10,7 +10,7 @@ import UserBrands from "@Component/screen-components/user-components/user-brands
 import { Jobtype } from "@Constants/jobtype";
 import { useCreateFeed } from "@Hooks/use-create-feed";
 import { useLoading } from "@Hooks/use-loading";
-
+import "react-quill/dist/quill.snow.css";
 import {
   BrandsModel,
   CreateFeedModel,
@@ -34,6 +34,7 @@ import {
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import SelectLocation from "@Component/Layout/SelectLocation";
+import EditTextWord from "@Component/elements/EditTextWord";
 
 const CreateFeed = () => {
   const [isChooseBrands, setIschooseBrands] = useState(false);
@@ -278,28 +279,14 @@ const CreateFeed = () => {
                       options={Jobtype}
                     />
                   </div>
-                  {/* <div className="box-size">
-                    <AppInput
-                      required={true}
-                      label="Thời gian làm việc trong ngày"
-                      placeholder="8h sáng - 8h tối"
-                      name="workingTime"
-                      requiredMessage="Vui lòng điền thời gian làm việc trong ngày"
-                    />
-                  </div> */}
                   <div className="box-size">
                     <label className="form-label" htmlFor="input-1">
                       Thời gian làm việc trong ngày
                       <span style={{ color: "red" }}>*</span>
                     </label>
-                    <textarea
-                      placeholder="Thời gian làm việc trong ngày"
-                      rows={4}
-                      cols={50}
+                    <EditTextWord
+                      onChange={(value) => setWorkingTime(value)}
                       value={workingTime}
-                      onChange={(event) => {
-                        setWorkingTime(event.target.value);
-                      }}
                     />
                   </div>
                   <div className="box-size">
@@ -413,14 +400,10 @@ const CreateFeed = () => {
                       Mô tả công việc
                       <span style={{ color: "red" }}>*</span>
                     </label>
-                    <textarea
-                      name="description"
-                      placeholder="Mô tả công việc"
-                      rows={4}
-                      cols={50}
-                      onChange={(event) => {
-                        setDescription(event.target.value);
-                      }}
+
+                    <EditTextWord
+                      onChange={(value) => setDescription(value)}
+                      value={description}
                     />
                   </div>
                   <div className="text-right">

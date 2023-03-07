@@ -15,6 +15,7 @@ import {
   Popover,
   Row,
   Select,
+  Typography,
 } from "antd";
 import { MenuOutlined } from "@ant-design/icons";
 import FeedDetailDrawerView from "../feed/FeedDetailDrawerView";
@@ -155,9 +156,10 @@ const TabFeeds = () => {
                     </div>
                   </div>
                   <div className="card-block-info">
-                    <p className="font-sm color-text-paragraph text-left text-description-card">
-                      {item.description}
-                    </p>
+                    <Typography
+                      className="font-sm color-text-paragraph text-left text-description-card"
+                      dangerouslySetInnerHTML={{ __html: item.description }}
+                    />
                     <p
                       className="font-sm color-text-paragraph text-left text-description-card"
                       style={{ color: "red" }}

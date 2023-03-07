@@ -5,7 +5,7 @@ import { useLoading } from "@Hooks/use-loading";
 import { GetFeedsModel, ResponseModel } from "@Models/index";
 import env from "@Env/index";
 import axios, { AxiosResponse } from "axios";
-import { Button, Image } from "antd";
+import { Button, Image, Typography } from "antd";
 import { useRouter } from "next/router";
 import { convertDateTimeToDateString } from "@Utils/format-time-string";
 import GetLocationString from "@Component/Layout/GetLocationString";
@@ -17,14 +17,12 @@ export default function Detail({ data }: Props) {
   const { setLoading } = useLoading();
   useEffect(() => {
     setLoading(false);
-    console.log(data);
   }, [data]);
 
   return (
     <>
       <Layout>
         <div className="container home-screen">
-          {/* <FeedDetail data={data} brand={brandById!} /> */}
           {data ? (
             <>
               <div className="row">
@@ -130,7 +128,9 @@ export default function Detail({ data }: Props) {
                         <span className="font-bold">Thời gian làm việc</span>
                       </div>
                       <div className="col-sm-8 col-7">
-                        <span>{data.workingTime}</span>
+                        <Typography
+                          dangerouslySetInnerHTML={{ __html: data.workingTime }}
+                        />
                       </div>
                     </div>
                     <div className="card-detail-feed-child">
@@ -165,7 +165,9 @@ export default function Detail({ data }: Props) {
                     <div className="card-detail-feed-child">
                       <div className="right-info p-2">
                         <a className="name-job">Mô tả công việc</a>
-                        <p>{data.description}</p>
+                        <Typography
+                          dangerouslySetInnerHTML={{ __html: data.description }}
+                        />
                       </div>
                     </div>
                   </div>

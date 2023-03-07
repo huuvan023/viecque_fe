@@ -10,6 +10,7 @@ import ImgCrop from "antd-img-crop";
 import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
 import { apiBrandsAxios } from "@Axios/user/api-brands";
 import { apiUserProfileAxios } from "@Axios/user/api-user-profile";
+import EditTextWord from "@Component/elements/EditTextWord";
 interface Props {
   onChooseBrand?: Function;
 }
@@ -226,15 +227,9 @@ const ModifyBrands = ({
           <label className="form-label" htmlFor="input-1">
             Thông tin Thương hiệu <span style={{ color: "red" }}>*</span>
           </label>
-          <textarea
+          <EditTextWord
+            onChange={(value) => setDescription(value)}
             value={description}
-            name="description"
-            placeholder="Thông tin Thương hiệu"
-            rows={4}
-            cols={50}
-            onChange={(event) => {
-              setDescription(event.target.value);
-            }}
           />
         </div>
       </Form>

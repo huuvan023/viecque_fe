@@ -27,6 +27,7 @@ import {
 import { useEffect, useState } from "react";
 import { apiFeedsAxios } from "@Axios/user/api-feeds";
 import SelectLocation from "@Component/Layout/SelectLocation";
+import EditTextWord from "@Component/elements/EditTextWord";
 
 interface Props {
   feed: GetFeedsModel;
@@ -141,7 +142,7 @@ export default function EditFeed(props: Props) {
       openNotification(
         "error",
         "Thất bại",
-        "Vui lòng điền thời gian làm việc trong ngày67!"
+        "Vui lòng điền thời gian làm việc trong ngày!"
       );
       return;
     }
@@ -329,14 +330,9 @@ export default function EditFeed(props: Props) {
                     Thời gian làm việc trong ngày
                     <span style={{ color: "red" }}>*</span>
                   </label>
-                  <textarea
-                    placeholder="Thời gian làm việc trong ngày"
-                    rows={4}
-                    cols={50}
+                  <EditTextWord
+                    onChange={(value) => setWorkingTime(value)}
                     value={workingTime}
-                    onChange={(event) => {
-                      setWorkingTime(event.target.value);
-                    }}
                   />
                 </div>
                 <div className="box-size">
@@ -461,15 +457,10 @@ export default function EditFeed(props: Props) {
                     Mô tả công việc
                     <span style={{ color: "red" }}>*</span>
                   </label>
-                  <textarea
-                    name="description"
-                    placeholder="Mô tả công việc"
-                    rows={4}
-                    cols={50}
+
+                  <EditTextWord
+                    onChange={(value) => setDescription(value)}
                     value={description}
-                    onChange={(event) => {
-                      setDescription(event.target.value);
-                    }}
                   />
                 </div>
                 <div className="text-right">

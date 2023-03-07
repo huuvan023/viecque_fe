@@ -14,7 +14,7 @@ import { apiFeedsAxios } from "@Axios/user/api-feeds";
 import { openNotification } from "@Utils/notification";
 import GetLocationString from "@Component/Layout/GetLocationString";
 import { Jobtype } from "@Constants/jobtype";
-import { Button, Image } from "antd";
+import { Button, Image, Typography } from "antd";
 import { convertDateTimeToDateString } from "@Utils/format-time-string";
 import { apiPaymentAxios } from "@Axios/payment/api-payment";
 export default function CreateFeedView() {
@@ -190,7 +190,11 @@ export default function CreateFeedView() {
                         <span className="font-bold">Thời gian làm việc</span>
                       </div>
                       <div className="col-sm-8 col-7">
-                        <span>{createFeed.workingTime}</span>
+                        <Typography
+                          dangerouslySetInnerHTML={{
+                            __html: createFeed.workingTime,
+                          }}
+                        />
                       </div>
                     </div>
                     <div className="card-detail-feed-child">
@@ -226,7 +230,12 @@ export default function CreateFeedView() {
                     <div className="card-detail-feed-child">
                       <div className="right-info p-2">
                         <a className="name-job">Mô tả công việc</a>
-                        <p>{createFeed.description}</p>
+
+                        <Typography
+                          dangerouslySetInnerHTML={{
+                            __html: createFeed.description,
+                          }}
+                        />
                       </div>
                     </div>
                   </div>
