@@ -12,7 +12,6 @@ import env from "@Env/index";
 import { ResponseModel } from "@Models/response.model";
 import {
   GetFeedsModel,
-  JobCategoryModel,
   LocationDataModel,
   PaginationModel,
 } from "@Models/index";
@@ -46,14 +45,9 @@ export default function Home({ data, total, filter }: Props) {
     page: 1,
     pageSize: 10,
   });
-  const [defaultLocation, setDefaultLocation] = useState<
-    LocationDataModel | undefined
-  >();
+
   useEffect(() => {
     setLoading(false);
-    setDefaultLocation(
-      JSON.parse(localStorage.getItem("filterLocation")!) || undefined
-    );
   }, [data, total, filter]);
 
   const onClearFilter = () => {
@@ -135,23 +129,12 @@ export default function Home({ data, total, filter }: Props) {
   };
 
   const onFilterLocation = (value: LocationDataModel) => {
-    localStorage.setItem("filterLocation", JSON.stringify(value));
     const newQuery = {
       ...query,
       provinceId: value.provinceId?.code,
       districtId: value.districtId?.code,
       wardId: value.wardId?.code,
     };
-    console.log(value);
-    // if (!value.provinceId) {
-    //   delete newQuery.provinceId;
-    // }
-    // if (!value.districtId) {
-    //   delete newQuery.districtId;
-    // }
-    // if (!value.wardId) {
-    //   delete newQuery.wardId;
-    // }
     router.push({
       pathname: "/",
       query: newQuery,
@@ -181,9 +164,6 @@ export default function Home({ data, total, filter }: Props) {
             defaultValueDateType={filter.dateType}
             // location
             handleLocationData={(value) => onFilterLocation(value)}
-            // defaultLocation={
-            //   JSON.parse(localStorage.getItem("filterLocation")!) || undefined
-            // }
           />
           <div style={{ height: "20px" }}></div>
           <FeedsList data={data} />

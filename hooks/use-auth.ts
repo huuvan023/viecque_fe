@@ -3,21 +3,21 @@ import useSwr from "swr";
 import * as swr__internal from "swr/_internal";
 import { authClient } from "@Axios/auth-client-axios";
 import { ENPOINT } from "@Axios/endpoint";
-import { useRouter } from "next/router";
 import { useRole } from "./use-role";
 
 export function useAuth(option?: Partial<swr__internal.PublicConfiguration>) {
   const { setRole } = useRole();
-  const { data, error, mutate } = useSwr(ENPOINT.checkAuth, {
-    dedupingInterval: 1000, // 1s reload data
+  const { data, error, mutate } = useSwr(ENPOINT.user, {
+    dedupingInterval: 3600000, // 1s reload data
     revalidateOnFocus: true,
     onSuccess(data) {
       setRole(data?.data?.data?.userRole || "");
     },
     onError(err) {
       // Unauthorized logout
-      // token die
-      logout(() => {});
+      if (err.response?.data?.error === "UNAUTHORIZED") {
+        logout(() => {});
+      }
     },
     ...option,
   });

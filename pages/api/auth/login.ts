@@ -31,7 +31,7 @@ export default async function handler(
 
       if (result.data) {
         const expirationDate = new Date();
-        expirationDate.setHours(expirationDate.getHours() + 4);
+        expirationDate.setHours(expirationDate.getHours() + 10);
         cookies.set("access_token", result.data?.token, {
           httpOnly: true,
           sameSite: "lax",
