@@ -226,18 +226,31 @@ const TabFeeds = () => {
                         >
                           <a>Chỉnh sửa tin</a>
                         </div>
-                        <div
-                          className="button-menu"
-                          onClick={() => onHideFeed(item.id)}
+                        <Popconfirm
+                          placement="topRight"
+                          title={"Ẩn tin"}
+                          description={"Bạn có muốn ẩn tin"}
+                          onConfirm={() => onHideFeed(item.id)}
+                          okText="Có"
+                          cancelText="Không"
                         >
-                          <a>Ẩn tin</a>
-                        </div>
-                        <div
-                          className="button-menu"
-                          onClick={() => onDeleteFeed(item.id)}
+                          <div className="button-menu">
+                            <a>Ẩn tin</a>
+                          </div>
+                        </Popconfirm>
+
+                        <Popconfirm
+                          placement="topRight"
+                          title={"Xóa tin"}
+                          description={"Bạn có muốn xóa tin"}
+                          onConfirm={() => onDeleteFeed(item.id)}
+                          okText="Có"
+                          cancelText="Không"
                         >
-                          <a>Xóa tin</a>
-                        </div>
+                          <div className="button-menu">
+                            <a>Xóa tin</a>
+                          </div>
+                        </Popconfirm>
                       </div>
                     }
                     trigger="click"

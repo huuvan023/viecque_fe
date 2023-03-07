@@ -32,21 +32,21 @@ const SelectLocation = ({ handleLocationData, defaultLocation }: Props) => {
     value: any;
     data: WardsModel;
   } | null>();
-  const [provinceCurrentDefault, setProvinceCurrentDefault] = useState<{
-    label: any;
-    value: any;
-    data: ProvinceModel;
-  } | null>();
-  const [districtsCurrentDefault, setDistrictsCurrentDefault] = useState<{
-    label: any;
-    value: any;
-    data: DistrictsModel;
-  } | null>();
-  const [wardsCurrentDefault, setWardsCurrentDefault] = useState<{
-    label: any;
-    value: any;
-    data: WardsModel;
-  } | null>();
+  // const [provinceCurrentDefault, setProvinceCurrentDefault] = useState<{
+  //   label: any;
+  //   value: any;
+  //   data: ProvinceModel;
+  // } | null>();
+  // const [districtsCurrentDefault, setDistrictsCurrentDefault] = useState<{
+  //   label: any;
+  //   value: any;
+  //   data: DistrictsModel;
+  // } | null>();
+  // const [wardsCurrentDefault, setWardsCurrentDefault] = useState<{
+  //   label: any;
+  //   value: any;
+  //   data: WardsModel;
+  // } | null>();
 
   useEffect(() => {
     (() => {
@@ -55,20 +55,20 @@ const SelectLocation = ({ handleLocationData, defaultLocation }: Props) => {
   }, []);
   useEffect(() => {
     if (defaultLocation?.provinceId) {
-      setProvinceCurrentDefault({
+      setProvinceCurrent({
         label: defaultLocation?.provinceId?.name,
         value: defaultLocation?.provinceId?.code,
         data: defaultLocation?.provinceId,
       });
       if (defaultLocation?.districtId) {
-        setDistrictsCurrentDefault({
+        setDistrictsCurrent({
           label: defaultLocation?.districtId?.name,
           value: defaultLocation?.districtId?.code,
           data: defaultLocation?.districtId,
         });
         getDistricts(defaultLocation.provinceId!);
         if (defaultLocation?.wardId) {
-          setWardsCurrentDefault({
+          setWardsCurrent({
             label: defaultLocation?.wardId?.name,
             value: defaultLocation?.wardId?.code,
             data: defaultLocation?.wardId,
@@ -79,16 +79,14 @@ const SelectLocation = ({ handleLocationData, defaultLocation }: Props) => {
     }
   }, [defaultLocation]);
 
-  useEffect(() => {
-    if (provinceCurrent?.data || districtsCurrent?.data || wardsCurrent?.data) {
-      handleLocationData({
-        provinceId: provinceCurrent?.data,
-        districtId: districtsCurrent?.data,
-        wardId: wardsCurrent?.data,
-      });
-    }
-  }, [provinceCurrent, districtsCurrent, wardsCurrent]);
-
+  const onChangeLocation = (location: LocationDataModel) => {
+    handleLocationData({
+      provinceId: provinceCurrent?.data,
+      districtId: districtsCurrent?.data,
+      wardId: wardsCurrent?.data,
+      ...location,
+    });
+  };
   const getProvince = async () => {
     try {
       const response = await apiPublicAxios.getProvinces();
@@ -147,14 +145,17 @@ const SelectLocation = ({ handleLocationData, defaultLocation }: Props) => {
             .toLowerCase()
             .localeCompare((optionB?.label ?? "").toLowerCase())
         }
-        value={provinceCurrent ?? provinceCurrentDefault}
+        value={provinceCurrent}
         onChange={(value, option: any) => {
           setDistrictsCurrent(null);
-          setDistrictsCurrentDefault(null);
-          setWardsCurrentDefault(null);
           setWardsCurrent(null);
           setProvinceCurrent(option);
           getDistricts(option.data);
+          onChangeLocation({
+            provinceId: option.data,
+            districtId: undefined,
+            wardId: undefined,
+          });
         }}
         options={province.map((item) => ({
           label: item.name,
@@ -180,10 +181,13 @@ const SelectLocation = ({ handleLocationData, defaultLocation }: Props) => {
           onChange={(value, option: any) => {
             setDistrictsCurrent(option);
             setWardsCurrent(null);
-            setWardsCurrentDefault(null);
             getWards(option.data);
+            onChangeLocation({
+              districtId: option.data,
+              wardId: undefined,
+            });
           }}
-          value={districtsCurrent ?? districtsCurrentDefault}
+          value={districtsCurrent}
           options={districts.map((item) => ({
             value: item.code,
             label: item.name,
@@ -208,9 +212,12 @@ const SelectLocation = ({ handleLocationData, defaultLocation }: Props) => {
               .toLowerCase()
               .localeCompare((optionB?.label ?? "").toLowerCase())
           }
-          value={wardsCurrent ?? wardsCurrentDefault}
+          value={wardsCurrent}
           onChange={(value, option: any) => {
             setWardsCurrent(option);
+            onChangeLocation({
+              wardId: option.data,
+            });
           }}
           options={wards.map((item) => ({
             value: item.code,

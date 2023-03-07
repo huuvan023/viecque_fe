@@ -8,7 +8,7 @@ import { useRole } from "./use-role";
 export function useAuth(option?: Partial<swr__internal.PublicConfiguration>) {
   const { setRole } = useRole();
   const { data, error, mutate } = useSwr(ENPOINT.user, {
-    dedupingInterval: 1000, // 1s reload data
+    dedupingInterval: 3600000, // 1s reload data
     revalidateOnFocus: true,
     onSuccess(data) {
       setRole(data?.data?.data?.userRole || "");
