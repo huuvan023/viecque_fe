@@ -1,4 +1,3 @@
-import 'globalthis/auto';
 import "../styles/globals.css";
 import "@Public/assets/css/style.css";
 import type { AppProps } from "next/app";
