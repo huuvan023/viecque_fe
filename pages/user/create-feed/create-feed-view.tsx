@@ -48,27 +48,6 @@ export default function CreateFeedView() {
     }
   };
 
-  const onSaveFeed = async (isPayment: boolean) => {
-    setLoading(true);
-    try {
-      const response = await apiFeedsAxios.createFeeds(createFeed!);
-      openNotification("success", "Thành công", "Tạo tin thành công");
-
-      if (isPayment) {
-        console.log(response.data?.data);
-        const feed = response.data?.data;
-        onPayment({ feedsId: feed.id, description: feed.jobTitle });
-      } else {
-        router.push({
-          pathname: Routes.userListFeeds,
-        });
-      }
-    } catch (error: any) {
-      setLoading(false);
-      const message = error.response.data.message;
-      openNotification("error", "Thất bại", message);
-    }
-  };
   const onPayment = async ({
     feedsId,
     description,
@@ -248,7 +227,7 @@ export default function CreateFeedView() {
               textBtn="Hủy tin"
               onClick={() => {
                 router.push({
-                  pathname: Routes.home,
+                  pathname: Routes.userListFeeds,
                 });
               }}
               style={{
@@ -258,10 +237,14 @@ export default function CreateFeedView() {
               }}
             />
 
-            <AppButton textBtn="Lưu tin nháp" onClick={onSaveFeed} />
             <AppButton
-              textBtn="Lưu tin và thanh toán"
-              onClick={() => onSaveFeed(true)}
+              textBtn="Thanh toán"
+              onClick={() =>
+                onPayment({
+                  feedsId: createFeed.id!,
+                  description: createFeed.jobTitle,
+                })
+              }
             />
           </div>
         </div>

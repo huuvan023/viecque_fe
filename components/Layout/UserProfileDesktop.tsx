@@ -6,7 +6,7 @@ export default function UserProfileDeskop() {
   return (
     <Popover
       placement="bottomRight"
-      title={<span>User profile</span>}
+      title={<span>Cài đặt</span>}
       content={<MenuUserProfile />}
       trigger="click"
     >
