@@ -1,0 +1,13 @@
+#!/bin/bash
+LOCAL_PROJECT_DIR=/Users/huuvan/Workspace/viecque/viecque_fe_ver2/viecque_fe
+SERVER_USERNAME=root
+SERVER_HOST=103.166.184.18
+SERVER_PROJECT_DIR=/home/server/fe_admin
+SERVER_PASSWORD=Jma48Zu7wd7U8Cv1
+
+cd $LOCAL_PROJECT_DIR
+npm install
+npm run build
+
+sshpass -p $SERVER_PASSWORD scp -r $LOCAL_PROJECT_DIR/.next $SERVER_USERNAME@$SERVER_HOST:$SERVER_PROJECT_DIR 
+sshpass -p $SERVER_PASSWORD scp -r $LOCAL_PROJECT_DIR/package.json $SERVER_USERNAME@$SERVER_HOST:$SERVER_PROJECT_DIR
