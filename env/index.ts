@@ -1,5 +1,5 @@
-import { hostDev } from "./dev.env";
-import { hostProd } from "./dev.env";
+  const hostDev = "http://banhmisua.cf".trim();
+  const hostProd = "https://api.viecque.com".trim();
 
 const env = hostProd;
 

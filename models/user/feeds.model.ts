@@ -7,6 +7,7 @@ import {
 } from "@Models/index";
 
 export interface CreateFeedModel {
+  id?: string;
   brandId: string;
   phoneNumber: string;
   provinceId: number;

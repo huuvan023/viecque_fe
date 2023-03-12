@@ -35,6 +35,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import SelectLocation from "@Component/Layout/SelectLocation";
 import EditTextWord from "@Component/elements/EditTextWord";
+import { apiFeedsAxios } from "@Axios/user/api-feeds";
 
 const CreateFeed = () => {
   const [isChooseBrands, setIschooseBrands] = useState(false);
@@ -78,7 +79,6 @@ const CreateFeed = () => {
     detailsAddress: string;
     jobTitle: string;
     position: string;
-
     phoneNumber: string;
   }) => {
     if (!brand) {
@@ -146,13 +146,28 @@ const CreateFeed = () => {
       workingTime: workingTime,
       ...dataJob,
     };
-    setCreateFeed(data);
-    setLoading(true);
-    router.push({
-      pathname: Routes.createFeedView,
-    });
+    onSaveFeed(data);
   };
 
+  const onSaveFeed = async (feed: CreateFeedModel) => {
+    setLoading(true);
+    try {
+      setLoading(true);
+      const response = await apiFeedsAxios.createFeeds(feed);
+      openNotification("success", "Thành công", "Tạo tin thành công");
+      const dataFeed = response.data?.data;
+      if (dataFeed) {
+        setCreateFeed({ ...feed, id: dataFeed.id });
+        router.push({
+          pathname: Routes.createFeedView,
+        });
+      }
+    } catch (error: any) {
+      setLoading(false);
+      const message = error.response.data.message;
+      openNotification("error", "Thất bại", message);
+    }
+  };
   const onFinish = async (dataJob: {
     detailsAddress: string;
     jobTitle: string;
