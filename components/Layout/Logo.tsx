@@ -7,7 +7,7 @@ const Logo = () => {
   return (
     <Link legacyBehavior href={Routes.home}>
       <a className="d-flex">
-        <ImageAssets src="assets/imgs/template/jobhub-logo.svg" alt="logo" />
+        <ImageAssets src="assets/imgs/template/viecque.png" alt="logo" width={100}/>
       </a>
     </Link>
   );
