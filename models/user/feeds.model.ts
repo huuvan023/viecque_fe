@@ -8,21 +8,21 @@ import {
 
 export interface CreateFeedModel {
   id?: string;
-  brandId: string;
-  phoneNumber: string;
-  provinceId: number;
-  districtId: number;
-  wardId: number;
-  detailsAddress: string;
-  jobTitle: string;
-  jobType: string;
-  jobCategoryId: string;
-  description: string;
-  amountPeople: string;
-  salary: string;
-  salaryUnit: string;
-  timeToStart: Date;
-  workingTime: string;
+  brandId?: string;
+  phoneNumber?: string;
+  provinceId?: number;
+  districtId?: number;
+  wardId?: number;
+  detailsAddress?: string;
+  jobTitle?: string;
+  jobType?: string;
+  jobCategoryId?: string;
+  description?: string;
+  amountPeople?: string;
+  salary?: string;
+  salaryUnit?: string;
+  timeToStart?: Date;
+  workingTime?: string;
 }
 export interface UpdateFeedModel extends CreateFeedModel {
   feedsId: string;

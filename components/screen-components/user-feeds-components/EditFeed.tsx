@@ -422,6 +422,10 @@ export default function EditFeed(props: Props) {
                     }
                     options={[
                       {
+                        value: "Trả lương theo giờ",
+                        label: "Trả lương theo giờ",
+                      },
+                      {
                         value: "Trả lương theo ngày",
                         label: "Trả lương theo ngày",
                       },

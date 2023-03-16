@@ -22,6 +22,7 @@ import { Routes } from "@Routes/routes";
 import { openNotification } from "@Utils/notification";
 import {
   Button,
+  Checkbox,
   Col,
   DatePicker,
   Form,
@@ -81,61 +82,61 @@ const CreateFeed = () => {
     position: string;
     phoneNumber: string;
   }) => {
-    if (!brand) {
-      openNotification("error", "Thất bại", "Vui lòng chọn thương hiệu!");
-      return;
-    }
+    // if (!brand) {
+    //   openNotification("error", "Thất bại", "Vui lòng chọn thương hiệu!");
+    //   return;
+    // }
 
-    if (!locationData?.provinceId) {
-      openNotification("error", "Thất bại", "Vui lòng chọn tỉnh!");
-      return;
-    }
-    if (!locationData?.districtId) {
-      openNotification("error", "Thất bại", "Vui lòng chọn huyện!");
-      return;
-    }
-    if (!locationData?.wardId) {
-      openNotification("error", "Thất bại", "Vui lòng chọn xã!");
-      return;
-    }
-    if (!jobType) {
-      openNotification(
-        "error",
-        "Thất bại",
-        "Vui lòng chọn loại thời gian làm việc!"
-      );
-      return;
-    }
-    if (!jobCategoryId) {
-      openNotification("error", "Thất bại", "Vui lòng danh mục công việc!");
-      return;
-    }
+    // if (!locationData?.provinceId) {
+    //   openNotification("error", "Thất bại", "Vui lòng chọn tỉnh!");
+    //   return;
+    // }
+    // if (!locationData?.districtId) {
+    //   openNotification("error", "Thất bại", "Vui lòng chọn huyện!");
+    //   return;
+    // }
+    // if (!locationData?.wardId) {
+    //   openNotification("error", "Thất bại", "Vui lòng chọn xã!");
+    //   return;
+    // }
+    // if (!jobType) {
+    //   openNotification(
+    //     "error",
+    //     "Thất bại",
+    //     "Vui lòng chọn loại thời gian làm việc!"
+    //   );
+    //   return;
+    // }
+    // if (!jobCategoryId) {
+    //   openNotification("error", "Thất bại", "Vui lòng danh mục công việc!");
+    //   return;
+    // }
     if (!salaryUnit) {
       openNotification("error", "Thất bại", "Vui lòng chọn chế độ trả lương!");
       return;
     }
-    if (!timeToStart) {
-      openNotification("error", "Thất bại", "Vui lòng chọn thời gian bắt đầu!");
-      return;
-    }
-    if (!description) {
-      openNotification("error", "Thất bại", "Vui lòng điền mô tả công việc!");
-      return;
-    }
-    if (!workingTime) {
-      openNotification(
-        "error",
-        "Thất bại",
-        "Vui lòng điền thời gian làm việc trong ngày!"
-      );
-      return;
-    }
+    // if (!timeToStart) {
+    //   openNotification("error", "Thất bại", "Vui lòng chọn thời gian bắt đầu!");
+    //   return;
+    // }
+    // if (!description) {
+    //   openNotification("error", "Thất bại", "Vui lòng điền mô tả công việc!");
+    //   return;
+    // }
+    // if (!workingTime) {
+    //   openNotification(
+    //     "error",
+    //     "Thất bại",
+    //     "Vui lòng điền thời gian làm việc trong ngày!"
+    //   );
+    //   return;
+    // }
 
     const data: CreateFeedModel = {
-      brandId: brand.brandId!,
-      provinceId: locationData.provinceId.code!,
-      districtId: locationData.districtId.code!,
-      wardId: locationData.wardId.code!,
+      brandId: brand?.brandId,
+      provinceId: locationData?.provinceId?.code,
+      districtId: locationData?.districtId?.code,
+      wardId: locationData?.wardId?.code,
       jobType: jobType!,
       salaryUnit: salaryUnit,
       timeToStart: timeToStart,
@@ -283,7 +284,7 @@ const CreateFeed = () => {
                       Chọn loại thời gian làm việc
                       <span style={{ color: "red" }}>*</span>
                     </label>
-                    <Select
+                    {/* <Select
                       // defaultValue="lucy"
                       placeholder="Vui lòng chọn loại thời gian làm việc"
                       size="large"
@@ -292,7 +293,23 @@ const CreateFeed = () => {
                         setJobType(value);
                       }}
                       options={Jobtype}
-                    />
+                    /> */}
+                    <Checkbox.Group
+                      style={{ width: "100%" }}
+                      onChange={(value) => {
+                        setJobType(value.join(","));
+                      }}
+                    >
+                      <Row>
+                        <Col>
+                          <Checkbox value="1">Bao ăn</Checkbox>
+                        </Col>
+                        <Col>
+                          <Checkbox value="2">Bao ở</Checkbox>
+                        </Col>
+                      </Row>
+                      {}
+                    </Checkbox.Group>
                   </div>
                   <div className="box-size">
                     <label className="form-label" htmlFor="input-1">
@@ -380,6 +397,10 @@ const CreateFeed = () => {
                           .includes(input.toLowerCase())
                       }
                       options={[
+                        {
+                          value: "Trả lương theo giờ",
+                          label: "Trả lương theo giờ",
+                        },
                         {
                           value: "Trả lương theo ngày",
                           label: "Trả lương theo ngày",

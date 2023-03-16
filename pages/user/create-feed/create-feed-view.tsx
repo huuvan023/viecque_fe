@@ -129,7 +129,7 @@ export default function CreateFeedView() {
                           {new Intl.NumberFormat("vi-VN", {
                             style: "currency",
                             currency: "VND",
-                          }).format(+createFeed.salary)}{" "}
+                          }).format(+createFeed.salary!)}{" "}
                           {`(${createFeed.salaryUnit})`}
                         </span>
                       </div>
@@ -157,9 +157,16 @@ export default function CreateFeedView() {
                       <div className="col-sm-8 col-7">
                         <span>
                           {
-                            Jobtype.find(
-                              (item) => item.value === createFeed.jobType
-                            )?.label
+                            "1,2"
+                              ?.split(",")
+                              .map(
+                                (item) =>
+                                  Jobtype.find((a) => a.value === item)?.label
+                              )
+                              .join(", ")
+                            // Jobtype.find(
+                            //   (item) => item.value === createFeed.jobType
+                            // )?.label
                           }
                         </span>
                       </div>
@@ -171,7 +178,7 @@ export default function CreateFeedView() {
                       <div className="col-sm-8 col-7">
                         <Typography
                           dangerouslySetInnerHTML={{
-                            __html: createFeed.workingTime,
+                            __html: createFeed.workingTime!,
                           }}
                         />
                       </div>
@@ -212,7 +219,7 @@ export default function CreateFeedView() {
 
                         <Typography
                           dangerouslySetInnerHTML={{
-                            __html: createFeed.description,
+                            __html: createFeed.description!,
                           }}
                         />
                       </div>
@@ -223,7 +230,7 @@ export default function CreateFeedView() {
             </>
           ) : null}
           <div className="d-flex justify-content-end align-items-center">
-            <AppButton
+            {/* <AppButton
               textBtn="Hủy tin"
               onClick={() => {
                 router.push({
@@ -235,14 +242,17 @@ export default function CreateFeedView() {
                 color: "red",
                 border: "1px solid",
               }}
-            />
+            /> */}
 
             <AppButton
-              textBtn="Thanh toán"
+              textBtn="Lưu tin"
               onClick={() =>
-                onPayment({
-                  feedsId: createFeed.id!,
-                  description: createFeed.jobTitle,
+                // onPayment({
+                //   feedsId: createFeed.id!,
+                //   description: createFeed.jobTitle!,
+                // })
+                router.push({
+                  pathname: Routes.userListFeeds,
                 })
               }
             />
