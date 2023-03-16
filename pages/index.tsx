@@ -165,7 +165,6 @@ export default function Home({ data, total, filter }: Props) {
             // location
             handleLocationData={(value) => onFilterLocation(value)}
           />
-          <div style={{ height: "20px" }}></div>
           <FeedsList data={data} />
           <AppPagination
             handlePagination={onPagination}

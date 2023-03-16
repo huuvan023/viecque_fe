@@ -29,6 +29,7 @@ import {
   Image,
   InputNumber,
   Modal,
+  Radio,
   Row,
   Select,
 } from "antd";
@@ -37,6 +38,7 @@ import React, { useEffect, useState } from "react";
 import SelectLocation from "@Component/Layout/SelectLocation";
 import EditTextWord from "@Component/elements/EditTextWord";
 import { apiFeedsAxios } from "@Axios/user/api-feeds";
+import { SalaryUnits } from "@Constants/salary-unit";
 
 const CreateFeed = () => {
   const [isChooseBrands, setIschooseBrands] = useState(false);
@@ -54,7 +56,6 @@ const CreateFeed = () => {
   const [timeToStart, setTimeToStart] = useState<Date>(new Date());
   const [description, setDescription] = useState("");
   const [jobCategoryId, setJobCategoryId] = useState("");
-  const [workingTime, setWorkingTime] = useState("");
   const [salary, setSalary] = useState(50000);
   const [amountPeople, setAmountPeople] = useState(1);
   useEffect(() => {
@@ -111,24 +112,16 @@ const CreateFeed = () => {
     //   openNotification("error", "Thất bại", "Vui lòng danh mục công việc!");
     //   return;
     // }
-    if (!salaryUnit) {
-      openNotification("error", "Thất bại", "Vui lòng chọn chế độ trả lương!");
-      return;
-    }
+    // if (!salaryUnit) {
+    //   openNotification("error", "Thất bại", "Vui lòng chọn chế độ trả lương!");
+    //   return;
+    // }
     // if (!timeToStart) {
     //   openNotification("error", "Thất bại", "Vui lòng chọn thời gian bắt đầu!");
     //   return;
     // }
     // if (!description) {
     //   openNotification("error", "Thất bại", "Vui lòng điền mô tả công việc!");
-    //   return;
-    // }
-    // if (!workingTime) {
-    //   openNotification(
-    //     "error",
-    //     "Thất bại",
-    //     "Vui lòng điền thời gian làm việc trong ngày!"
-    //   );
     //   return;
     // }
 
@@ -144,7 +137,7 @@ const CreateFeed = () => {
       description: description,
       salary: salary.toString(),
       amountPeople: amountPeople.toString(),
-      workingTime: workingTime,
+      workingTime: "",
       ...dataJob,
     };
     onSaveFeed(data);
@@ -210,7 +203,7 @@ const CreateFeed = () => {
                   <div className="box-size">
                     <label className="form-label" htmlFor="input-1">
                       Upload thương hiệu
-                      <span style={{ color: "red" }}>*</span>
+                      {/* <span style={{ color: "red" }}>*</span> */}
                     </label>
                     {brand ? (
                       <div className="box-brand-create-feed">
@@ -252,7 +245,8 @@ const CreateFeed = () => {
                   </div>
                   <div className="box-size">
                     <label className="form-label" htmlFor="input-1">
-                      Chọn vị trí <span style={{ color: "red" }}>*</span>
+                      Chọn vị trí
+                      {/*  <span style={{ color: "red" }}>*</span> */}
                     </label>
 
                     <SelectLocation
@@ -263,7 +257,7 @@ const CreateFeed = () => {
                   </div>
                   <div className="box-size">
                     <AppInput
-                      required={true}
+                      // required={true}
                       label="Vị trí chi tiết"
                       placeholder="Số nhà ABC hẻm XYZ..."
                       name="detailsAddress"
@@ -272,7 +266,7 @@ const CreateFeed = () => {
                   </div>
                   <div className="box-size">
                     <AppInput
-                      required={true}
+                      // required={true}
                       label="Số điện thoại"
                       placeholder="Nhập số điện thoại"
                       name="phoneNumber"
@@ -282,7 +276,7 @@ const CreateFeed = () => {
                   <div className="box-size">
                     <label className="form-label" htmlFor="input-1">
                       Chọn loại thời gian làm việc
-                      <span style={{ color: "red" }}>*</span>
+                      {/* <span style={{ color: "red" }}>*</span> */}
                     </label>
                     {/* <Select
                       // defaultValue="lucy"
@@ -311,20 +305,11 @@ const CreateFeed = () => {
                       {}
                     </Checkbox.Group>
                   </div>
-                  <div className="box-size">
-                    <label className="form-label" htmlFor="input-1">
-                      Thời gian làm việc trong ngày
-                      <span style={{ color: "red" }}>*</span>
-                    </label>
-                    <EditTextWord
-                      onChange={(value) => setWorkingTime(value)}
-                      value={workingTime}
-                    />
-                  </div>
+
                   <div className="box-size">
                     <label className="form-label" htmlFor="input-1">
                       Danh mục công việc
-                      <span style={{ color: "red" }}>*</span>
+                      {/* <span style={{ color: "red" }}>*</span> */}
                     </label>
                     <Select
                       showSearch
@@ -346,20 +331,7 @@ const CreateFeed = () => {
                       }))}
                     />
                   </div>
-                  <div className="box-size">
-                    <label className="form-label" htmlFor="input-1">
-                      Số người cần tuyển
-                      <span style={{ color: "red" }}>*</span>
-                    </label>
-                    <InputNumber
-                      style={{ width: "100%" }}
-                      size="large"
-                      min={1}
-                      max={10000}
-                      defaultValue={amountPeople}
-                      onChange={(value) => setAmountPeople(value!)}
-                    />
-                  </div>
+
                   <div className="box-size">
                     <label className="form-label" htmlFor="input-1">
                       Mức lương (VNĐ)
@@ -376,50 +348,31 @@ const CreateFeed = () => {
                       }}
                     />
                   </div>
+                  <label className="form-label" htmlFor="input-1">
+                    Chế độ trả lương
+                  </label>
                   <div className="box-size">
-                    <label className="form-label" htmlFor="input-1">
-                      Chế độ trả lương
-                      <span style={{ color: "red" }}>*</span>
-                    </label>
-                    <Select
-                      showSearch
-                      size="large"
-                      style={{ width: "100%" }}
-                      placeholder="Chọn chế độ trả lương"
-                      optionFilterProp="children"
-                      onChange={(value: string) => {
-                        setSalaryUnit(value);
-                      }}
-                      // onSearch={onSearch}
-                      filterOption={(input, option) =>
-                        (option?.label ?? "")
-                          .toLowerCase()
-                          .includes(input.toLowerCase())
-                      }
-                      options={[
-                        {
-                          value: "Trả lương theo giờ",
-                          label: "Trả lương theo giờ",
-                        },
-                        {
-                          value: "Trả lương theo ngày",
-                          label: "Trả lương theo ngày",
-                        },
-                        {
-                          value: "Trả lương theo tuần",
-                          label: "Trả lương theo tuần",
-                        },
-                        {
-                          value: "Trả lương theo tháng",
-                          label: "Trả lương theo tháng",
-                        },
-                      ]}
-                    />
+                    <Radio.Group
+                      onChange={(event) => setSalaryUnit(event.target.value)}
+                      value={salaryUnit}
+                    >
+                      {SalaryUnits.map((item) => {
+                        return (
+                          <Radio
+                            key={item.value}
+                            style={{ display: "block" }}
+                            value={item.value}
+                          >
+                            {item.label}
+                          </Radio>
+                        );
+                      })}
+                    </Radio.Group>
                   </div>
                   <div className="box-size">
                     <label className="form-label" htmlFor="input-1">
                       Thời gian bắt đầu
-                      <span style={{ color: "red" }}>*</span>
+                      {/* <span style={{ color: "red" }}>*</span> */}
                     </label>
 
                     <DatePicker
@@ -434,7 +387,7 @@ const CreateFeed = () => {
                   <div className="box-size">
                     <label className="form-label" htmlFor="input-1">
                       Mô tả công việc
-                      <span style={{ color: "red" }}>*</span>
+                      {/* <span style={{ color: "red" }}>*</span> */}
                     </label>
 
                     <EditTextWord
@@ -442,7 +395,7 @@ const CreateFeed = () => {
                       value={description}
                     />
                   </div>
-                  <div className="text-right">
+                  <div className="text-right" style={{ marginTop: "3em" }}>
                     <AppButton textBtn="Tiếp tục" type="submit" />
                   </div>
                 </Form>

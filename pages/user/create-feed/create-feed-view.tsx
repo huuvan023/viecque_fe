@@ -156,33 +156,17 @@ export default function CreateFeedView() {
                       </div>
                       <div className="col-sm-8 col-7">
                         <span>
-                          {
-                            "1,2"
-                              ?.split(",")
-                              .map(
-                                (item) =>
-                                  Jobtype.find((a) => a.value === item)?.label
-                              )
-                              .join(", ")
-                            // Jobtype.find(
-                            //   (item) => item.value === createFeed.jobType
-                            // )?.label
-                          }
+                          {createFeed.jobType
+                            ?.split(",")
+                            .map(
+                              (item) =>
+                                Jobtype.find((a) => a.value === item)?.label
+                            )
+                            .join(", ")}
                         </span>
                       </div>
                     </div>
-                    <div className="card-detail-feed-child">
-                      <div className="col-sm-4 col-5">
-                        <span className="font-bold">Thời gian làm việc</span>
-                      </div>
-                      <div className="col-sm-8 col-7">
-                        <Typography
-                          dangerouslySetInnerHTML={{
-                            __html: createFeed.workingTime!,
-                          }}
-                        />
-                      </div>
-                    </div>
+
                     <div className="card-detail-feed-child">
                       <div className="col-sm-4 col-5">
                         <span className="font-bold">Thời gian bắt đầu</span>

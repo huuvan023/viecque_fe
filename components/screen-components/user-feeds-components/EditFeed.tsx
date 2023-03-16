@@ -23,11 +23,13 @@ import {
   Image,
   Row,
   Select,
+  Radio,
 } from "antd";
 import { useEffect, useState } from "react";
 import { apiFeedsAxios } from "@Axios/user/api-feeds";
 import SelectLocation from "@Component/Layout/SelectLocation";
 import EditTextWord from "@Component/elements/EditTextWord";
+import { SalaryUnits } from "@Constants/salary-unit";
 
 interface Props {
   feed: GetFeedsModel;
@@ -52,7 +54,6 @@ export default function EditFeed(props: Props) {
     setDetailsAddress(feed.detailsAddress);
     setPhoneNumber(feed.phoneNumber);
     setJobType(Jobtype.find((item) => item.label === feed.jobType)?.value);
-    setWorkingTime(feed.workingTime);
     setSalary(feed.salary);
     setAmountPeople(feed.amount);
     setDescription(feed.description);
@@ -75,7 +76,6 @@ export default function EditFeed(props: Props) {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [salaryUnit, setSalaryUnit] = useState("");
   const [jobTitle, setJobTitle] = useState("");
-  const [workingTime, setWorkingTime] = useState("");
   const [jobCategoryList, setJobCategoryList] = useState<JobCategoryModel[]>(
     []
   );
@@ -138,14 +138,6 @@ export default function EditFeed(props: Props) {
       openNotification("error", "Thất bại", "Vui lòng điền mô tả công việc!");
       return;
     }
-    if (!workingTime) {
-      openNotification(
-        "error",
-        "Thất bại",
-        "Vui lòng điền thời gian làm việc trong ngày!"
-      );
-      return;
-    }
 
     const data: UpdateFeedModel = {
       feedsId: props.feed.id,
@@ -163,7 +155,7 @@ export default function EditFeed(props: Props) {
       jobTitle: jobTitle,
       detailsAddress: detailsAddress,
       phoneNumber: phoneNumber,
-      workingTime: workingTime,
+      workingTime: "",
     };
     onSaveFeed(data);
     setLoading(true);
@@ -325,16 +317,7 @@ export default function EditFeed(props: Props) {
                     options={Jobtype}
                   />
                 </div>
-                <div className="box-size">
-                  <label className="form-label" htmlFor="input-1">
-                    Thời gian làm việc trong ngày
-                    <span style={{ color: "red" }}>*</span>
-                  </label>
-                  <EditTextWord
-                    onChange={(value) => setWorkingTime(value)}
-                    value={workingTime}
-                  />
-                </div>
+
                 <div className="box-size">
                   <label className="form-label" htmlFor="input-1">
                     Danh mục công việc
@@ -366,20 +349,7 @@ export default function EditFeed(props: Props) {
                     }))}
                   />
                 </div>
-                <div className="box-size">
-                  <label className="form-label" htmlFor="input-1">
-                    Số người cần tuyển
-                    <span style={{ color: "red" }}>*</span>
-                  </label>
-                  <InputNumber
-                    style={{ width: "100%" }}
-                    size="large"
-                    min={1}
-                    max={10000}
-                    defaultValue={amountPeople}
-                    onChange={(value) => setAmountPeople(value!)}
-                  />
-                </div>
+
                 <div className="box-size">
                   <label className="form-label" htmlFor="input-1">
                     Mức lương (VNĐ)
@@ -401,44 +371,23 @@ export default function EditFeed(props: Props) {
                     Chế độ trả lương
                     <span style={{ color: "red" }}>*</span>
                   </label>
-                  <Select
-                    showSearch
-                    size="large"
-                    style={{ width: "100%" }}
-                    placeholder="Chọn chế độ trả lương"
-                    optionFilterProp="children"
-                    onChange={(value: any) => {
-                      setSalaryUnit(value);
-                    }}
-                    // onSearch={onSearch}
-                    value={{
-                      value: salaryUnit,
-                      label: salaryUnit,
-                    }}
-                    filterOption={(input, option) =>
-                      (option?.label ?? "")
-                        .toLowerCase()
-                        .includes(input.toLowerCase())
-                    }
-                    options={[
-                      {
-                        value: "Trả lương theo giờ",
-                        label: "Trả lương theo giờ",
-                      },
-                      {
-                        value: "Trả lương theo ngày",
-                        label: "Trả lương theo ngày",
-                      },
-                      {
-                        value: "Trả lương theo tuần",
-                        label: "Trả lương theo tuần",
-                      },
-                      {
-                        value: "Trả lương theo tháng",
-                        label: "Trả lương theo tháng",
-                      },
-                    ]}
-                  />
+                  c
+                  <Radio.Group
+                    onChange={(event) => setSalaryUnit(event.target.value)}
+                    value={salaryUnit}
+                  >
+                    {SalaryUnits.map((item) => {
+                      return (
+                        <Radio
+                          key={item.value}
+                          style={{ display: "block" }}
+                          value={item.value}
+                        >
+                          {item.label}
+                        </Radio>
+                      );
+                    })}
+                  </Radio.Group>
                 </div>
                 <div className="box-size">
                   <label className="form-label" htmlFor="input-1">

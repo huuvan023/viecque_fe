@@ -114,16 +114,7 @@ export default function FeedDetailDrawerView({ data }: Props) {
                       {data.jobCate.name}
                     </div>
                   </div>
-                  <div className="card-detail-feed-child">
-                    <div className="col-sm-4 col-5">
-                      <span className="font-bold">Thời gian làm việc</span>
-                    </div>
-                    <div className="col-sm-8 col-7">
-                      <Typography
-                        dangerouslySetInnerHTML={{ __html: data.workingTime }}
-                      />
-                    </div>
-                  </div>
+
                   <div className="card-detail-feed-child">
                     <div className="col-sm-4 col-5">
                       <span className="font-bold">Thời gian bắt đầu</span>
